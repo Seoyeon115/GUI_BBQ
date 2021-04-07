@@ -15,16 +15,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class MainUI{
+public class StartUI{
 	//Field
 	Frame f;
 	Panel top_panel,ad_panel,bottom_panel;
 	Label first_label,last_label;
 	JButton btn_login, btn_order;
-	MainUIEvent eventobj = new MainUIEvent(this);
+	StartUIEvent eventobj = new StartUIEvent(this);
 	
 	//Constructor
-	public MainUI() {
+	public StartUI() {
 		init();
 	}
 	
