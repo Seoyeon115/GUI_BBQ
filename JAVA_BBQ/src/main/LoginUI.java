@@ -76,7 +76,7 @@ public class LoginUI implements ActionListener{
 
 			label_panel.add(l_panel.add(new Label(name)));
 
-			if (name.equals("PW")) {
+			if (name.trim().equals("PW")) {
 				pass_tf = new JPasswordField(15);
 				tf_panel.add(t_panel.add(pass_tf));
 			} else {
@@ -126,7 +126,7 @@ public class LoginUI implements ActionListener{
 			login_proc();
 		} else if (obj == btn_join) {
 			//회원가입 창
-			System.out.println("회원가입창");
+			new JoinUI();
 		}
 	}
 
