@@ -23,6 +23,8 @@ public class StartUIEvent implements ActionListener{
 			new LoginUI(main);
 		}else if(obj == main.btn_order) {
 			new OrderUI(main);
+		}else if(obj == log.btn_login) {
+			new JoinUI(log);
 		}else if(obj == log.btn_join) {
 			new JoinUI(log);
 		}

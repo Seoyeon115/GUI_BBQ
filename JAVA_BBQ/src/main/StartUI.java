@@ -24,13 +24,16 @@ import javax.swing.JPanel;
 import test.Commons;
 import test.LoginUI;
 
-public class StartUI{
+public class StartUI {
 	// Field
 	JFrame f;
 	JPanel top_panel, center_panel, bottom_panel;
 	JLabel inform_label;
 	JButton btn_login, btn_order;
 	StartUIEvent eventobj = new StartUIEvent(this);
+
+	// login °á°ú
+	public static boolean LOGIN_RESULT = false;
 
 	// Constructor
 	public StartUI() {

@@ -3,11 +3,12 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -15,14 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import main.Commons;
-import main.StartUI;
-
-public class LoginUI {
+public class LoginUI implements ActionListener{
 	// Field
 	JFrame f;
 	JButton btn_login, btn_join;
@@ -31,6 +30,7 @@ public class LoginUI {
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
 	StartUI main;
+	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// Constructor
 	public LoginUI() {
@@ -100,7 +100,58 @@ public class LoginUI {
 				System.exit(0);
 			}
 		});
+		
+		btn_login.addActionListener(this);
+		btn_join.addActionListener(this);
 
 	}// init
+	
+	/** loginCheck **/
+	public boolean loginCheck(String id, String pass) {
+		boolean result = false;
+//		for(MemberVO member : memberlist) {
+//			if(member.getId().equals(id) && member.getPass().equals(pass)) {
+//				result = true;
+//			}
+//		}
+		return result;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+
+		if (obj == btn_login) {
+			// 로그인
+			login_proc();
+		} else if (obj == btn_join) {
+			//회원가입 창
+			System.out.println("회원가입창");
+		}
+	}
+
+	public void login_proc() {
+		// 유효성 체크
+		if (id_tf.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요"));
+			id_tf.requestFocus();
+		} else if (pass_tf.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("패스워드를 입력해주세요"));
+			pass_tf.requestFocus();
+		} else {
+			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
+			boolean result = loginCheck(id_tf.getText(), pass_tf.getText());
+			if (result) {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
+				new StartUI();
+				main.btn_login.setText("   로그아웃     ");
+				StartUI.LOGIN_RESULT = true;
+			} else {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));
+
+			}
+
+		}
+	}
 
 }// class
