@@ -3,10 +3,10 @@ package main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainUIEvent implements ActionListener{
-	MainUI main;
+public class StartUIEvent implements ActionListener{
+	StartUI main;
 	
-	public MainUIEvent(MainUI main) {
+	public StartUIEvent(StartUI main) {
 		this.main = main;
 	}
 

@@ -20,14 +20,14 @@ public class LoginUI {
 	JPasswordField pass_tf;
 	Panel ad_panel,center_panel,label_panel,tf_panel,btn_panel;
 	JLabel blank_label,id_label,pass_label;
-	MainUI main;
+	StartUI main;
 	
 	// Constructor
 	public LoginUI() {
 		init();
 	}
 
-	public LoginUI(MainUI main) {
+	public LoginUI(StartUI main) {
 		this.main = main;
 		init();
 	}
