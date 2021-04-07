@@ -5,9 +5,14 @@ import java.awt.event.ActionListener;
 
 public class StartUIEvent implements ActionListener{
 	StartUI main;
+	LoginUI log;
 	
 	public StartUIEvent(StartUI main) {
 		this.main = main;
+	}
+	
+	public StartUIEvent(LoginUI log) {
+		this.log = log;
 	}
 
 	@Override
@@ -18,6 +23,8 @@ public class StartUIEvent implements ActionListener{
 			new LoginUI(main);
 		}else if(obj == main.btn_order) {
 //			new OrderUI(main);
+		}else if(obj == log.btn_join) {
+			new JoinUI(log);
 		}
 	}
 	
