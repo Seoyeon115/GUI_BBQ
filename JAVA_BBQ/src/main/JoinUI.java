@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import BBQ_VO.MemberVO;
 
 public class JoinUI implements ActionListener {
 	// Field
