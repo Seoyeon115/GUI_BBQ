@@ -70,15 +70,18 @@ public class DetailMenuUI implements ActionListener{
 		// 메뉴명&가격 패널
 		JPanel panel_nameNprice = new JPanel();
 		JLabel label_name = new JLabel(vo.getName());
+		label_name.setFont(Commons.getFont());
 		panel_nameNprice.add(BorderLayout.WEST, label_name);
 		panel_content.add(panel_nameNprice);
 		
 		JLabel label_price = new JLabel(String.valueOf(vo.getPrice()+"원"));
+		label_price.setFont(Commons.getFont());
 		panel_nameNprice.add(BorderLayout.EAST, label_price);
 		
 		// 메뉴 설명 패널
 		JPanel panel_desc = new JPanel();
 		JLabel label_desc = new JLabel(vo.getDesc());
+		label_desc.setFont(Commons.getFont());
 		panel_desc.add(label_desc);
 		panel_content.add(panel_desc);
 		
@@ -87,9 +90,10 @@ public class DetailMenuUI implements ActionListener{
 		JPanel panel_options = new JPanel(new GridLayout(option_size, 3));
 //		panel_options.setBackground(new Color(0,0,0));
 		panel_options.setBorder(new LineBorder(Color.red, 1, true));
-		for(String option : vo.getOptions()) {
+		for(String str : vo.getOptions()) {
 			JPanel panel_option = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JCheckBox check_option = new JCheckBox(option);
+			JCheckBox check_option = new JCheckBox(str);
+			check_option.setFont(Commons.getFont());
 			
 			panel_option.add(check_option);
 			check_options.add(check_option);
@@ -102,6 +106,7 @@ public class DetailMenuUI implements ActionListener{
 		// 담기 버튼
 		JPanel panel_onCart = new JPanel(new GridLayout(1, 1));
 		button_onCart = new JButton("장바구니 담기");
+		button_onCart.setFont(Commons.getFont());
 		button_onCart.addActionListener(this);
 		panel_onCart.add(button_onCart);
 		panel_content.add(BorderLayout.SOUTH, panel_onCart);
