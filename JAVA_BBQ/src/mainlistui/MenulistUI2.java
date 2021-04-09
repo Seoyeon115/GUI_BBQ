@@ -43,9 +43,9 @@ public class MenulistUI2 implements ActionListener {
 		panel.setBounds(30, 22, 520, 820);
 //		frame.getContentPane().add(panel);
 
-		ImageIcon icon1 = new ImageIcon("image/marinate1.png");
-		ImageIcon icon2 = new ImageIcon("image/marinate2.png");
-		ImageIcon icon3 = new ImageIcon("image/marinate3.png");
+		ImageIcon icon1 = new ImageIcon("images/marinate1.png");
+		ImageIcon icon2 = new ImageIcon("images/marinate2.png");
+		ImageIcon icon3 = new ImageIcon("images/marinate3.png");
 
 		// menu1
 
@@ -62,10 +62,10 @@ public class MenulistUI2 implements ActionListener {
 
 		// 홈버튼 장바구니버튼 넣기
 		// 홈버튼 장바구니버튼 넣기
-		ImageIcon home = new ImageIcon("image/homer.png");
-		ImageIcon home2 = new ImageIcon("image/homey.png");
-		ImageIcon cart = new ImageIcon("image/cartr.png");
-		ImageIcon cart2 = new ImageIcon("image/carty.png");
+		ImageIcon home = new ImageIcon("images/homer.png");
+		ImageIcon home2 = new ImageIcon("images/homey.png");
+		ImageIcon cart = new ImageIcon("images/cartr.png");
+		ImageIcon cart2 = new ImageIcon("images/carty.png");
 
 		btn_home = new JButton();
 		btn_home.setIcon(home);
@@ -129,8 +129,8 @@ public class MenulistUI2 implements ActionListener {
 		menu2_btn_panel.setBackground(new Color(255, 255, 255));
 		menu2_btn_panel.add(menu2_lb);
 		// 버튼 공간 만들기 및 버튼 이미지 세팅
-		ImageIcon point = new ImageIcon("image/leftr.png");
-		ImageIcon point2 = new ImageIcon("image/lefty.png");
+		ImageIcon point = new ImageIcon("images/leftr.png");
+		ImageIcon point2 = new ImageIcon("images/lefty.png");
 
 		btn_sidepage = new JButton();
 		btn_sidepage.setIcon(point);
