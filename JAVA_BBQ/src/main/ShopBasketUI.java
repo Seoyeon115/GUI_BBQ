@@ -1,5 +1,21 @@
 package main;
 
-public class ShopBasketUI {
+import javax.swing.*;
 
+public class ShopBasketUI {
+	//Field
+	JFrame f;
+	
+	
+	//Constructor
+	
+	
+	
+	
+	//Method
+	
+	
+	
+	
+	
 }

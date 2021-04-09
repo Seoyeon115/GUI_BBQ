@@ -22,9 +22,10 @@ public class JoinUI implements ActionListener {
 	// Field
 	JFrame f;
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
-	JButton join_btn, reset_btn, id_chk_btn;
+	JButton btn_join, btn_reset, btn_id_chk;
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
 	LoginUI log;
+//	StartUIEvent eventobj = new StartUIEvent(this);
 	
 	// Constructor
 	public JoinUI() {
@@ -57,10 +58,10 @@ public class JoinUI implements ActionListener {
 		title_panel.add(new JLabel("회원가입                                       "));
 		title_panel.add(img_label);
 
-		join_btn = new JButton("회원가입");
-		reset_btn = new JButton("취소하기");
-		btn_panel.add(join_btn);
-		btn_panel.add(reset_btn);
+		btn_join = new JButton("회원가입");
+		btn_reset = new JButton("취소하기");
+		btn_panel.add(btn_join);
+		btn_panel.add(btn_reset);
 
 		for (String name : namelist) {
 			JPanel l_panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -72,9 +73,9 @@ public class JoinUI implements ActionListener {
 
 			if (name.equals("아이디")) {
 				JTextField id = new JTextField(12);
-				id_chk_btn = new JButton("중복확인");
+				btn_id_chk = new JButton("중복확인");
 				t_panel.add(id);
-				t_panel.add(id_chk_btn);
+				t_panel.add(btn_id_chk);
 				tf_panel.add(t_panel);
 
 			} else if (name.equals("핸드폰")) {
@@ -119,9 +120,13 @@ public class JoinUI implements ActionListener {
 
 			}
 		});
-		join_btn.addActionListener(this);
-		reset_btn.addActionListener(this);
-		id_chk_btn.addActionListener(this);
+		
+		btn_join.addActionListener(this);
+		btn_reset.addActionListener(this);
+		btn_id_chk.addActionListener(this);
+//		btn_join.addActionListener(eventobj);
+//		btn_reset.addActionListener(eventobj);
+//		btn_id_chk.addActionListener(eventobj);
 
 	}
 
@@ -131,11 +136,11 @@ public class JoinUI implements ActionListener {
 		Object obj = e.getSource();
 		String name = e.getActionCommand().trim();
 
-		if (obj == join_btn) {
+		if (obj == btn_join) {
 			// 가입정보 DB 등록
-		} else if (obj == reset_btn) {
-
-		} else if (obj == id_chk_btn) {
+		} else if (obj == btn_reset) {
+			
+		} else if (obj == btn_id_chk) {
 			// DB아이디 중복체크
 
 		}
