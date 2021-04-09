@@ -46,9 +46,9 @@ public class MenulistUI implements ActionListener {
 		panel.setBounds(30, 22, 520, 820);
 		
 		
-		ImageIcon icon1 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/normal.png");
-		ImageIcon icon2 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/half.png");
-		ImageIcon icon3 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/rip.png");
+		ImageIcon icon1 = new ImageIcon("images/normal.png");
+		ImageIcon icon2 = new ImageIcon("images/half.png");
+		ImageIcon icon3 = new ImageIcon("images/rip.png");
 		
 		
 		//menu1
@@ -66,10 +66,10 @@ public class MenulistUI implements ActionListener {
 		menu1_btn_panel.add(menu1_lb);
 		
 		//홈버튼 장바구니버튼 넣기
-		ImageIcon home = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/homer.png");
-		ImageIcon home2 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/homey.png");
-		ImageIcon cart = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/cartr.png");
-		ImageIcon cart2 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/carty.png");
+		ImageIcon home = new ImageIcon("images/homer.png");
+		ImageIcon home2 = new ImageIcon("images/homey.png");
+		ImageIcon cart = new ImageIcon("images/cartr.png");
+		ImageIcon cart2 = new ImageIcon("images/carty.png");
 		
 		
 		btn_home = new JButton();
@@ -136,8 +136,8 @@ public class MenulistUI implements ActionListener {
 		menu2_btn_panel.setBackground(new Color(255, 255, 255));
 		menu2_btn_panel.add(menu2_lb);
 		//버튼 공간 만들기 및 버튼 이미지 세팅
-		ImageIcon point = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/rightr.png");
-		ImageIcon point2 = new ImageIcon("C:/dev/GUI_BBQ/JAVA_BBQ/src/image/righty.png");
+		ImageIcon point = new ImageIcon("images/rightr.png");
+		ImageIcon point2 = new ImageIcon("images/righty.png");
 		
 		
 		btn_sidepage = new JButton();
