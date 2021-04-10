@@ -2,43 +2,43 @@ package main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 import BBQ_VO.MenuVO;
+import BBQ_VO.OptionVO;
 
 // 상세 메뉴창 미완성
 public class DetailMenuUI implements ActionListener{
+	JFrame frame = new JFrame();
+	JPanel panel_content;
 	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton button_onCart; // 담기 버튼
 	JButton button_back; // 뒤로가기 버튼
-	
+	int price_final; // 메뉴 결제 가격
 	MenuVO vo; // 메뉴 정보
-	
-	///////////
-	//Field
-	
-	JFrame frame = new JFrame();
-	JPanel panel_content;
-	
 	//Constructor
 	// 생성자, 메뉴 정보를 매개변수로 받는다
 		public DetailMenuUI(MenuVO vo) {
 			this.vo = vo;
+			this.price_final = vo.getPrice();
 			init();
 		}
-	//Method
-	
+		
+	//Method	
 	public void init() {
 		// 프레임
 		frame = new JFrame();
@@ -49,7 +49,7 @@ public class DetailMenuUI implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(null);
 		
-		panel_content = new JPanel();
+		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
 		panel_content.setBounds(30, 22, 520, 820);
 		
@@ -98,8 +98,8 @@ public class DetailMenuUI implements ActionListener{
 		JPanel panel_image = new JPanel();
 		panel_image.setBackground(new Color(255, 255, 255));
 		panel_image.setPreferredSize(new Dimension(520, 285));
-		JLabel label_image = new JLabel(Commons.imageResize(vo.getImage(), 300, 150));
-		label_image.setBorder(new LineBorder(Color.red));
+		JLabel label_image = new JLabel(Commons.imageResize(vo.getImage(), 450, 255));
+		label_image.setBorder(new LineBorder(Color.red, 5, true));
 		panel_image.add(label_image);
 		panel_content.add(panel_image);
 	}
@@ -124,28 +124,50 @@ public class DetailMenuUI implements ActionListener{
 		panel_desc.setBackground(new Color(255, 255, 255));
 		panel_desc.setPreferredSize(new Dimension(520, 50));
 		JLabel label_desc = new JLabel(vo.getDesc());
-		label_desc.setFont(Commons.getFont());
+		label_desc.setFont(Commons.getFont(15));
 		panel_desc.add(label_desc);
 		panel_content.add(panel_desc);
 	}
 	
 	void init_option() {
-		int option_size = vo.getOptions().size();
-		JPanel panel_options = new JPanel(new GridLayout(option_size, 1));
+		JPanel panel_options = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 5));
 		panel_options.setBackground(new Color(255, 255, 255));
-		panel_options.setPreferredSize(new Dimension(520, 300));
-		panel_options.setBorder(new LineBorder(Color.red, 1, true));
-		for(String str : vo.getOptions()) {
-			JPanel panel_option = new JPanel();
-			JCheckBox check_option = new JCheckBox(str);
-			check_option.setFont(Commons.getFont());
+		panel_options.setPreferredSize(new Dimension(500, 305));
+		panel_options.setBorder(new LineBorder(Color.red, 5, true));
+		
+		JLabel label_option = new JLabel(" 추가 옵션");
+		label_option.setFont(Commons.getFont(20));
+		panel_options.add(label_option);
+		
+		JPanel panel_check = new JPanel();
+		panel_check.setLayout(null);
+		panel_check.setPreferredSize(new Dimension(498, 5 + vo.getOptions().size()*45));
+		
+		// 스크롤 추가
+		JScrollPane scroll = new JScrollPane(panel_check);
+		scroll.setPreferredSize(new Dimension(490, 258));
+//		scroll.setVerticalScrollBar(scroll.createVerticalScrollBar());
+		scroll.setHorizontalScrollBar(null);
+		scroll.setBorder(null);
+		
+		int h =5; // 체크박스 높이 조정용
+		for(OptionVO option : vo.getOptions()) {
+			JPanel panel_option = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			panel_option.setBounds(5, h, 473, 40);
+			h += 45;
+			panel_option.setBackground(new Color(100, 100, 100));
+			JCheckBox check_option = new JCheckBox(option.getOption()
+										+ "(+" + option.getPrice() + ")");
+			check_option.setFont(Commons.getFont(15));
 			
 			panel_option.add(check_option);
 			check_options.add(check_option);
-			panel_options.add(panel_option);
+			panel_check.add(panel_option);
 			
 			check_option.addActionListener(this);
 		}
+		panel_options.add(scroll);
+		
 		panel_content.add(panel_options);
 	}
 	
@@ -154,21 +176,31 @@ public class DetailMenuUI implements ActionListener{
 		panel_onCart.setPreferredSize(new Dimension(520, 50));
 		
 		ImageIcon image_cart = Commons.imageResize(new ImageIcon("images/593.png"), 50, 50);
-		button_onCart = new JButton("장바구니 담기", image_cart);
-		button_onCart.setFont(Commons.getFont());
+		button_onCart = new JButton("장바구니 담기("+ price_final+"원)", image_cart);
+		button_onCart.setFont(Commons.getFont(25));
+		button_onCart.setBorderPainted(false);
 		button_onCart.addActionListener(this);
 		panel_onCart.add(button_onCart);
 		panel_content.add(panel_onCart);
 	}
 	
 	
-	boolean isInOption(Object obj) { // 옵션 메뉴 선택인지 확인
-		for(JCheckBox check : check_options) {
-			if(obj == check) {
-				return true;	
+	int isInOption(Object obj) { // 옵션 메뉴 선택인지 확인
+		for(int i=0;i<check_options.size();i++) {
+			if(obj == check_options.get(i)) {
+				return i;
 			}
 		}
-		return false;
+		return -1;
+	}
+	
+	void clickOption(int idx, boolean state) { // 옵션 클릭 시 담기 버튼에 표시된 가격이 바뀜
+		if(state) { // 체크를 했을 때
+			price_final += vo.getOptions().get(idx).getPrice();
+		}else { // 체크를 해제했을 때
+			price_final -= vo.getOptions().get(idx).getPrice();
+		}
+		button_onCart.setText("장바구니 담기("+ price_final+"원)");
 	}
 	
 	// 이벤트 동작
@@ -180,9 +212,11 @@ public class DetailMenuUI implements ActionListener{
 			System.out.println("장바구니 담기");
 		}else if(obj == button_back) { // 뒤로가기 버튼 클릭
 			System.out.println("뒤로가기");
-		}else if(isInOption(obj)) {
-			JCheckBox check = (JCheckBox) obj;
-			System.out.println(check.getText());
+		}else { // 옵션 메뉴 선택
+			int op = isInOption(obj);
+			if(op != -1) {
+				clickOption(op, check_options.get(op).isSelected());
+			}
 		}
 	}
 }
