@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginUI implements ActionListener{
+public class LoginUI implements ActionListener {
 	// Field
 	JFrame f;
 	JButton btn_login, btn_join;
@@ -35,9 +35,9 @@ public class LoginUI implements ActionListener{
 	// Constructor
 	public LoginUI() {
 		init();
-		
+
 	}
-	
+
 	public LoginUI(StartUI main) {
 		this.main = main;
 		init();
@@ -95,18 +95,11 @@ public class LoginUI implements ActionListener{
 		f.setSize(250, 230);
 		f.setVisible(true);
 
-		// 윈도우 종료 이벤트
-		f.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		
 		btn_login.addActionListener(this);
 		btn_join.addActionListener(this);
 
 	}// init
-	
+
 	/** loginCheck **/
 	public boolean loginCheck(String id, String pass) {
 		boolean result = false;
@@ -117,7 +110,7 @@ public class LoginUI implements ActionListener{
 //		}
 		return result;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
@@ -126,7 +119,7 @@ public class LoginUI implements ActionListener{
 			// 로그인
 			login_proc();
 		} else if (obj == btn_join) {
-			//회원가입 창
+			// 회원가입 창
 			new JoinUI();
 		}
 	}

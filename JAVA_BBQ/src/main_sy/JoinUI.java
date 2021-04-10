@@ -20,27 +20,26 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
 public class JoinUI implements ActionListener {
 	// Field
 	JFrame f;
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JButton join_btn, reset_btn, id_chk_btn;
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
-	ArrayList<Object> list =new ArrayList<Object>();
+	ArrayList<Object> list = new ArrayList<Object>();
 	LoginUI log;
-	
+
 	// Constructor
 	public JoinUI() {
 		init();
-		
+
 	}
 
 	public JoinUI(LoginUI log) {
 		this.log = log;
 		init();
 	}
-	
+
 	// Method
 	public void init() {
 		f = new JFrame("BBQ");
@@ -121,12 +120,6 @@ public class JoinUI implements ActionListener {
 		f.setLocation(100, 100);
 		f.setVisible(true);
 
-		// 윈도우 이벤트 호출-종료
-		f.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-
-			}
-		});
 		join_btn.addActionListener(this);
 		reset_btn.addActionListener(this);
 		id_chk_btn.addActionListener(this);
@@ -138,17 +131,17 @@ public class JoinUI implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		String name = e.getActionCommand().trim();
-		
-		
+
 		if (obj == join_btn) {
 			form_check();
 			// 가입정보 DB 등록
-			
+
 		} else if (obj == reset_btn) {
-			
-			for(Object obj2 : list) {
-				JTextField tf = (JTextField)obj2;
-				tf.setText("");}
+
+			for (Object obj2 : list) {
+				JTextField tf = (JTextField) obj2;
+				tf.setText("");
+			}
 
 		} else if (obj == id_chk_btn) {
 			// DB아이디 중복체크
@@ -156,27 +149,25 @@ public class JoinUI implements ActionListener {
 
 		}
 	}
-	
 
-
-/**회원가입 폼 체크**/
+	/** 회원가입 폼 체크 **/
 
 	public boolean form_check() {
-	boolean result = false;
-	
-	for(int i=0;i<namelist.length-2;i++) {
-		JTextField tf = (JTextField)list.get(i);
-		
-		if(tf.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, Commons.getMsg(namelist[i]+"를 입력해주세요"));
-			tf.requestFocus();
-			i=namelist.length-2;
-		}else if(i== namelist.length-3){
-			result= true;
+		boolean result = false;
+
+		for (int i = 0; i < namelist.length - 2; i++) {
+			JTextField tf = (JTextField) list.get(i);
+
+			if (tf.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, Commons.getMsg(namelist[i] + "를 입력해주세요"));
+				tf.requestFocus();
+				i = namelist.length - 2;
+			} else if (i == namelist.length - 3) {
+				result = true;
+			}
 		}
-}
-	
-	return result;
-}
+
+		return result;
+	}
 
 }

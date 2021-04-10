@@ -19,8 +19,8 @@ public class ShopBasketUI implements ActionListener {
 	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton btn_check, btn_back, btn_alldel, btn_order;
 	JPanel top_panel, content_panel, menu_panel, total_panel, bottom_panel;
-	JLabel total_label;
-	JTextField price;
+	JLabel total_label,price_label;
+//	JTextField price;
 	
 
 	// Constructor
@@ -47,14 +47,16 @@ public class ShopBasketUI implements ActionListener {
 		content_panel.add(BorderLayout.CENTER,menu_panel);
 		content_panel.add(BorderLayout.SOUTH,total_panel);
 		
-		total_label = new JLabel("총 결제 금액 : ");
+		total_label = new JLabel("총 주문 금액 : ");
+		price_label = new JLabel(" 10000 원 ");
 		total_panel.add(total_label);
-		price = new JTextField();
-		total_panel.add(price);
+		total_panel.add(price_label);
+//		price = new JTextField();
+//		total_panel.add(price);
 
 		btn_back = new JButton("뒤로가기");
 		btn_back.setBackground(new Color(255, 255, 255));
-		btn_order = new JButton("주문하기");
+		btn_order = new JButton("   결제   ");
 		top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
 		top_panel.add(new JLabel("                                         장바구니"));
 		bottom_panel.add(btn_order);
@@ -73,22 +75,30 @@ public class ShopBasketUI implements ActionListener {
 		f.setLocation(width, height);
 		f.setVisible(true);
 
-		// 윈도우 이벤트 호출-종료
-		f.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		btn_back.addActionListener(this);
+		btn_order.addActionListener(this);
+	}//init
 
-			}
-		});
-	}
-
+	
 	/** 음식패널 **/
 	public void food() {
-
-	}
+		
+	}//food
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object object = e.getSource();
-	}
+		Object obj = e.getSource();
+		
+		if(obj == btn_back) {   //뒤로가기
+			System.out.println("뒤로");
+			
+		}else if(obj == btn_order) {
+			System.out.println("결제하기");
+			new PayUI();
+//		}else if(isInOption(obj)) {       //옵션
+//			JCheckBox check = (JCheckBox) obj;
+//			System.out.println(check.getText());
+		}
+	}//actionPerformed
 
-}
+}//ShopBasketUI
