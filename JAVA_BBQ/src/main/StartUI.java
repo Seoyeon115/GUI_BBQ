@@ -21,9 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import test.Commons;
-import test.LoginUI;
-
 public class StartUI {
 	// Field
 	JFrame f;
