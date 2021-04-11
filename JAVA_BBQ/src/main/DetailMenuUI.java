@@ -27,8 +27,6 @@ public class DetailMenuUI implements ActionListener{
 	JPanel panel_content;
 	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton button_back; // 뒤로가기 버튼
-	ImageIcon image_back;
-	ImageIcon image_backPressed;
 	JButton button_onCart; // 담기 버튼
 	int price_final; // 메뉴 결제 가격
 	MenuVO vo; // 메뉴 정보
@@ -74,11 +72,11 @@ public class DetailMenuUI implements ActionListener{
 		panel_upper.setPreferredSize(new Dimension(520, 50));
 		
 		// 뒤로가기 버튼
-		image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
-		image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
+		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
+		ImageIcon image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
 		
 		button_back = new JButton("", image_back);
-		button_back.set
+		button_back.setPressedIcon(image_backPressed);
 		button_back.setBorderPainted(false);
 		button_back.setContentAreaFilled(false);
 		button_back.setBounds(5, 0, 50, 40);
