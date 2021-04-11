@@ -101,7 +101,7 @@ public class DetailMenuUI implements ActionListener{
 		panel_image.setBackground(new Color(255, 255, 255));
 		panel_image.setPreferredSize(new Dimension(520, 285));
 		JLabel label_image = new JLabel(Commons.imageResize(vo.getImage(), 450, 255));
-		label_image.setBorder(new LineBorder(Color.red, 5, true));
+		label_image.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		panel_image.add(label_image);
 		panel_content.add(panel_image);
 	}
@@ -135,13 +135,14 @@ public class DetailMenuUI implements ActionListener{
 		JPanel panel_options = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 5));
 		panel_options.setBackground(new Color(255, 255, 255));
 		panel_options.setPreferredSize(new Dimension(500, 305));
-		panel_options.setBorder(new LineBorder(Color.red, 5, true));
+		panel_options.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
 		JLabel label_option = new JLabel(" 추가 옵션");
 		label_option.setFont(Commons.getFont(20));
 		panel_options.add(label_option);
 		
 		JPanel panel_check = new JPanel();
+		panel_check.setBackground(new Color(255, 255, 255));
 		panel_check.setLayout(null);
 		panel_check.setPreferredSize(new Dimension(498, 5 + vo.getOptions().size()*45));
 		
@@ -159,9 +160,10 @@ public class DetailMenuUI implements ActionListener{
 			JPanel panel_option = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel_option.setBounds(5, h, 473, 40);
 			h += 45;
-			panel_option.setBackground(new Color(100, 100, 100));
+			panel_option.setBackground(new Color(255, 255, 255));
 			JCheckBox check_option = new JCheckBox(option.getOption()
 										+ "(+" + option.getPrice() + ")");
+			check_option.setBackground(new Color(255, 255, 255));
 			check_option.setFont(Commons.getFont(15));
 			
 			panel_option.add(check_option);
@@ -179,8 +181,11 @@ public class DetailMenuUI implements ActionListener{
 		JPanel panel_onCart = new JPanel(new GridLayout(1, 1));
 		panel_onCart.setPreferredSize(new Dimension(520, 50));
 		
-		ImageIcon image_cart = Commons.imageResize(new ImageIcon("images/593.png"), 50, 50);
+		ImageIcon image_cart = Commons.imageResize(new ImageIcon("images/cartr.png"), 50, 50);
+		ImageIcon image_cartPressed = Commons.imageResize(new ImageIcon("images/carty.png"), 50, 50);
+		
 		button_onCart = new JButton("장바구니 담기("+ price_final+"원)", image_cart);
+		button_onCart.setPressedIcon(image_cartPressed);
 		button_onCart.setFont(Commons.getFont(25));
 		button_onCart.setBorderPainted(false);
 		button_onCart.addActionListener(this);
