@@ -3,6 +3,7 @@ package main_jk;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,7 @@ public class ShopBasketUI implements ActionListener{
 	//Field
 	
 	JFrame f;
-	JPanel title_panel, center_panel, bottom_panel, menu_panel;
+	JPanel panel_content, title_panel, center_panel, bottom_panel, menu_panel;
 	JLabel shop_basket, branch_name, ttl_order, order_price;
 	JButton btn_back, btn_all_delete, btn_add_order, btn_order, btn_mdelete, btn_madd, btn_minus;
 	ImageIcon icon1;
@@ -42,15 +43,26 @@ public class ShopBasketUI implements ActionListener{
 	
 	//Method
 		public void init() {
-			f = new JFrame("BBQ");
+			f = new JFrame();
+			f.getContentPane().setBackground(new Color(204, 0, 51));
+			f.getContentPane().setForeground(new Color(255, 255, 255));
+			f.setBounds(100, 90, 600, 800);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setLayout(null);
+			
+			panel_content = new JPanel(new BorderLayout());
+			panel_content.setBackground(new Color(255, 255, 255));
+			panel_content.setBounds(30, 22, 520, 700);
+			
+			f.add(panel_content);
+			f.setVisible(true);
+			
 			title_panel = new JPanel(new GridLayout(1,3));
 			title_panel.setBackground(new Color(255, 255, 255));
 			center_panel = new JPanel(new GridLayout(10,2));
 			center_panel.setBackground(new Color(255, 255, 255));
 			bottom_panel = new JPanel(new GridLayout(2,1));
 			bottom_panel.setBackground(new Color(255, 255, 255));
-			f.setBounds(100, 90, 600, 750);
-			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 		//title_panel
 			btn_all_delete = new JButton("전체삭제");
@@ -72,9 +84,9 @@ public class ShopBasketUI implements ActionListener{
 			bottom_panel.add(order_price_label);
 			bottom_panel.add(btn_order);
 
-			f.add(BorderLayout.NORTH, title_panel);
-			f.add(BorderLayout.CENTER, center_panel);
-			f.add(BorderLayout.SOUTH, bottom_panel);
+			panel_content.add(BorderLayout.NORTH, title_panel);
+			panel_content.add(BorderLayout.CENTER, center_panel);
+			panel_content.add(BorderLayout.SOUTH, bottom_panel);
 
 
 			Dimension fsize = f.getSize();
@@ -104,20 +116,8 @@ public class ShopBasketUI implements ActionListener{
 		}//init
 	/** 메뉴 생성 **/
 		public void menulist() {
-			JPanel pc = new JPanel();
-			
-			f.add(pc,BorderLayout.CENTER);
-			
-			menu_panel = new JPanel(new GridLayout(1,8)) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(50,100);
-				}
-			};
-			menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-			pc.add(menu_panel);
-			f.setVisible(true);
-
+			menu_panel = new JPanel();
+			menu_panel.setBounds(0, 40, 520, 200);
 			JLabel menu_label = new JLabel("select menu");
 			JLabel option_label = new JLabel("option");
 			JLabel price_label = new JLabel("price");
@@ -144,9 +144,8 @@ public class ShopBasketUI implements ActionListener{
 			
 			menu_panel.add(BorderLayout.WEST, left_panel);
 			menu_panel.add(BorderLayout.EAST, right_panel);
+			panel_content.add( menu_panel);
 		
-			center_panel.add(menu_panel);
-			
 			btn_mdelete.addActionListener(this);
 			btn_madd.addActionListener(this);
 			btn_minus.addActionListener(this);

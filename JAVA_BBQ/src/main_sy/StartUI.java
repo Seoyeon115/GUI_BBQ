@@ -1,4 +1,4 @@
-package main;
+package main_sy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
 public class StartUI {
 	// Field
 	JFrame f;
@@ -35,6 +36,7 @@ public class StartUI {
 	// Constructor
 	public StartUI() {
 		init();
+		
 	}
 
 	// Method

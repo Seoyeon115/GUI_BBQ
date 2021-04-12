@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 public class MenuVO {
 	ImageIcon image;
 	String name, desc;
-	ArrayList<String> options;
+	ArrayList<OptionVO> options;
 	int price;
 	
 	public ImageIcon getImage() {
@@ -28,10 +28,10 @@ public class MenuVO {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public ArrayList<String> getOptions() {
+	public ArrayList<OptionVO> getOptions() {
 		return options;
 	}
-	public void setOptions(ArrayList<String> options) {
+	public void setOptions(ArrayList<OptionVO> options) {
 		this.options = options;
 	}
 	public int getPrice() {
