@@ -1,20 +1,10 @@
 package main_sy;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-
-import main_jk.OrderUI;
 
 public class ShopBasketUI implements ActionListener {
 	// Field
@@ -43,8 +33,10 @@ public class ShopBasketUI implements ActionListener {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setLayout(null);
 		
+//		panel_content = new JPanel(new BorderLayout());
 		panel_content = new JPanel(new BorderLayout());
-		panel_content.setBackground(new Color(255, 255, 255));
+//		panel_content.setBackground(new Color(255, 255, 255));
+		panel_content.setBackground(Color.pink);
 		panel_content.setBounds(30, 22, 520, 700);
 		
 		f.add(panel_content);
@@ -53,9 +45,14 @@ public class ShopBasketUI implements ActionListener {
 		top_panel = new JPanel(new BorderLayout());
 		top_panel.setBackground(new Color(255, 255, 255));
 		center_panel = new JPanel(new GridLayout(10,1));
-		center_panel.setBackground(new Color(255, 255, 255));
+//		center_panel.setBackground(new Color(255, 255, 255));
+		center_panel.setBackground(Color.green);
 		bottom_panel = new JPanel(new GridLayout(2,1));
 		bottom_panel.setBackground(new Color(255, 255, 255));
+		
+//		panel_content.add(BorderLayout.NORTH, top_panel);
+//		panel_content.add(BorderLayout.CENTER, center_panel);
+//		panel_content.add(BorderLayout.SOUTH, bottom_panel);
 		
 		//top_panel
 		btn_back = new JButton("뒤로가기");
@@ -67,6 +64,8 @@ public class ShopBasketUI implements ActionListener {
 		//center_panel
 		menulist();
 		btn_order = new JButton("추가 주문");
+		center_panel.add(btn_order);
+		center_panel.add(btn_order);
 		center_panel.add(btn_order);
 		
 		//bottom_panel
@@ -83,7 +82,7 @@ public class ShopBasketUI implements ActionListener {
 		JScrollPane content = new JScrollPane(center_panel); 
 		f.add(content);
 		f.setVisible(true);
-
+		
 		btn_back.addActionListener(this);
 		btn_all_delete.addActionListener(this);
 		btn_order.addActionListener(this);
@@ -123,7 +122,10 @@ public class ShopBasketUI implements ActionListener {
 		
 		menu_panel.add(BorderLayout.WEST, left_panel);
 		menu_panel.add(BorderLayout.EAST, right_panel);
-		panel_content.add(menu_panel);
+		panel_content.add(menu_panel);     ///////
+//		center_panel.add(menu_panel);    
+//		panel_content.add(center_panel);     
+		
 		
 		btn_mdelete.addActionListener(this);
 		btn_madd.addActionListener(this);
