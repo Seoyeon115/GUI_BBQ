@@ -59,6 +59,7 @@ public class PayUI implements ActionListener {
 		menu_panel = new JPanel();
 //		menu_panel.setBackground(new Color(255, 255, 255));
 		menu_panel.setBackground(Color.pink);   ///
+//		sb.menulist();
 		/** 결제금액 패널 **/
 		total_panel = new JPanel();
 //		total_panel.setBackground(new Color(255, 255, 255));

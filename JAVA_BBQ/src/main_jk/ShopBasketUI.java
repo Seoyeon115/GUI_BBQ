@@ -24,7 +24,6 @@ import javax.swing.border.BevelBorder;
 
 public class ShopBasketUI implements ActionListener{
 	//Field
-	
 	JFrame f;
 	JPanel panel_content, title_panel, center_panel, bottom_panel, menu_panel;
 	JLabel shop_basket, branch_name, ttl_order, order_price;
@@ -89,15 +88,15 @@ public class ShopBasketUI implements ActionListener{
 			panel_content.add(BorderLayout.SOUTH, bottom_panel);
 
 
-			Dimension fsize = f.getSize();
-			Dimension scsize = Toolkit.getDefaultToolkit().getScreenSize();
-			int width = (int) (scsize.getWidth() - fsize.getWidth()) / 2;
-			int height = (int) (scsize.getHeight() - fsize.getHeight()) / 2;
+//			Dimension fsize = f.getSize();
+//			Dimension scsize = Toolkit.getDefaultToolkit().getScreenSize();
+//			int width = (int) (scsize.getWidth() - fsize.getWidth()) / 2;
+//			int height = (int) (scsize.getHeight() - fsize.getHeight()) / 2;
 
 			JScrollPane content = new JScrollPane(center_panel); 
 			f.add(content);
 			
-			f.setLocation(width, height);
+//			f.setLocation(width, height);
 			f.setVisible(true);
 			
 			

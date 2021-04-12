@@ -14,102 +14,88 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
+import main_jk.OrderUI;
+
 public class ShopBasketUI implements ActionListener {
 	// Field
 	JFrame f;
-	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton btn_check,btn_back,btn_alldel,btn_order,btn_pay,btn_all_delete,
 			btn_mdelete, btn_madd, btn_minus;
-	JPanel top_panel,content_panel,list_panel,menu_panel,total_panel,bottom_panel;
+	JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
 	JLabel total_label,price_label;
-//	JTextField price;
+	OrderUI order;
 	
 	// Constructor
 	public ShopBasketUI() {
 		init();
 	}
-
+	public ShopBasketUI(OrderUI order) {
+		this.order = order;
+		init();
+	}
+	
 	// Method
 	public void init() {
 		f = new JFrame("장바구니");
+		f.getContentPane().setBackground(new Color(204, 0, 51));
+		f.getContentPane().setForeground(new Color(255, 255, 255));
+		f.setBounds(100, 90, 600, 800);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setLayout(null);
+		
+		panel_content = new JPanel(new BorderLayout());
+		panel_content.setBackground(new Color(255, 255, 255));
+		panel_content.setBounds(30, 22, 520, 700);
+		
+		f.add(panel_content);
+		f.setVisible(true);
+		
 		top_panel = new JPanel(new BorderLayout());
-		content_panel = new JPanel(new BorderLayout());
-//		content_panel.setBackground(new Color(255, 255, 255));
-		content_panel.setBackground(Color.LIGHT_GRAY);   ///
-		JScrollPane content = new JScrollPane(content_panel); // 회면에 스크롤 추가
-		f.add(content);
-		list_panel = new JPanel();
-//		list_panel.setBackground(new Color(255, 255, 255));
-		list_panel.setBackground(Color.pink);  ///
-		bottom_panel = new JPanel();
-		total_panel = new JPanel();
-//		total_panel.setBackground(new Color(255, 255, 255));
-		total_panel.setBackground(Color.MAGENTA);  ///
+		top_panel.setBackground(new Color(255, 255, 255));
+		center_panel = new JPanel(new GridLayout(10,1));
+		center_panel.setBackground(new Color(255, 255, 255));
+		bottom_panel = new JPanel(new GridLayout(2,1));
+		bottom_panel.setBackground(new Color(255, 255, 255));
 		
 		//top_panel
 		btn_back = new JButton("뒤로가기");
-		btn_back.setBackground(new Color(255, 255, 255));
 		btn_all_delete = new JButton("전체삭제");
-		btn_all_delete.setBackground(new Color(255, 255, 255));
 		top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
 		top_panel.add(new JLabel("                                         장바구니"));
 		top_panel.add(BorderLayout.EAST, new JPanel(new GridLayout(1, 1)).add(btn_all_delete));
 		
-		//content_panel
+		//center_panel
 		menulist();
-		content_panel.add(BorderLayout.CENTER,list_panel);
-		content_panel.add(BorderLayout.SOUTH,total_panel);
-		
-		
-		//total_panel
-		total_label = new JLabel("총 주문 금액 : ");
-		price_label = new JLabel(" 10000 원 ");
-		total_panel.add(total_label);
-		total_panel.add(price_label);
-//		price = new JTextField();
-//		total_panel.add(price);
+		btn_order = new JButton("추가 주문");
+		center_panel.add(btn_order);
 		
 		//bottom_panel
-		btn_order = new JButton("추가 주문");
+		JLabel total_label = new JLabel("총주문금액: price +원");
 		btn_pay = new JButton("   결제    ");
-		bottom_panel.add(btn_order);
+		bottom_panel.add(total_label);
 		bottom_panel.add(btn_pay);
 		
 		//setting
-		f.add(BorderLayout.NORTH, top_panel);
-		f.add(BorderLayout.CENTER, content_panel);
-		f.add(BorderLayout.SOUTH, bottom_panel);
-		f.setBounds(100, 90, 600, 750);
+		panel_content.add(BorderLayout.NORTH, top_panel);
+		panel_content.add(BorderLayout.CENTER, center_panel);
+		panel_content.add(BorderLayout.SOUTH, bottom_panel);
+		
+		JScrollPane content = new JScrollPane(center_panel); 
+		f.add(content);
 		f.setVisible(true);
 
-//		Dimension fsize = f.getSize();   //창 가운데 위치
-//		Dimension scsize = Toolkit.getDefaultToolkit().getScreenSize();
-//		int width = (int) (scsize.getWidth() - fsize.getWidth()) / 2;
-//		int height = (int) (scsize.getHeight() - fsize.getHeight()) / 2;
-//		f.setLocation(width, height);
-
 		btn_back.addActionListener(this);
+		btn_all_delete.addActionListener(this);
 		btn_order.addActionListener(this);
 		btn_pay.addActionListener(this);
+		
 	}//init
 
 	
 	/** 메뉴 생성 GUI **/
 	public void menulist() {
-		JPanel pc = new JPanel();
-		
-		f.add(pc,BorderLayout.CENTER);
-		
-		menu_panel = new JPanel(new GridLayout(1,8)) {
-			@Override
-			public Dimension getPreferredSize() {
-				return new Dimension(50,100);
-			}
-		};
-		menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		pc.add(menu_panel);
-		f.setVisible(true);
-
+		menu_panel = new JPanel(new GridLayout(1,2));
+		menu_panel.setBounds(0, 40, 520, 200);
 		JLabel menu_label = new JLabel("select menu");
 		JLabel option_label = new JLabel("option");
 		JLabel price_label = new JLabel("price");
@@ -117,8 +103,9 @@ public class ShopBasketUI implements ActionListener {
 		JPanel right_panel =new JPanel();
 		JPanel left_panel =new JPanel(new GridLayout(3,1));
 		btn_mdelete = new JButton("x");
+		btn_mdelete.setFont(Commons.getFont(10));
 		right_panel.setLayout(null);
-		btn_mdelete.setBounds(245, 0, 40, 28);
+		btn_mdelete.setBounds(220, 0, 40, 38);
 		btn_madd = new JButton("+");
 		btn_minus = new JButton("-");
 		JTextField tf_madd = new JTextField(8);
@@ -136,8 +123,7 @@ public class ShopBasketUI implements ActionListener {
 		
 		menu_panel.add(BorderLayout.WEST, left_panel);
 		menu_panel.add(BorderLayout.EAST, right_panel);
-	
-		list_panel.add(menu_panel);
+		panel_content.add(menu_panel);
 		
 		btn_mdelete.addActionListener(this);
 		btn_madd.addActionListener(this);
@@ -148,22 +134,29 @@ public class ShopBasketUI implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		
-		if(obj == btn_back) {   //뒤로가기
-			System.out.println("뒤로");
+		if(obj == btn_back) {  
+			f.setVisible(false);
 			new StartUI();
+		}else if(obj == btn_all_delete) {
+			System.out.println("전체삭제");
 		}else if(obj == btn_order) {
 			System.out.println("추가 주문");
-//			new MenulistUI();
+			f.setVisible(false);
+			new InnerMain();
 		}else if(obj == btn_pay) {
-			System.out.println("결제하기");
+			f.setVisible(false);
 			new PayUI();
 		}else if(obj == btn_mdelete) {
 			System.out.println("삭제");
 			menu_panel.setVisible(false);
-			list_panel.remove(menu_panel);
-//		}else if(isInOption(obj)) {       //옵션
-//			JCheckBox check = (JCheckBox) obj;
-//			System.out.println(check.getText());
+			center_panel.remove(menu_panel);
+		}else if(obj == btn_madd) {
+			System.out.println("추가");
+			
+		}else if(obj == btn_minus) {
+			System.out.println("빼기");
+			
+			
 		}
 	}//actionPerformed
 

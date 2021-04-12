@@ -6,23 +6,19 @@ import java.awt.Label;
 import javax.swing.JButton;
 
 public class Commons {
-	//Field
-	
-	
-	
-	//Constructor
-	
-	
-	
-	//Method
 	
 	public static Font getFont() {
-		Font font = new Font("맑은 고딕",Font.BOLD,10);   //String은 UI가 아니기 때문에 setFont출력 불가
+		Font font = new Font("맑은 고딕",Font.BOLD,12);   //String은 UI가 아니기 때문에 setFont출력 불가
+		return font;
+	}
+	
+	public static  Font getFont(int size) {
+		Font font = new Font("맑은 고딕", Font.BOLD, size);
 		return font;
 	}
 	
 	public static JButton getJButton(String name) {
-		Font font = new Font("맑은 고딕",Font.BOLD,10);   //String은 UI가 아니기 때문에 setFont출력 불가
+		Font font = new Font("맑은 고딕",Font.BOLD,12);   //String은 UI가 아니기 때문에 setFont출력 불가
 		JButton button = new JButton(name);
 		button.setFont(font);
 		return button;
