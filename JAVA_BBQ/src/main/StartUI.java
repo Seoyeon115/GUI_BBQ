@@ -24,9 +24,8 @@ import javax.swing.JPanel;
 public class StartUI {
 	// Field
 	JFrame f;
-	JPanel top_panel, center_panel, bottom_panel;
-	JLabel inform_label;
-	JButton btn_login, btn_order;
+	JPanel center_panel, bottom_panel;
+	JButton btn_login;
 	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// login 결과
@@ -40,14 +39,10 @@ public class StartUI {
 	// Method
 	public void init() {
 		f = new JFrame("BBQ");
-		top_panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		top_panel.setBackground(new Color(255, 255, 255));
 		center_panel = new JPanel();
 		center_panel.setBackground(new Color(204, 0, 51));
 		bottom_panel = new JPanel();
 		bottom_panel.setBackground(new Color(204, 0, 51));
-		inform_label = new JLabel("로그인을 해주세요");
-		top_panel.add(inform_label);
 
 		ImageIcon adv_img = new ImageIcon("images/eventpage.png");
 		Image img = adv_img.getImage();
@@ -57,11 +52,8 @@ public class StartUI {
 		center_panel.add(img_label);
 
 		btn_login = new JButton("로그인");
-		btn_order = new JButton("주문하기");
 		bottom_panel.add(btn_login);
-		bottom_panel.add(btn_order);
 
-		f.add(BorderLayout.NORTH, top_panel);
 		f.add(BorderLayout.CENTER, center_panel);
 		f.add(BorderLayout.SOUTH, bottom_panel);
 
@@ -86,7 +78,6 @@ public class StartUI {
 //		btn_login.addActionListener(this);
 //		btn_order.addActionListener(this);
 		btn_login.addActionListener(eventobj);
-		btn_order.addActionListener(eventobj);
 
 	}
 
