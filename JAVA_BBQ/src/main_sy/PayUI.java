@@ -6,96 +6,113 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class PayUI implements ActionListener{
+public class PayUI implements ActionListener {
 	// Field
 	StartUI main;
-	ShopBasketUI sb;        //활용 가능..?
+	ShopBasketUI sb; // 활용 가능..?
 	JFrame f;
-	JPanel top_panel,content_panel,bottom_panel,total_panel,menu_panel,addr_panel;
-	JButton btn_back,btn_pay;
-	JLabel total_label,price_label;
-	JTextField addr;
+	JPanel top_panel, center_panel, bottom_panel, total_panel, menu_panel, addr_panel;
+	JButton btn_back, btn_pay, btn_cancel;
+	JLabel addr_label,total_label,price_label;
+	JTextField addr1_tf,addr2_tf;
 
 	// Constructor
 	public PayUI() {
-			init();
-		}
+		init();
+	}
 
 	public PayUI(StartUI main) {
-			this.main = main;
-			init();
-		}
+		this.main = main;
+		init();
+	}
 
 	// Method
 	public void init() {
 		f = new JFrame("결제창");
 		top_panel = new JPanel(new BorderLayout());
-		content_panel =  new JPanel(new BorderLayout());
-		content_panel.setBackground(Color.LIGHT_GRAY);  
-		bottom_panel =  new JPanel();
-		btn_back = new JButton("뒤로가기");
-		btn_back.setBackground(new Color(255, 255, 255));
-		btn_pay = new JButton("결제");
-		btn_pay.setBackground(new Color(255, 255, 255));
-		
+		center_panel = new JPanel(new BorderLayout());
+		center_panel.setBackground(Color.LIGHT_GRAY);   ///
+//		center_panel.setBackground(new Color(255, 255, 255));
 		/** 주소 패널 **/
-		addr_panel = new JPanel();
-		addr_panel.setBackground(Color.cyan);  
+		addr_panel = new JPanel(new BorderLayout(2,3));
+		addr_panel.setBackground(Color.cyan);   ///
+		addr_label = new JLabel("주소");
+		addr1_tf = new JTextField(50);
+		addr2_tf = new JTextField(50);
+		
 		/** 메뉴리스트 패널 **/
 		menu_panel = new JPanel();
 //		menu_panel.setBackground(new Color(255, 255, 255));
-		menu_panel.setBackground(Color.pink);
-		/** 결제버튼 패널 **/
+		menu_panel.setBackground(Color.pink);   ///
+		/** 결제금액 패널 **/
 		total_panel = new JPanel();
 //		total_panel.setBackground(new Color(255, 255, 255));
 		total_label = new JLabel("총 주문 금액 : ");
 		price_label = new JLabel(" 10000 원 ");
-		
-		total_panel.setBackground(Color.MAGENTA);
-		content_panel.add(BorderLayout.NORTH,addr_panel);
-		content_panel.add(BorderLayout.CENTER,menu_panel);
-		content_panel.add(BorderLayout.SOUTH,total_panel);
-		
-		
-		
-		
-		total_panel.add(total_label);
-		total_panel.add(price_label);
+		bottom_panel = new JPanel();
+
+		// top_panel
+		btn_back = new JButton("뒤로가기");
+		btn_back.setBackground(new Color(255, 255, 255));
+		total_panel.setBackground(Color.MAGENTA); ///
+
 		top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
 		top_panel.add(new JLabel("                                         최종 결제"));
-//		top_panel.add(btn_back);
-		f.add(top_panel);
+
+		// center_panel
+		addr_panel.add(BorderLayout.WEST,addr_label);
+		addr_panel.add(BorderLayout.EAST,addr1_tf);
+		addr_panel.add(BorderLayout.EAST,addr2_tf);
+		
+		total_panel.add(price_label);
+		total_panel.add(total_label);
+		
+		center_panel.add(BorderLayout.NORTH, addr_panel);
+		center_panel.add(BorderLayout.CENTER, menu_panel);
+		center_panel.add(BorderLayout.SOUTH, total_panel);
+
+		// bottom_panel
+		btn_cancel = new JButton("취소");
+		btn_cancel.setBackground(new Color(255, 255, 255));
+		btn_pay = new JButton("결제");
+		btn_pay.setBackground(new Color(255, 255, 255));
+
+		bottom_panel.add(btn_cancel);
 		bottom_panel.add(btn_pay);
-		f.add(bottom_panel);
-		
+
+		// setting
 		f.add(BorderLayout.NORTH, top_panel);
-		f.add(BorderLayout.CENTER, content_panel);
+		f.add(BorderLayout.CENTER, center_panel);
 		f.add(BorderLayout.SOUTH, bottom_panel);
-		
-		
-		f.setSize(500, 450);
+
+		f.setBounds(90, 90, 600, 750);
 		f.setVisible(true);
-		
+
 		btn_back.addActionListener(this);
+		btn_cancel.addActionListener(this);
 		btn_pay.addActionListener(this);
-		
-	}//init
-	
+
+	}// init
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		
-		if(obj == btn_back) {   //뒤로가기
+
+		if (obj == btn_back) { // 뒤로가기
 			System.out.println("뒤로");
-			
-		}else if(obj == btn_pay) {
+			//닫기
+			new ShopBasketUI();
+		} else if (obj == btn_pay) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("주문이 완료되었습니다."));
-//		}else if(isInOption(obj)) {       //옵션
+			//닫기
+		}else if(obj == btn_cancel) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("결제를 취소합니다."));
+			//닫기
+			new StartUI();
+// 		}else if(isInOption(obj)) { //옵션
 //			JCheckBox check = (JCheckBox) obj;
 //			System.out.println(check.getText());
 		}
-	}//actionPerformed
-	
-	
-	
-}//PayUI
+	}// actionPerformed
+
+}// PayUI
