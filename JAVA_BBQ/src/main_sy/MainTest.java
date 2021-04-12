@@ -6,7 +6,7 @@ public class MainTest {
 //		new StartUI();
 //		new LoginUI();
 //		new JoinUI();
-		new ShopBasketUI();
+//		new ShopBasketUI();
 		new PayUI();
 	}
 
