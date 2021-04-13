@@ -2,10 +2,12 @@ package main_jk;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,9 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import main_sy.Commons;
-import main_sy.ShopBasketUI;
-import main_sy.StartUI;
+import main_jk.Commons;
+import main_jk.ShopBasketUI;
+import main_jk.StartUI;
 
 public class PayUI implements ActionListener{
 	// Field
@@ -50,7 +52,7 @@ public class PayUI implements ActionListener{
 	      panel_content = new JPanel(new BorderLayout());
 	      panel_content.setBackground(new Color(255, 255, 255));
 //	      panel_content.setBackground(Color.pink);
-	      panel_content.setBounds(30, 22, 520, 700);
+	      panel_content.setBounds(30, 22, 520, 650);
 	      
 	      f.add(panel_content);
 	      f.setVisible(true);
@@ -78,9 +80,15 @@ public class PayUI implements ActionListener{
 		bottom_panel = new JPanel();
 
 		// top_panel
-		btn_back = new JButton("뒤로가기");
-		btn_back.setBackground(new Color(255, 255, 255));
-		total_panel.setBackground(Color.MAGENTA); ///
+		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
+	    ImageIcon image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
+			
+	    btn_back = new JButton("", image_back);
+	    btn_back.setPressedIcon(image_backPressed);
+	    btn_back.setBorderPainted(false);
+	    btn_back.setContentAreaFilled(false);
+	    btn_back.setBounds(5, 0, 50, 40);
+	    btn_back.setPreferredSize(new Dimension(50, 40));
 
 		top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
 		top_panel.add(new JLabel("                                         최종 결제"));

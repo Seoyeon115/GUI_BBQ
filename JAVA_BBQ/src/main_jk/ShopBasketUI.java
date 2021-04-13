@@ -3,27 +3,23 @@ package main_jk;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 
 import main.Commons;
 import main.OrderUI;
-import main_sy.PayUI;
-import main_sy.StartUI;
+import main_jk.PayUI;
+import mainlistui.InnerMain;
+import mainlistui.MenulistUI;
+import mainlistui.MenulistUI2;
 
 public class ShopBasketUI implements ActionListener{
 	  // Field
@@ -33,6 +29,8 @@ public class ShopBasketUI implements ActionListener{
 	   JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
 	   JLabel total_label,price_label;
 	   OrderUI order;
+	   InnerMain main;
+	   MenulistUI list1;
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -48,7 +46,7 @@ public class ShopBasketUI implements ActionListener{
 	      f = new JFrame("장바구니");
 	      f.getContentPane().setBackground(new Color(204, 0, 51));
 	      f.getContentPane().setForeground(new Color(255, 255, 255));
-	      f.setBounds(100, 90, 600, 800);
+	      f.setBounds(100, 90, 600, 750);
 	      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      f.setLayout(null);
 	
@@ -56,7 +54,7 @@ public class ShopBasketUI implements ActionListener{
 	      panel_content = new JPanel(new BorderLayout());
 	      panel_content.setBackground(new Color(255, 255, 255));
 //	      panel_content.setBackground(Color.pink);
-	      panel_content.setBounds(30, 22, 520, 700);
+	      panel_content.setBounds(30, 22, 520, 650);
 	      
 	      f.add(panel_content);
 	      f.setVisible(true);
@@ -167,21 +165,25 @@ public class ShopBasketUI implements ActionListener{
 	      Object obj = e.getSource();
 	      
 	      if(obj == btn_back) {  
-	         f.setVisible(false);
-	         new StartUI();
+	    	  f.setVisible(false);
+	    	  new InnerMain();
+	    	  
 	      }else if(obj == btn_all_delete) {
 	         System.out.println("전체삭제");
+	         
 	      }else if(obj == btn_order) {
 	         System.out.println("추가 주문");
-	         f.setVisible(false);
-//	         new InnerMain();
+	         new MenulistUI();
+	         
 	      }else if(obj == btn_pay) {
 	         f.setVisible(false);
 	         new PayUI();
+	         
 	      }else if(obj == btn_mdelete) {
 	         System.out.println("삭제");
 	         menu_panel.setVisible(false);
 	         center_panel.remove(menu_panel);
+	         
 	      }else if(obj == btn_madd) {
 	         System.out.println("추가");
 	         
