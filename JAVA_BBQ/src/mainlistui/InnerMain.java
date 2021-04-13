@@ -22,6 +22,7 @@ public class InnerMain implements ActionListener {
 	JFrame frame = new JFrame();
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
 	MenulistUI list1 = new MenulistUI(this);
+	Orderstatus_no ing = new Orderstatus_no(this);
 	JPanel panel;
 	
 	//Constructor
@@ -242,7 +243,8 @@ public class InnerMain implements ActionListener {
 		}else if(obj == btn_cart) {
 			System.out.println("cart");
 		}else if(obj == btn_ing) {
-			System.out.println("주문현황");
+			panel.setVisible(false);
+			frame.add(ing.init());
 		}else if(obj == btn_ed) {
 			System.out.println("주문내역");
 		}
