@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -58,9 +59,11 @@ public class PayUI implements ActionListener{
 	      f.setVisible(true);
 	      
 		top_panel = new JPanel(new BorderLayout());
+		top_panel.setBackground(new Color(255, 255, 255));
 		center_panel = new JPanel(new BorderLayout());
 //		center_panel.setBackground(Color.LIGHT_GRAY);   ///
 		center_panel.setBackground(new Color(255, 255, 255));
+		
 		/** 주소 패널 **/
 		addr_panel = new JPanel(new BorderLayout(2,3));
 //		addr_panel.setBackground(Color.cyan);   ///
@@ -82,17 +85,24 @@ public class PayUI implements ActionListener{
 		// top_panel
 		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
 	    ImageIcon image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
-			
 	    btn_back = new JButton("", image_back);
 	    btn_back.setPressedIcon(image_backPressed);
 	    btn_back.setBorderPainted(false);
 	    btn_back.setContentAreaFilled(false);
 	    btn_back.setBounds(5, 0, 50, 40);
 	    btn_back.setPreferredSize(new Dimension(50, 40));
+	    
+	    ImageIcon logo_img = new ImageIcon("images/BBQ LOGO.png");
+		Image img = logo_img.getImage();
+		Image changeImg = img.getScaledInstance(50, 30, Image.SCALE_SMOOTH);
+		ImageIcon changeIcon = new ImageIcon(changeImg);
+		JLabel img_label = new JLabel(changeIcon);
 
-		top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
-		top_panel.add(new JLabel("                                         최종 결제"));
-
+		top_panel.add(BorderLayout.WEST, btn_back);
+		top_panel.add(new JLabel("                                         "
+				+ "          최종 결제"));
+		top_panel.add(BorderLayout.EAST, img_label);
+		
 		// center_panel
 		addr_panel.add(BorderLayout.WEST,addr_label);
 		addr_panel.add(BorderLayout.EAST,addr1_tf);

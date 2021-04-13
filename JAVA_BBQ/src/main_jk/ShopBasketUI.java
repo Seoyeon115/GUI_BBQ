@@ -7,12 +7,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 
 import main.Commons;
 import main.OrderUI;
@@ -81,7 +83,8 @@ public class ShopBasketUI implements ActionListener{
 	      
 	      btn_all_delete = new JButton("전체삭제");
 	      top_panel.add(BorderLayout.WEST, new JPanel(new GridLayout(1, 1)).add(btn_back));
-	      top_panel.add(new JLabel("                                         장바구니"));
+	      top_panel.add(new JLabel("                                       "
+	      		+ "        장바구니"));
 	      top_panel.add(BorderLayout.EAST, new JPanel(new GridLayout(1, 1)).add(btn_all_delete));
 	      
 	      //center_panel
@@ -121,8 +124,22 @@ public class ShopBasketUI implements ActionListener{
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
-	      menu_panel = new JPanel(new GridLayout(1,2));
-	      menu_panel.setBounds(0, 40, 520, 200);
+			JPanel pc = new JPanel();
+			
+			f.add(pc,BorderLayout.CENTER);
+			
+			menu_panel = new JPanel(new GridLayout(1,8)) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(50,100);
+				}
+			};
+			menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+			pc.add(menu_panel);
+			f.setVisible(true);
+		   
+//	      menu_panel = new JPanel(new GridLayout(1,2));
+//	      menu_panel.setBounds(0, 40, 520, 200);
 	      JLabel menu_label = new JLabel("select menu");
 	      JLabel option_label = new JLabel("option");
 	      JLabel price_label = new JLabel("price");
