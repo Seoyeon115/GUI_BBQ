@@ -3,6 +3,8 @@ package main_jk;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import mainlistui.InnerMain;
+
 public class StartUIEvent implements ActionListener{
 	StartUI main;
 	LoginUI log;
@@ -21,8 +23,10 @@ public class StartUIEvent implements ActionListener{
 		
 		if(obj == main.btn_login) {
 			new LoginUI(main);
+			
 		}else if(obj == log.btn_login) {
 			new JoinUI(log);
+			
 		}else if(obj == log.btn_join) {
 			new JoinUI(log);
 			

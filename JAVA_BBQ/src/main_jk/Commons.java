@@ -1,8 +1,10 @@
 package main_jk;
  
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Label;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Commons {
@@ -38,6 +40,11 @@ public class Commons {
 		return label;
 	}
 	
-	
+	// ImageIcon 원하는 사이즈로 크기 조절
+		public static ImageIcon imageResize(ImageIcon icon, int width, int height) {
+			Image image = icon.getImage();
+			Image resized = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+			return new ImageIcon(resized);
+		}
 	
 }

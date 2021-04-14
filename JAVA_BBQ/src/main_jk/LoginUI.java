@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import mainlistui.InnerMain;
+
 public class LoginUI implements ActionListener{
 	// Field
 	JFrame f;
@@ -109,7 +111,7 @@ public class LoginUI implements ActionListener{
 	
 	/** loginCheck **/
 	public boolean loginCheck(String id, String pass) {
-		boolean result = false;
+		boolean result = true;
 //		for(MemberVO member : memberlist) {
 //			if(member.getId().equals(id) && member.getPass().equals(pass)) {
 //				result = true;
@@ -144,7 +146,8 @@ public class LoginUI implements ActionListener{
 			boolean result = loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-				new StartUI();
+				f.setVisible(false);
+				new InnerMain();
 				main.btn_login.setText("   로그아웃     ");
 				StartUI.LOGIN_RESULT = true;
 			} else {
