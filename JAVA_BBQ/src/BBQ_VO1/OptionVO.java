@@ -1,4 +1,4 @@
-package BBQ_VO;
+package BBQ_VO1;
 
 // 메뉴 옵션 vo
 public class OptionVO {

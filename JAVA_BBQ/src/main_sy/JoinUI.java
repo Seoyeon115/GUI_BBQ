@@ -26,7 +26,8 @@ public class JoinUI implements ActionListener {
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JButton join_btn, reset_btn, id_chk_btn;
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
-	ArrayList<Object> list = new ArrayList<Object>();
+	String[] namelist2 = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰1", "핸드폰2", "핸드폰3", "주소1", "주소2" };
+	ArrayList<Object> list = new ArrayList<Object>();  //데이터 저장할 곳(배열)
 	LoginUI log;
 
 	// Constructor
@@ -42,7 +43,7 @@ public class JoinUI implements ActionListener {
 
 	// Method
 	public void init() {
-		f = new JFrame("BBQ");
+		f = new JFrame("회원가입");
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
 		label_panel = new JPanel(new GridLayout(6, 1));

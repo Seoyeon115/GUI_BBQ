@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
-import BBQ_VO.MenuVO;
+import BBQ_VO1.MenuVO;
 
 // 상세 메뉴창 미완성
 public class DetailMenuUI implements ActionListener{

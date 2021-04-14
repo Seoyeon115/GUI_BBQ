@@ -1,5 +1,7 @@
 package main_sy;
 
+import BBQ_DVO.DBConn;
+
 public class MainTest {
 
 	public static void main(String[] args) {
@@ -7,7 +9,8 @@ public class MainTest {
 //		new LoginUI();
 //		new JoinUI();
 //		new ShopBasketUI();
-		new PayUI();
+//		new PayUI();
+		new DBConn();
 	}
 
 }

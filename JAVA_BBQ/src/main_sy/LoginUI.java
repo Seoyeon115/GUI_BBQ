@@ -30,7 +30,6 @@ public class LoginUI implements ActionListener {
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
 	StartUI main;
-	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// Constructor
 	public LoginUI() {
