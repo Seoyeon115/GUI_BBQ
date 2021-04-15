@@ -23,7 +23,7 @@ import BBQ_VO.OptionVO;
 
 // 상세 메뉴창 미완성
 public class DetailMenuUI implements ActionListener{
-	JFrame frame = new JFrame();
+	JFrame frame;
 	JPanel panel_content;
 	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton button_back; // 뒤로가기 버튼
