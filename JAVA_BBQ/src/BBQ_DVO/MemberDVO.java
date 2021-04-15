@@ -1,6 +1,6 @@
 package BBQ_DVO;
 
-import BBQ_VO1.MemberVO;
+import BBQ_VO.MemberVO;
 
 public class MemberDVO extends DBConn{
 	/** 로그인 처리 **/

@@ -8,9 +8,9 @@ public class MainTest {
 //		new StartUI();
 //		new LoginUI();
 //		new JoinUI();
-//		new ShopBasketUI();
-//		new PayUI();
-		new DBConn();
+		new ShopBasketUI();
+		new PayUI();
+//		new DBConn();
 	}
 
 }

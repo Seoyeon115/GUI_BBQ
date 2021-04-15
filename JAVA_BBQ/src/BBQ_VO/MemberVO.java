@@ -1,4 +1,4 @@
-package BBQ_VO1;
+package BBQ_VO;
 
 public class MemberVO {
 	String id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;

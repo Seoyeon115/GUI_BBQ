@@ -1,4 +1,4 @@
-package BBQ_VO1;
+package BBQ_VO;
 
 import java.util.ArrayList;
 

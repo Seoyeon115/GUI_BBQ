@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-import BBQ_VO1.MenuVO;
-import BBQ_VO1.OptionVO;
+import BBQ_VO.MenuVO;
+import BBQ_VO.OptionVO;
 
 // DetailMenuUI 테스트용
 public class DetailMenuUITest {
