@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BBQ_DAO_jk.MemberDAO;
 import mainlistui.InnerMain;
 
 public class LoginUI implements ActionListener{
@@ -32,7 +33,8 @@ public class LoginUI implements ActionListener{
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
 	StartUI main;
-	StartUIEvent eventobj = new StartUIEvent(this);
+	BBQ_System system = new BBQ_System();
+//	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// Constructor
 	public LoginUI() {
@@ -109,15 +111,35 @@ public class LoginUI implements ActionListener{
 
 	}// init
 	
-	/** loginCheck **/
-	public boolean loginCheck(String id, String pass) {
-		boolean result = true;
-//		for(MemberVO member : memberlist) {
-//			if(member.getId().equals(id) && member.getPass().equals(pass)) {
-//				result = true;
-//			}
-//		}
-		return result;
+//	/** loginCheck **/
+//	public boolean loginCheck(String id, String pass) {
+//		MemberDAO member =new MemberDAO();
+//		boolean result = member.getLoginResult(id,pass);
+//		return result;
+//	}
+	
+	public void login_proc() {
+		// 유효성 체크
+		if (id_tf.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요"));
+			id_tf.requestFocus();
+		} else if (pass_tf.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("패스워드를 입력해주세요"));
+			pass_tf.requestFocus();
+		} else {
+			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
+			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
+			if (result) {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
+				BBQ_System.LOGIN_RESULT = true;
+				f.setVisible(false);
+				new InnerMain();
+			} else {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));
+				
+			}
+			
+		}
 	}
 	
 	@Override
@@ -133,29 +155,5 @@ public class LoginUI implements ActionListener{
 		}
 	}
 
-	public void login_proc() {
-		// 유효성 체크
-		if (id_tf.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요"));
-			id_tf.requestFocus();
-		} else if (pass_tf.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, Commons.getMsg("패스워드를 입력해주세요"));
-			pass_tf.requestFocus();
-		} else {
-			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
-			boolean result = loginCheck(id_tf.getText(), pass_tf.getText());
-			if (result) {
-				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-				f.setVisible(false);
-				new InnerMain();
-				main.btn_login.setText("   로그아웃     ");
-				StartUI.LOGIN_RESULT = true;
-			} else {
-				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));
-
-			}
-
-		}
-	}
 
 }// class

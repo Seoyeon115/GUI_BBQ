@@ -18,10 +18,8 @@ import javax.swing.border.BevelBorder;
 
 import main.Commons;
 import main.OrderUI;
-import main_jk.PayUI;
 import mainlistui.InnerMain;
 import mainlistui.MenulistUI;
-import mainlistui.MenulistUI2;
 
 public class ShopBasketUI implements ActionListener{
 	  // Field

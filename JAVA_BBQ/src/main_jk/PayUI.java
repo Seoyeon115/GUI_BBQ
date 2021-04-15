@@ -108,8 +108,8 @@ public class PayUI implements ActionListener{
 		addr_panel.add(BorderLayout.EAST,addr1_tf);
 		addr_panel.add(BorderLayout.EAST,addr2_tf);
 		
-		total_panel.add(price_label);
 		total_panel.add(total_label);
+		total_panel.add(price_label);
 		
 		center_panel.add(BorderLayout.NORTH, addr_panel);
 		center_panel.add(BorderLayout.CENTER, menu_panel);
@@ -121,8 +121,8 @@ public class PayUI implements ActionListener{
 		btn_pay = new JButton("∞·¡¶");
 		btn_pay.setBackground(new Color(255, 255, 255));
 
-		bottom_panel.add(btn_cancel);
 		bottom_panel.add(btn_pay);
+		bottom_panel.add(btn_cancel);
 
 		// setting
 		panel_content.add(BorderLayout.NORTH, top_panel);
