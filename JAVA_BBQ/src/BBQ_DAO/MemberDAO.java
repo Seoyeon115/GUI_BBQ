@@ -35,7 +35,7 @@ public class MemberDAO extends DBConn{
 		boolean result = false;
 
 		try {
-			String sql = "insert into bbq_member values(?,?,?,?,?,?,sysdate)";
+			String sql = "insert into bbq_member values(?,?,?,?,?,sysdate)";
 			getPreparedStatement(sql);
 
 			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
