@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BBQ_DAO_jk.MemberDAO;
+import BBQ_VO.MemberVO;
+
 
 public class JoinUI implements ActionListener {
 	// Field
@@ -29,6 +32,8 @@ public class JoinUI implements ActionListener {
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
 	ArrayList<Object> list =new ArrayList<Object>();
 	LoginUI log;
+	MemberDAO mdao = new MemberDAO();
+	public BBQ_System system = new BBQ_System();
 	
 	// Constructor
 	public JoinUI() {
@@ -93,12 +98,17 @@ public class JoinUI implements ActionListener {
 				t_panel.add(new JLabel("-"));
 				t_panel.add(hp3);
 				tf_panel.add(t_panel);
+				list.add(hp1);
+				list.add(hp2);
+				list.add(hp3);
 			} else if (name.equals("주소")) {
 				JTextField addr1 = new JTextField(28);
 				JTextField addr2 = new JTextField(28);
 				t_panel.add(addr1);
 				t_panel.add(addr2);
 				tf_panel.add(t_panel);
+				list.add(addr1);
+				list.add(addr2);
 			} else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
 				JPasswordField tf = new JPasswordField(20);
 				t_panel.add(tf);
@@ -133,19 +143,46 @@ public class JoinUI implements ActionListener {
 
 	}
 
-	// 액션 이벤트
+	/** 액션 이벤트 **/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		String name = e.getActionCommand().trim();
-		
 		
 		if (obj == join_btn) {
-			form_check();
-			// 가입정보 DB 등록
+			if(form_check()) {
+				ArrayList<JTextField> jlist = new ArrayList<JTextField>();
+				for(Object tf : list) {
+					JTextField jtf = (JTextField)tf;
+					jlist.add(jtf);
+				}//for
+				MemberVO member = new MemberVO();
+				member.setId(jlist.get(0).getText());
+				member.setPass(jlist.get(1).getText());
+				member.setCpass(jlist.get(2).getText());
+				member.setName(jlist.get(3).getText());
+				member.setHp1(jlist.get(4).getText());
+				member.setHp2(jlist.get(5).getText());
+				member.setHp3(jlist.get(6).getText());
+				member.setAddr1(jlist.get(7).getText());
+				member.setAddr2(jlist.get(8).getText());
+				
+				boolean result = system.join(member);
+				
+				if(result) {
+					JOptionPane.showMessageDialog(null, 
+							Commons.getMsg("회원가입 성공"));
+					for(Object obj2 : list) {
+						JTextField tf = (JTextField)obj2;
+						tf.setText("");
+					}//for
+					
+				}else {
+					JOptionPane.showMessageDialog(null, 
+							Commons.getMsg("회원가입 실패"));
+				}
 			
+			}
 		} else if (obj == reset_btn) {
-			
 			for(Object obj2 : list) {
 				JTextField tf = (JTextField)obj2;
 				tf.setText("");}
@@ -160,23 +197,26 @@ public class JoinUI implements ActionListener {
 
 
 /**회원가입 폼 체크**/
-
 	public boolean form_check() {
-	boolean result = false;
-	
-	for(int i=0;i<namelist.length-2;i++) {
-		JTextField tf = (JTextField)list.get(i);
-		
-		if(tf.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, Commons.getMsg(namelist[i]+"를 입력해주세요"));
-			tf.requestFocus();
-			i=namelist.length-2;
-		}else if(i== namelist.length-3){
-			result= true;
+		boolean result = false;
+
+		for(int i=0;i<list.size();i++) {
+			JTextField tf = (JTextField)list.get(i);
+			
+			if(tf.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, 
+							Commons.getMsg(namelist[i]+"를 입력해주세요"));
+				tf.requestFocus();
+				i=list.size();
+			}else if(i == list.size()-1) {
+				result = true;
+			}
+			
 		}
-}
-	
-	return result;
-}
+		
+		return result;
+	}
+
+		
 
 }

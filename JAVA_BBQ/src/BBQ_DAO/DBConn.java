@@ -1,4 +1,4 @@
-package BBQ_DVO;
+package BBQ_DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

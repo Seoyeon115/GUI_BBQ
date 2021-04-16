@@ -1,6 +1,6 @@
 package main_sy;
 
-import BBQ_DVO.DBConn;
+import BBQ_DAO.DBConn;
 
 public class MainTest {
 
@@ -8,7 +8,7 @@ public class MainTest {
 //		new StartUI();
 //		new LoginUI();
 //		new JoinUI();
-		new ShopBasketUI();
+//		new ShopBasketUI();
 		new PayUI();
 //		new DBConn();
 	}

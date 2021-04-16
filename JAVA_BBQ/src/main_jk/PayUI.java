@@ -102,13 +102,24 @@ public class PayUI implements ActionListener {
 		top_panel.add(BorderLayout.EAST, img_label);
 
 		// center_panel
+<<<<<<< HEAD
 		addr_panel.add(BorderLayout.WEST, addr_label);
 		addr_panel.add(BorderLayout.EAST, addr1_tf);
 		addr_panel.add(BorderLayout.EAST, addr2_tf);
 
+=======
+		addr_panel.add(BorderLayout.WEST,addr_label);
+		addr_panel.add(BorderLayout.EAST,addr1_tf);
+		addr_panel.add(BorderLayout.EAST,addr2_tf);
+		
+>>>>>>> branch 'jokyoung' of https://github.com/Seoyeon115/GUI_BBQ.git
 		total_panel.add(total_label);
 		total_panel.add(price_label);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> branch 'jokyoung' of https://github.com/Seoyeon115/GUI_BBQ.git
 		center_panel.add(BorderLayout.NORTH, addr_panel);
 		center_panel.add(BorderLayout.CENTER, menu_panel);
 		center_panel.add(BorderLayout.SOUTH, total_panel);
