@@ -51,7 +51,6 @@ public class PayUI implements ActionListener {
 
 		panel_content = new JPanel(new BorderLayout());
 		panel_content.setBackground(new Color(255, 255, 255));
-//         panel_content.setBackground(Color.pink);
 		panel_content.setBounds(30, 22, 520, 650);
 
 		f.add(panel_content);
@@ -60,20 +59,16 @@ public class PayUI implements ActionListener {
 		top_panel = new JPanel(new BorderLayout());
 		top_panel.setBackground(new Color(255, 255, 255));
 		center_panel = new JPanel(new BorderLayout());
-//      center_panel.setBackground(Color.LIGHT_GRAY);   ///
 		center_panel.setBackground(new Color(255, 255, 255));
 
 		/** 주소 패널 **/
 		addr_panel = new JPanel(new BorderLayout(2, 3));
-//      addr_panel.setBackground(Color.cyan);   ///
 		addr_label = new JLabel("        주소");
 		addr1_tf = new JTextField(43);
 		addr2_tf = new JTextField(43);
-
 		/** 메뉴리스트 패널 **/
 		menu_panel = new JPanel();
 		menu_panel.setBackground(new Color(255, 255, 255));
-//      menu_panel.setBackground(Color.pink);   ///
 		/** 결제금액 패널 **/
 		total_panel = new JPanel();
 		total_panel.setBackground(new Color(255, 255, 255));
@@ -102,24 +97,18 @@ public class PayUI implements ActionListener {
 		top_panel.add(BorderLayout.EAST, img_label);
 
 		// center_panel
-<<<<<<< HEAD
 		addr_panel.add(BorderLayout.WEST, addr_label);
 		addr_panel.add(BorderLayout.EAST, addr1_tf);
 		addr_panel.add(BorderLayout.EAST, addr2_tf);
 
-=======
 		addr_panel.add(BorderLayout.WEST,addr_label);
 		addr_panel.add(BorderLayout.EAST,addr1_tf);
 		addr_panel.add(BorderLayout.EAST,addr2_tf);
 		
->>>>>>> branch 'jokyoung' of https://github.com/Seoyeon115/GUI_BBQ.git
 		total_panel.add(total_label);
 		total_panel.add(price_label);
-<<<<<<< HEAD
 
-=======
 		
->>>>>>> branch 'jokyoung' of https://github.com/Seoyeon115/GUI_BBQ.git
 		center_panel.add(BorderLayout.NORTH, addr_panel);
 		center_panel.add(BorderLayout.CENTER, menu_panel);
 		center_panel.add(BorderLayout.SOUTH, total_panel);

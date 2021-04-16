@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main_jk.Commons;
+import main_jk.ShopBasketUI;
+import main_jk.StartUI;
 
 public class PayUI implements ActionListener {
 	// Field
@@ -51,7 +53,6 @@ public class PayUI implements ActionListener {
 
 		panel_content = new JPanel(new BorderLayout());
 		panel_content.setBackground(new Color(255, 255, 255));
-//	    panel_content.setBackground(Color.pink);
 		panel_content.setBounds(30, 22, 520, 650);
 
 		f.add(panel_content);
@@ -61,15 +62,12 @@ public class PayUI implements ActionListener {
 		top_panel.setBackground(new Color(255, 255, 255));
 		center_panel = new JPanel(new BorderLayout());
 		center_panel.setBackground(new Color(255, 255, 255));
-		bottom_panel = new JPanel();
 
 		/** 주소 패널 **/
 		addr_panel = new JPanel(new BorderLayout(2, 3));
-		tf_panel = new JPanel(new GridLayout(2,1));
-		addr_label = new JLabel("               주소");
+		addr_label = new JLabel("        주소");
 		addr1_tf = new JTextField(43);
 		addr2_tf = new JTextField(43);
-
 		/** 메뉴리스트 패널 **/
 		menu_panel = new JPanel();
 		menu_panel.setBackground(new Color(255, 255, 255));
@@ -78,6 +76,7 @@ public class PayUI implements ActionListener {
 		total_panel.setBackground(new Color(255, 255, 255));
 		total_label = new JLabel("총 주문 금액 : ");
 		price_label = new JLabel(" 10000 원 ");
+		bottom_panel = new JPanel();
 
 		// top_panel
 		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
@@ -100,16 +99,18 @@ public class PayUI implements ActionListener {
 		top_panel.add(BorderLayout.EAST, img_label);
 
 		// center_panel
-		tf_panel.add(addr1_tf);
-		tf_panel.add(addr2_tf);
 		addr_panel.add(BorderLayout.WEST, addr_label);
-		addr_panel.add(BorderLayout.EAST, tf_panel);
+		addr_panel.add(BorderLayout.EAST, addr1_tf);
+		addr_panel.add(BorderLayout.EAST, addr2_tf);
 
-//		sb.menulist();
+		addr_panel.add(BorderLayout.WEST,addr_label);
+		addr_panel.add(BorderLayout.EAST,addr1_tf);
+		addr_panel.add(BorderLayout.EAST,addr2_tf);
 		
 		total_panel.add(total_label);
 		total_panel.add(price_label);
 
+		
 		center_panel.add(BorderLayout.NORTH, addr_panel);
 		center_panel.add(BorderLayout.CENTER, menu_panel);
 		center_panel.add(BorderLayout.SOUTH, total_panel);
@@ -120,8 +121,8 @@ public class PayUI implements ActionListener {
 		btn_pay = new JButton("결제");
 		btn_pay.setBackground(new Color(255, 255, 255));
 
-		bottom_panel.add(btn_cancel);
 		bottom_panel.add(btn_pay);
+		bottom_panel.add(btn_cancel);
 
 		// setting
 		panel_content.add(BorderLayout.NORTH, top_panel);
@@ -142,18 +143,19 @@ public class PayUI implements ActionListener {
 		Object obj = e.getSource();
 
 		if (obj == btn_back) { // 뒤로가기
-			f.setVisible(false);
+			System.out.println("뒤로");
+			// 닫기
 			new ShopBasketUI();
 		} else if (obj == btn_pay) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("주문이 완료되었습니다."));
-			f.setVisible(false);
+			// 닫기
 		} else if (obj == btn_cancel) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("결제를 취소합니다."));
-			f.setVisible(false);
+			// 닫기
 			new StartUI();
-// 		}else if(isInOption(obj)) { //옵션
-//			JCheckBox check = (JCheckBox) obj;
-//			System.out.println(check.getText());
+//       }else if(isInOption(obj)) { //옵션
+//         JCheckBox check = (JCheckBox) obj;
+//         System.out.println(check.getText());
 		}
 	}// actionPerformed
 

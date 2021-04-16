@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import BBQ_DAO_jk.MemberDAO;
+import BBQ_DAO.MemberDAO;
 import BBQ_VO.MemberVO;
 
 

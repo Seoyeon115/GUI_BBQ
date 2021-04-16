@@ -17,11 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 import main.Commons;
-<<<<<<< HEAD
 import main_jk.PayUI;
-=======
-import main.OrderUI;
->>>>>>> branch 'jokyoung' of https://github.com/Seoyeon115/GUI_BBQ.git
+import main_jk.OrderUI;
 import mainlistui.InnerMain;
 import mainlistui.MenulistUI;
 
