@@ -1,5 +1,7 @@
 package main_sy;
 
+import BBQ_GUI.StartUI;
+
 public class OrderUI {
 	//Field
 	StartUI main;

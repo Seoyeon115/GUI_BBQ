@@ -1,4 +1,4 @@
-package main_sy;
+package BBQ_GUI;
 
 import java.awt.Font;
 import java.awt.Label;

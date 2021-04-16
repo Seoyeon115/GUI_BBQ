@@ -22,7 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import BBQ_DAO.MemberDAO;
-import mainlistui.InnerMain;
+import main_sy.InnerMain;
 
 public class LoginUI implements ActionListener{
 	// Field

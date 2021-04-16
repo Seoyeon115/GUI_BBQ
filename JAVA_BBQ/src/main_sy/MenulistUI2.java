@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_GUI.Commons;
+
 public class MenulistUI2 implements ActionListener {
 //	JFrame frame = new JFrame();
 	JButton btn_sidepage;

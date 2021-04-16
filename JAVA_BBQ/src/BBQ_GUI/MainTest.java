@@ -1,4 +1,4 @@
-package main_sy;
+package BBQ_GUI;
 
 import BBQ_DAO.DBConn;
 

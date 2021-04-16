@@ -1,6 +1,6 @@
 package main_jk;
 
-import mainlistui.InnerMain;
+import main_sy.InnerMain;
 
 public class MainTest {
 

@@ -1,27 +1,10 @@
-package main_sy;
+package BBQ_GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import mainlistui.InnerMain;
+import BBQ_SYSTEM.BBQ_System;
 
 public class LoginUI implements ActionListener {
 	// Field
@@ -129,8 +112,6 @@ public class LoginUI implements ActionListener {
 			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-//				main.btn_login.setText("   로그아웃     ");
-//				new StartUI();
 				new InnerMain();
 				StartUI.LOGIN_RESULT = true;
 			} else {
