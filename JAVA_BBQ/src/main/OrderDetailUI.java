@@ -21,7 +21,7 @@ import BBQ_VO.OrderVO;
 public class OrderDetailUI implements ActionListener{
 	JFrame frame;
 	JPanel panel_content;
-	JButton button_back;
+	JButton button_back, button_prev, button_next;
 	
 	OrderVO vo; // 주문 정보
 	
@@ -53,6 +53,7 @@ public class OrderDetailUI implements ActionListener{
 		init_upper();
 		init_summary();
 		init_detail();
+		init_bottom();
 		//
 		
 		frame.add(panel_content);
@@ -96,15 +97,13 @@ public class OrderDetailUI implements ActionListener{
 //		panel_summary.setLayout(new BoxLayout(panel_summary, BoxLayout.Y_AXIS));
 		panel_summary.setLayout(null);
 		panel_summary.setBackground(new Color(255, 255, 255));
-		panel_summary.setPreferredSize(new Dimension(480, 320));
+		panel_summary.setPreferredSize(new Dimension(480, 300));
 		panel_summary.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
 		// 주문일시, 배달주소, 주문금액, 할인금액, 배달료, 결제금액, 요청사항
-		String[] titles = {"주문일시", "배달주소", "주문금액", "할인금액", "배달료", "결제금액", "요청사항"};
+		String[] titles = {"주문일시", "배달주소", "결제금액", "요청사항"};
 		String[] contents = {vo.getDate(), vo.getAddr(), 
-				String.valueOf(vo.getPrice()), String.valueOf(vo.getDPrice()), 
-				String.valueOf(vo.getDPrice()), String.valueOf(vo.getPayment()),
-				vo.getMessage()};
+				String.valueOf(vo.getPrice()), vo.getMessage()};
 		for(int i=0;i<titles.length;i++) {
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.setBackground(new Color(255, 255, 255));
@@ -133,7 +132,7 @@ public class OrderDetailUI implements ActionListener{
 		
 		JPanel panel_detail = new JPanel();
 		panel_detail.setBackground(new Color(255, 255, 255));
-		panel_detail.setPreferredSize(new Dimension(480, 370));
+		panel_detail.setPreferredSize(new Dimension(480, 360));
 		panel_detail.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
 		int height = 5;
@@ -162,6 +161,39 @@ public class OrderDetailUI implements ActionListener{
 		
 		panel_content.add(panel_space);
 		panel_content.add(panel_detail);
+	}
+	
+	void init_bottom() {
+		JPanel panel_bottom = new JPanel();
+		panel_bottom.setLayout(null);
+		panel_bottom.setBackground(new Color(255, 255, 255));
+		panel_bottom.setPreferredSize(new Dimension(520, 35));
+		
+		ImageIcon image_prev = Commons.imageResize(new ImageIcon("images/leftr.png"), 50, 40);
+		ImageIcon image_prevPressed = Commons.imageResize(new ImageIcon("images/lefty.png"), 50, 40);
+		
+		button_prev = new JButton("", image_prev);
+		button_prev.setPressedIcon(image_prevPressed);
+		button_prev.setBorderPainted(false);
+		button_prev.setContentAreaFilled(false);
+		button_prev.setBounds(210, 0, 50, 40);
+		button_prev.setPreferredSize(new Dimension(50, 40));
+		button_prev.addActionListener(this);		
+		panel_bottom.add(button_prev);
+		
+		ImageIcon image_next = Commons.imageResize(new ImageIcon("images/rightr.png"), 50, 40);
+		ImageIcon image_nextPressed = Commons.imageResize(new ImageIcon("images/righty.png"), 50, 40);
+		
+		button_next = new JButton("", image_next);
+		button_next.setPressedIcon(image_nextPressed);
+		button_next.setBorderPainted(false);
+		button_next.setContentAreaFilled(false);
+		button_next.setBounds(260, 0, 50, 40);
+		button_next.setPreferredSize(new Dimension(50, 40));
+		button_next.addActionListener(this);
+		panel_bottom.add(button_next);
+		
+		panel_content.add(panel_bottom);
 	}
 	
 	

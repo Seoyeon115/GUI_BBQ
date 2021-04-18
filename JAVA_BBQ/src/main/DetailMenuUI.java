@@ -23,7 +23,9 @@ import BBQ_VO.OptionVO;
 
 // 상세 메뉴창 미완성
 public class DetailMenuUI implements ActionListener{
-	JFrame frame;
+	InnerMain main;
+	MenulistUI prevPage;
+//	JFrame frame;
 	JPanel panel_content;
 	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
 	JButton button_back; // 뒤로가기 버튼
@@ -32,22 +34,27 @@ public class DetailMenuUI implements ActionListener{
 	MenuVO vo; // 메뉴 정보
 	//Constructor
 	// 생성자, 메뉴 정보를 매개변수로 받는다
-		public DetailMenuUI(MenuVO vo) {
-			this.vo = vo;
-			this.price_final = vo.getPrice();
-			init();
+		public DetailMenuUI(InnerMain main, MenulistUI prevPage) {
+			this.main = main;
+			this.prevPage = prevPage;
+			
+//			init();
 		}
 		
 	//Method	
-	public void init() {
+	public JPanel init(MenuVO vo) {
+		
+		this.vo = vo;
+		this.price_final = vo.getPrice();
+		
 		// 프레임
-		frame = new JFrame();
-		frame.setResizable(false); // 크기 조절 불가
-		frame.getContentPane().setBackground(new Color(204, 0, 51));
-		frame.getContentPane().setForeground(new Color(255, 255, 255));
-		frame.setBounds(100, 90, 600, 910);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(null);
+//		frame = new JFrame();
+//		frame.setResizable(false); // 크기 조절 불가
+//		frame.getContentPane().setBackground(new Color(204, 0, 51));
+//		frame.getContentPane().setForeground(new Color(255, 255, 255));
+//		frame.setBounds(100, 90, 600, 910);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setLayout(null);
 		
 		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
@@ -61,8 +68,12 @@ public class DetailMenuUI implements ActionListener{
 		init_option();
 		init_onCart();
 		
-		frame.add(panel_content);
-		frame.setVisible(true);
+//		frame.add(panel_content);
+//		frame.setVisible(true);
+		
+		panel_content.setVisible(true);
+		
+		return panel_content;
 	}
 	
 	void init_upper() { // 맨 위 패널 생성
@@ -220,7 +231,9 @@ public class DetailMenuUI implements ActionListener{
 		if(obj == button_onCart) { // 담기 버튼 클릭
 			System.out.println("장바구니 담기");
 		}else if(obj == button_back) { // 뒤로가기 버튼 클릭
-			System.out.println("뒤로가기");
+//			System.out.println("뒤로가기");
+			panel_content.setVisible(false);
+			main.frame.add(prevPage.initialize());
 		}else { // 옵션 메뉴 선택
 			int op = isInOption(obj);
 			if(op != -1) {

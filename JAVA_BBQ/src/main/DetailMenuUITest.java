@@ -23,21 +23,32 @@ public class DetailMenuUITest {
 		list.add(new OptionVO("콜라", 2000));
 		list.add(new OptionVO("사이다", 2000));
 		list.add(new OptionVO("치킨무", 1000));
-		list.add(new OptionVO("치킨무", 1000));
-		list.add(new OptionVO("치킨무", 1000));
-		list.add(new OptionVO("치킨무", 1000));
-		list.add(new OptionVO("치킨무", 1000));
-		list.add(new OptionVO("치킨무", 1000));
+		list.add(new OptionVO("옵션4", 1000));
+		list.add(new OptionVO("옵션5", 1000));
+		list.add(new OptionVO("옵션6", 1000));
+		list.add(new OptionVO("옵션7", 1000));
+		list.add(new OptionVO("옵션8", 1000));
 		vo.setOptions(list);
-		//new DetailMenuUI(vo);
 		
 		OrderVO order = new OrderVO();
+		order.setDate("2021년 04월 15일 18시 51분");
+		order.setMessage("맛있게 튀겨주세요~");
+		order.setAddr("서울특별시 강남구 ~~");
+		order.setPrice(24000);
 		ArrayList<MenuVO> menus = new ArrayList<MenuVO>();
 		menus.add(vo);
 //		menus.add(new MenuVO());
 		order.setMenulist(menus);
 		
-		new OrderDetailUI(order);
+//		ArrayList<OrderVO> orders = new ArrayList<OrderVO>();
+//		for(int i=0;i>10;i++) {
+//			OrderVO q = new OrderVO();
+//			
+//		}
+		
+//		new DetailMenuUI(vo);
+//		new OrderDetailUI(order);
+//		new OrderListUI(new ArrayList<OrderVO>());
 	}
 
 }
