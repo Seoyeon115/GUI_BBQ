@@ -48,7 +48,7 @@ public class JoinUI implements ActionListener {
 	
 	// Method
 	public void init() {
-		f = new JFrame("BBQ");
+		f = new JFrame("BBQ 회원가입");
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
 		label_panel = new JPanel(new GridLayout(6, 1));

@@ -49,11 +49,11 @@ public class LoginUI implements ActionListener{
 
 	// Method
 	public void init() {
-		f = new JFrame("login system");
-		String[] namelist = { "   ID", "   PW" };
+		f = new JFrame("BBQ ·Î±×ÀÎ");
+		String[] namelist = { "   ID   ", "   PW    " };
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
-		label_panel = new JPanel(new GridLayout(3, 1, 10, 20));
+		label_panel = new JPanel(new GridLayout(3, 2, 10, 20));
 		label_panel.setBackground(new Color(204, 0, 51));
 		tf_panel = new JPanel(new GridLayout(3, 1, 10, 20));
 		tf_panel.setBackground(new Color(204, 0, 51));
@@ -77,9 +77,9 @@ public class LoginUI implements ActionListener{
 
 		for (String name : namelist) {
 			Panel l_panel = new Panel(new FlowLayout(FlowLayout.LEFT));
-			Panel t_panel = new Panel(new FlowLayout(FlowLayout.LEFT));
-
-			label_panel.add(l_panel.add(new Label(name)));
+			Panel t_panel = new Panel(new FlowLayout(FlowLayout.CENTER));
+			
+			label_panel.add(l_panel.add(new JLabel(name)));
 
 			if (name.trim().equals("PW")) {
 				pass_tf = new JPasswordField(15);

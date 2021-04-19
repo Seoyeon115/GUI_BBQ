@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
@@ -86,7 +87,8 @@ public class ShopBasketUI implements ActionListener{
 	      top_panel.add(BorderLayout.EAST, new JPanel(new GridLayout(1, 1)).add(btn_all_delete));
 	      
 	      //center_panel
-	      menulist();
+	      
+	      menulist_btn();
 	      JPanel order_panel = new JPanel(new GridLayout(2,1));
 	      order_panel.setBackground(new Color(255, 255, 255));
 	      btn_order = new JButton("추가 주문");
@@ -103,12 +105,13 @@ public class ShopBasketUI implements ActionListener{
 	      bottom_panel.add(btn_pay);
 	      
 	      //setting
+	      
 	      panel_content.add(BorderLayout.NORTH, top_panel);
 	      panel_content.add(BorderLayout.CENTER, center_panel);
 	      panel_content.add(BorderLayout.SOUTH, bottom_panel);
 	      
-//	      JScrollPane content = new JScrollPane(center_panel); 
-//	      f.add(content);
+	      JScrollPane content = new JScrollPane(center_panel); 
+	      panel_content.add(content);
 	      
 	      f.setVisible(true);
 	      
@@ -121,7 +124,7 @@ public class ShopBasketUI implements ActionListener{
 
 	   
 	   /** 메뉴 생성 GUI **/
-	   public void menulist() {
+	   public JPanel menulist() {
 			JPanel pc = new JPanel();
 			
 			f.add(pc,BorderLayout.CENTER);
@@ -137,21 +140,32 @@ public class ShopBasketUI implements ActionListener{
 			f.setVisible(true);
 		   
 //	      menu_panel = new JPanel(new GridLayout(1,2));
-//	      menu_panel.setBounds(0, 40, 520, 200);
+//	      menu_panel.setBounds(0, 40, 400, 200);
 	      JLabel menu_label = new JLabel("select menu");
 	      JLabel option_label = new JLabel("option");
 	      JLabel price_label = new JLabel("price");
 	      
-	      JPanel right_panel =new JPanel();
 	      JPanel left_panel =new JPanel(new GridLayout(3,1));
+	      left_panel.add(menu_label);
+	      left_panel.add(option_label);
+	      left_panel.add(price_label);
+	      menu_panel.add(BorderLayout.WEST, left_panel);
+	      
+	      return menu_panel;
+	   }//menulist
+	   
+	   public void menulist_btn() {
+		   menulist();
+		   
+	      JPanel right_panel =new JPanel();
 	      btn_mdelete = new JButton("x");
 	      btn_mdelete.setFont(Commons.getFont(10));
 	      right_panel.setLayout(null);
-	      btn_mdelete.setBounds(220, 0, 40, 38);
+	      btn_mdelete.setBounds(200, 0, 40, 38);
 	      btn_madd = new JButton("+");
 	      btn_minus = new JButton("-");
 	      JTextField tf_madd = new JTextField(8);
-	      
+	     
 	      JPanel count_panel = new JPanel();
 	      count_panel.add(btn_minus);
 	      count_panel.add(tf_madd);
@@ -159,11 +173,7 @@ public class ShopBasketUI implements ActionListener{
 	      count_panel.setBounds(0,50, 300, 60);
 	      right_panel.add(btn_mdelete);
 	      right_panel.add(count_panel);
-	      left_panel.add(menu_label);
-	      left_panel.add(option_label);
-	      left_panel.add(price_label);
 	      
-	      menu_panel.add(BorderLayout.WEST, left_panel);
 	      menu_panel.add(BorderLayout.EAST, right_panel);
 //	      panel_content.add(menu_panel);     ///////
 	      center_panel.add(menu_panel);    
@@ -173,7 +183,9 @@ public class ShopBasketUI implements ActionListener{
 	      btn_mdelete.addActionListener(this);
 	      btn_madd.addActionListener(this);
 	      btn_minus.addActionListener(this);
-	   }//menulist
+	      
+	    
+	   }//menulist_btn
 
 	   @Override
 	   public void actionPerformed(ActionEvent e) {

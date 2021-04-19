@@ -24,7 +24,7 @@ public class MenulistUI implements ActionListener {
 	MenulistUI2 list2;
 	
 	public MenulistUI() {
-		
+		initialize();
 	}
 	public MenulistUI(InnerMain main) {
 		this.main = main;
