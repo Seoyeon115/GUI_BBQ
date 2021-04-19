@@ -1,15 +1,14 @@
-package main;
+package BBQ_UI;
 
 public class OrderUI {
 	//Field
-	StartUI main;
+	InnerMain main;
 	
 	//Constructor
 	public OrderUI() {
 		init();
 	}
-	
-	public OrderUI(StartUI main) {
+	public OrderUI(InnerMain main) {
 		this.main = main;
 		init();
 	}

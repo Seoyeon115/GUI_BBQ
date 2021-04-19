@@ -1,29 +1,45 @@
-package main;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_VO.MenuVO;
+import BBQ_VO.OrderVO;
+
 public class InnerMain implements ActionListener {
 	
 	//Field
+	public static int MAIN = 0;
+	public static int MENULIST = 1;
+	public static int MENULIST2 = 2;
+	public static int DETAILMENU = 3;
+	public static int CART = 4;
+	public static int ORDERSTATUS = 5;
+	public static int ORDERLIST = 6;
+	public static int ORDERDETAIL = 7;
+	public static int PAY = 8;
 	
 	JFrame frame = new JFrame();
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
 	MenulistUI list1 = new MenulistUI(this);
+	MenulistUI2 list2 = new MenulistUI2(this);
+	DetailMenuUI detailMenu = new DetailMenuUI(this);
+	ShopBasketUI basket = new ShopBasketUI(this);
 	Orderstatus_on ing = new Orderstatus_on(this);
 	OrderListUI orderlistUI = new OrderListUI(this);
+	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
+	PayUI payUI = new PayUI(this);
+	
 	JPanel panel;
 	
 	//Constructor
@@ -234,21 +250,54 @@ public class InnerMain implements ActionListener {
 		frame.add(panel);
 		frame.setVisible(true);
 	}
-
+	
+	public void switchPanel(int ui) {
+		if(ui == MAIN) {
+			panelinit();
+		}else if(ui == MENULIST) {
+			frame.add(list1.initialize());
+		}else if(ui == MENULIST2) {
+			frame.add(list2.initialize());
+		}else if(ui == CART) {
+			frame.add(basket.init());
+		}else if(ui == ORDERSTATUS) {
+			frame.add(ing.init());
+		}else if(ui == ORDERLIST) {
+			frame.add(orderlistUI.init());
+		}else if(ui == PAY) {
+			frame.add(payUI.init());
+		}
+	}
+	
+	public void switchPanel(int ui, Object obj) {
+		// 다른 매개변수가 필요한 패널
+		if(ui == DETAILMENU) {
+			frame.add(detailMenu.init((MenuVO)obj));
+		}else if(ui == ORDERDETAIL) {
+			frame.add(orderDetailUI.init((OrderVO)obj));
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if(obj == btn_mainlist) {
 			panel.setVisible(false);
-			frame.add(list1.initialize());
+//			frame.add(list1.initialize());
+			switchPanel(InnerMain.MENULIST);
 		}else if(obj == btn_cart) {
-			System.out.println("cart");
+//			System.out.println("cart");
+			panel.setVisible(false);
+//			frame.add(basket.init());
+			switchPanel(InnerMain.CART);
 		}else if(obj == btn_ing) {
 			panel.setVisible(false);
-			frame.add(ing.init());
+//			frame.add(ing.init());
+			switchPanel(InnerMain.ORDERSTATUS);
 		}else if(obj == btn_ed) {
 			panel.setVisible(false);
-			frame.add(orderlistUI.init());
+//			frame.add(orderlistUI.init());
+			switchPanel(InnerMain.ORDERLIST);
 		}
 	}
 }

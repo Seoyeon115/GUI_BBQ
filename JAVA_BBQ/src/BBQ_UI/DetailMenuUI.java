@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,12 +34,16 @@ public class DetailMenuUI implements ActionListener{
 	MenuVO vo; // 메뉴 정보
 	//Constructor
 	// 생성자, 메뉴 정보를 매개변수로 받는다
-		public DetailMenuUI(InnerMain main, MenulistUI prevPage) {
-			this.main = main;
-			this.prevPage = prevPage;
-			
-//			init();
-		}
+	public DetailMenuUI(InnerMain main) {
+		this.main = main;
+	}
+	
+	public DetailMenuUI(InnerMain main, MenulistUI prevPage) {
+		this.main = main;
+		this.prevPage = prevPage;
+		
+//		init();
+	}
 		
 	//Method	
 	public JPanel init(MenuVO vo) {

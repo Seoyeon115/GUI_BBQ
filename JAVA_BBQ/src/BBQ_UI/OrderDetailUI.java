@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +19,8 @@ import BBQ_VO.OrderVO;
 
 // 상세 메뉴창 미완성
 public class OrderDetailUI implements ActionListener{
-	JFrame frame;
+	InnerMain main;
+//	JFrame frame;
 	JPanel panel_content;
 	JButton button_back, button_prev, button_next;
 	
@@ -29,21 +30,21 @@ public class OrderDetailUI implements ActionListener{
 	
 	//Constructor
 	// 생성자, 메뉴 정보를 매개변수로 받는다
-		public OrderDetailUI(OrderVO vo) {
-			this.vo = vo;
-			init();
+		public OrderDetailUI(InnerMain main) {
+			this.main = main;
 		}
 		
 	//Method	
-	public void init() {
+	public JPanel init(OrderVO vo) {
+		this.vo = vo;
 		// 프레임
-		frame = new JFrame();
-		frame.setResizable(false); // 크기 조절 불가
-		frame.getContentPane().setBackground(new Color(204, 0, 51));
-		frame.getContentPane().setForeground(new Color(255, 255, 255));
-		frame.setBounds(100, 90, 600, 910);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(null);
+//		frame = new JFrame();
+//		frame.setResizable(false); // 크기 조절 불가
+//		frame.getContentPane().setBackground(new Color(204, 0, 51));
+//		frame.getContentPane().setForeground(new Color(255, 255, 255));
+//		frame.setBounds(100, 90, 600, 910);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setLayout(null);
 		
 		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
@@ -56,8 +57,10 @@ public class OrderDetailUI implements ActionListener{
 		init_bottom();
 		//
 		
-		frame.add(panel_content);
-		frame.setVisible(true);
+//		frame.add(panel_content);
+//		frame.setVisible(true);
+		
+		return panel_content;
 	}
 	
 	void init_upper() { // 맨 위 패널 생성
@@ -203,7 +206,9 @@ public class OrderDetailUI implements ActionListener{
 		Object obj = e.getSource();
 		
 		if(obj == button_back) { // 뒤로가기 버튼 클릭
-			System.out.println("뒤로가기");
+//			System.out.println("뒤로가기");
+			panel_content.setVisible(false);
+			main.switchPanel(InnerMain.ORDERLIST);
 		}
 	}
 }

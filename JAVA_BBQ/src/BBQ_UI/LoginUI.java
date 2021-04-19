@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,8 +9,6 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginUI implements ActionListener{
+import BBQ_SYSTEM.BBQ_System;
+
+public class LoginUI implements ActionListener {
 	// Field
 	JFrame f;
 	JButton btn_login, btn_join;
@@ -30,13 +30,14 @@ public class LoginUI implements ActionListener{
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
 	StartUI main;
-	StartUIEvent eventobj = new StartUIEvent(this);
+	BBQ_System system = new BBQ_System();
 
 	// Constructor
 	public LoginUI() {
 		init();
+
 	}
-	
+
 	public LoginUI(StartUI main) {
 		this.main = main;
 		init();
@@ -94,29 +95,12 @@ public class LoginUI implements ActionListener{
 		f.setSize(250, 230);
 		f.setVisible(true);
 
-		// 윈도우 종료 이벤트
-		f.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-		
 		btn_login.addActionListener(this);
 		btn_join.addActionListener(this);
 
 	}// init
-	
-	/** loginCheck **/
-	public boolean loginCheck(String id, String pass) {
-		boolean result = false;
-//		for(MemberVO member : memberlist) {
-//			if(member.getId().equals(id) && member.getPass().equals(pass)) {
-//				result = true;
-//			}
-//		}
-		return result;
-	}
-	
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
@@ -125,7 +109,7 @@ public class LoginUI implements ActionListener{
 			// 로그인
 			login_proc();
 		} else if (obj == btn_join) {
-			//회원가입 창
+			// 회원가입 창
 			new JoinUI();
 		}
 	}
@@ -140,11 +124,10 @@ public class LoginUI implements ActionListener{
 			pass_tf.requestFocus();
 		} else {
 			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
-			boolean result = loginCheck(id_tf.getText(), pass_tf.getText());
+			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-				new StartUI();
-				main.btn_login.setText("   로그아웃     ");
+				new InnerMain();
 				StartUI.LOGIN_RESULT = true;
 			} else {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));

@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -271,16 +271,17 @@ public class MenulistUI implements ActionListener {
 		
 		if(obj == btn_sidepage) {
 			panel.setVisible(false);
-			main.frame.add(list2.initialize());
-			
+//			main.frame.add(list2.initialize());
+			main.switchPanel(InnerMain.MENULIST2);
 			
 		}else if(obj == btn_home){
 			panel.setVisible(false);
 			main.panelinit();
 			
 		}else if(obj == btn_cart) {
-			System.out.println("cart");
-			
+//			System.out.println("cart");
+			panel.setVisible(false);
+			main.switchPanel(InnerMain.CART);
 		}
 		
 	}

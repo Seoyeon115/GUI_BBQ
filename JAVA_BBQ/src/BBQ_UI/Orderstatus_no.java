@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -122,7 +122,8 @@ public void actionPerformed(ActionEvent e) {
 		
 		if(obj == btn_home){
 			panel.setVisible(false);
-			main.panelinit();
+//			main.panelinit();
+			main.switchPanel(InnerMain.MAIN);
 		}
 		
 	}

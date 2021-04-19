@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.Color;
 import java.awt.Font;

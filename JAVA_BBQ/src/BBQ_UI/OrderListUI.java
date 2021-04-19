@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -133,7 +133,10 @@ public class OrderListUI implements ActionListener{
 			JButton button_detail = new JButton("상세보기");
 			button_detail.setFont(Commons.getFont(15));
 			button_detail.setBounds(340, 50, 100, 30);
+			
+			button_detail.addActionListener(this);
 			panel_order.add(button_detail);
+			buttons.add(button_detail);
 			
 			panel_inner.add(panel_order);
 		}
@@ -143,7 +146,18 @@ public class OrderListUI implements ActionListener{
 		panel_content.add(panel_list);
 	}
 	
-	
+	int orderCheck(Object obj) {
+		int result = -1;
+		
+		for(int i=0;i<buttons.size();i++) {
+			if(obj == buttons.get(i)) {
+				result = i;
+				i = buttons.size();
+			}
+		}
+		
+		return result;
+	}
 	
 	// 이벤트 동작
 	@Override
@@ -153,7 +167,14 @@ public class OrderListUI implements ActionListener{
 		if(obj == button_back) { // 뒤로가기 버튼 클릭
 //			System.out.println("뒤로가기");
 			panel_content.setVisible(false);
-			main.panelinit();
+//			main.panelinit();
+			main.switchPanel(InnerMain.MAIN);
+		}else {
+			int order = orderCheck(obj);
+			if(order != -1) {
+				panel_content.setVisible(false);
+				main.switchPanel(InnerMain.ORDERDETAIL, orderlist.get(order));
+			}
 		}
 	}
 }
