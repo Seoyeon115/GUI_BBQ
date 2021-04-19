@@ -20,7 +20,9 @@ public class Orderstatus_on implements ActionListener {
 	JFrame frame;
 	JPanel panel;
 	JButton btn_home, btn_cart;
-
+	JButton btn_chat;
+	int idnum = 0;
+	
 //	public Orderstatus_on() {
 //		init();
 //	}
@@ -127,7 +129,7 @@ public class Orderstatus_on implements ActionListener {
 		ImageIcon chat_icon = new ImageIcon("images/chat.png");
 		ImageIcon chat_icon2 = new ImageIcon("images/chat2.png");
 		
-		JButton btn_chat = new JButton();
+		btn_chat = new JButton();
 		btn_chat = new JButton();
 		btn_chat.setIcon(chat_icon2);
 		btn_chat.setPressedIcon(chat_icon);
@@ -146,6 +148,7 @@ public class Orderstatus_on implements ActionListener {
 		
 		JPanel btn_panel = new JPanel(new BorderLayout(0,85));
 		btn_panel.setBackground(new Color(255,255,255));
+		btn_chat.addActionListener(this);
 		
 		//라인 넣기
 		
@@ -188,6 +191,10 @@ public class Orderstatus_on implements ActionListener {
 			panel.setVisible(false);
 //			main.panelinit();
 			main.switchPanel(InnerMain.MAIN);
+		}else if(obj == btn_chat) {
+			idnum += 1;
+			new ChatUI(idnum);
+			
 		}
 
 	}

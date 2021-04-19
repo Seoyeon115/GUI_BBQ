@@ -6,5 +6,6 @@ public class MainTest {
 		//new Orderstatus_on();
 		new InnerMain();
 		//new StartUI();
+		//new ChatUI();
 	}
 }
