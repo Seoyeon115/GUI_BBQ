@@ -1,4 +1,4 @@
-package main;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
@@ -20,21 +19,24 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MemberVO;
 
 public class JoinUI implements ActionListener {
 	// Field
 	JFrame f;
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
-	JButton btn_join, btn_reset, btn_id_chk;
+	JButton join_btn, reset_btn, id_chk_btn;
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
-	ArrayList<Object> list = new ArrayList<Object>();
+	String[] namelist2 = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰1", "핸드폰2", "핸드폰3", "주소1", "주소2" };
+	ArrayList<Object> list = new ArrayList<Object>(); // 데이터 저장할 곳(배열)
 	LoginUI log;
-//	StartUIEvent eventobj = new StartUIEvent(this);
+	BBQ_System system = new BBQ_System();
 
 	// Constructor
 	public JoinUI() {
 		init();
+
 	}
 
 	public JoinUI(LoginUI log) {
@@ -44,7 +46,7 @@ public class JoinUI implements ActionListener {
 
 	// Method
 	public void init() {
-		f = new JFrame("BBQ");
+		f = new JFrame("회원가입");
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
 		label_panel = new JPanel(new GridLayout(6, 1));
@@ -63,10 +65,10 @@ public class JoinUI implements ActionListener {
 		title_panel.add(new JLabel("회원가입                                       "));
 		title_panel.add(img_label);
 
-		btn_join = new JButton("회원가입");
-		btn_reset = new JButton("취소하기");
-		btn_panel.add(btn_join);
-		btn_panel.add(btn_reset);
+		join_btn = new JButton("회원가입");
+		reset_btn = new JButton("취소하기");
+		btn_panel.add(join_btn);
+		btn_panel.add(reset_btn);
 
 		for (String name : namelist) {
 			JPanel l_panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -78,9 +80,9 @@ public class JoinUI implements ActionListener {
 
 			if (name.equals("아이디")) {
 				JTextField id = new JTextField(12);
-				btn_id_chk = new JButton("중복확인");
+				id_chk_btn = new JButton("중복확인");
 				t_panel.add(id);
-				t_panel.add(btn_id_chk);
+				t_panel.add(id_chk_btn);
 				tf_panel.add(t_panel);
 				list.add(id);
 
@@ -122,43 +124,57 @@ public class JoinUI implements ActionListener {
 		f.setLocation(100, 100);
 		f.setVisible(true);
 
-		// 윈도우 이벤트 호출-종료
-		f.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		join_btn.addActionListener(this);
+		reset_btn.addActionListener(this);
+		id_chk_btn.addActionListener(this);
 
-			}
-		});
+	}
 
-		btn_join.addActionListener(this);
-		btn_reset.addActionListener(this);
-		btn_id_chk.addActionListener(this);
-//		btn_join.addActionListener(eventobj);
-//		btn_reset.addActionListener(eventobj);
-//		btn_id_chk.addActionListener(eventobj);
-
+	// 윈도우 이벤트 처리
+	public void windowClosing(WindowEvent e) {
+		System.out.println("--- 회원가입 프로그램을 종료합니다 ---");
 	}
 
 	// 액션 이벤트
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
 		String name = e.getActionCommand().trim();
+		Object obj = e.getSource();
 
-		
-		if (obj == btn_join) {
-			form_check();
-			// 가입정보 DB 등록
-		} else if (obj == btn_reset) {
-			
-		} else if (obj == btn_id_chk) {
-			
-		} else if (obj == btn_reset) {
-			
-			for(Object obj2 : list) {
-				JTextField tf = (JTextField)obj2;
-				tf.setText("");}
+		if (obj == join_btn) {
+			// 유효성체크
+			if (form_check()) {
+				ArrayList<JTextField> jlist = new ArrayList<JTextField>();
+				for (Object tf : list) {
+					JTextField jtf = (JTextField) tf; // tf데이터를 형변환시켜서 jtf에 넣어준다
+					jlist.add(jtf);
+				}
 
-		} else if (obj == btn_id_chk) {
+				MemberVO member = new MemberVO();
+				member.setId(jlist.get(0).getText());
+				member.setPass(jlist.get(1).getText());
+				member.setCpass(jlist.get(2).getText());
+				member.setName(jlist.get(3).getText());
+
+				boolean result = system.join(member);
+
+				if (result) {
+					JOptionPane.showMessageDialog(null, Commons.getMsg("회원가입 성공"));
+					for (Object obj2 : list) {
+						JTextField tf = (JTextField) obj2;
+						tf.setText("");
+					}
+					f.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, Commons.getMsg("회원가입 실패"));
+				}
+			}
+		} else if (obj == reset_btn) {
+			for (Object obj2 : list) {
+				JTextField tf = (JTextField) obj2;
+				tf.setText("");
+			}
+		} else if (obj == id_chk_btn) {
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 

@@ -1,4 +1,4 @@
-package sg;
+package BBQ_UI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -186,7 +186,8 @@ public class Orderstatus_on implements ActionListener {
 
 		if (obj == btn_home) {
 			panel.setVisible(false);
-			main.panelinit();
+//			main.panelinit();
+			main.switchPanel(InnerMain.MAIN);
 		}
 
 	}
