@@ -6,9 +6,9 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		new StartUI();
-		new InnerMain();
-		new ShopBasketUI();
-		new PayUI();
+//		new InnerMain();
+//		new ShopBasketUI();
+//		new PayUI();
 	}
 
 	

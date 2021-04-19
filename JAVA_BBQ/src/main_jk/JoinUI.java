@@ -35,6 +35,7 @@ public class JoinUI implements ActionListener {
 	MemberDAO mdao = new MemberDAO();
 	public BBQ_System system = new BBQ_System();
 	
+	
 	// Constructor
 	public JoinUI() {
 		init();
@@ -150,6 +151,7 @@ public class JoinUI implements ActionListener {
 		
 		if (obj == join_btn) {
 			if(form_check()) {
+				
 				ArrayList<JTextField> jlist = new ArrayList<JTextField>();
 				for(Object tf : list) {
 					JTextField jtf = (JTextField)tf;
@@ -188,13 +190,29 @@ public class JoinUI implements ActionListener {
 				tf.setText("");}
 
 		} else if (obj == id_chk_btn) {
+//			idcheck();
+			
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 
 		}
 	}
 	
-
+/** 아이디 중복 체크**/
+//	public boolean idcheck(MemberVO member) {
+//		boolean check =false;
+//		
+//		if() {
+//			JOptionPane.showMessageDialog(null, 
+//					Commons.getMsg("존재하는 아이디 입니다."));
+//			
+//		}else {
+//			JOptionPane.showMessageDialog(null, 
+//					Commons.getMsg("사용가능 한 아이디 입니다."));
+//			check = true;
+//		}
+//		return check;
+//	}
 
 /**회원가입 폼 체크**/
 	public boolean form_check() {

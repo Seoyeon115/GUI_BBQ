@@ -147,7 +147,6 @@ public class LoginUI implements ActionListener{
 		Object obj = e.getSource();
 
 		if (obj == btn_login) {
-			// 로그인
 			login_proc();
 		} else if (obj == btn_join) {
 			//회원가입 창

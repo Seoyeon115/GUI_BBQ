@@ -10,8 +10,8 @@ public class MemberDAO extends DBConn{
 	public boolean getLoginResult (String id, String pass) {
 		boolean result = false;
 		try {
-			String sql ="SELECT COUNT(*) FROM SCORE_MEMBER "
-					+ "WHERE ID =? AND PASS =?"; //DB 테이블생성전이라 임의로지정
+			String sql ="SELECT COUNT(*) FROM BBQ_MEMBER "
+					+ "WHERE ID =? AND PASS =?"; 
 			getPreparedStatement(sql);
 			
 			pstmt.setString(1, id);
@@ -57,9 +57,26 @@ public class MemberDAO extends DBConn{
 		return result;
 	}
 	
-	
-
-	
+	/** 아이디 중복 확인 **/
+	public boolean getJoinIdResult(MemberVO member) {
+		boolean result = false;
+		try {
+			String sql ="SELECT COUNT(*) FROM BBQ_MEMBER "
+					+ "WHERE ID =? "; 
+			getPreparedStatement(sql);
+			
+			pstmt.setString(1, member.getId());
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) result = true;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
 
 
