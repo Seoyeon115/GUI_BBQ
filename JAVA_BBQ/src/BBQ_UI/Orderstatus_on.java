@@ -16,24 +16,21 @@ import javax.swing.JPanel;
 
 public class Orderstatus_on implements ActionListener {
 	InnerMain main;
-
+	ChatUI chat;
+	
 	JFrame frame;
 	JPanel panel;
-	JButton btn_home, btn_cart;
-	JButton btn_chat;
-	int idnum = 0;
-	
-//	public Orderstatus_on() {
-//		init();
-//	}
+	JButton btn_home, btn_cart,btn_chat;
+	boolean existchat = false;
+
 
 	public Orderstatus_on(InnerMain main) {
 		this.main = main;
-		init();
+		
+		//chat = new ChatUI(main,this);
 	}
-
+	
 	public JPanel init() {
-
 //		frame = new JFrame();
 //		frame.setResizable(false);
 //		frame.getContentPane().setBackground(new Color(204, 0, 51));
@@ -62,14 +59,13 @@ public class Orderstatus_on implements ActionListener {
 		// 홈버튼 장바구니버튼 넣기
 		ImageIcon home = new ImageIcon("images/homer.png");
 		ImageIcon home2 = new ImageIcon("images/homey.png");
-		
-		
+
 		JButton btn_home_blank = new JButton();
 		btn_home_blank.setBackground(new Color(255, 255, 255));
 		btn_home_blank.setPreferredSize(new Dimension(35, 40));
 		JPanel btn_home_pn = new JPanel();
 		btn_home_pn.setBackground(new Color(255, 255, 255));
-		
+
 		btn_home = new JButton();
 		btn_home.setIcon(home);
 		btn_home.setPressedIcon(home2);
@@ -82,7 +78,6 @@ public class Orderstatus_on implements ActionListener {
 		btn_home.setBorderPainted(false);
 		btn_home.setFocusPainted(false);
 		btn_home.setContentAreaFilled(false);
-		btn_home.addActionListener(this);
 		btn_home_blank.setBorderPainted(false);
 		btn_home_blank.setFocusPainted(false);
 		btn_home_blank.setContentAreaFilled(false);
@@ -128,7 +123,7 @@ public class Orderstatus_on implements ActionListener {
 		// 채팅 버튼 넣기
 		ImageIcon chat_icon = new ImageIcon("images/chat.png");
 		ImageIcon chat_icon2 = new ImageIcon("images/chat2.png");
-		
+
 		btn_chat = new JButton();
 		btn_chat = new JButton();
 		btn_chat.setIcon(chat_icon2);
@@ -136,33 +131,31 @@ public class Orderstatus_on implements ActionListener {
 		btn_chat.setForeground(new Color(255, 255, 255));
 		btn_chat.setBackground(new Color(255, 255, 255));
 		btn_chat.setPreferredSize(new Dimension(40, 40));
-				
+
 		// 이미지만 넣기
 		btn_chat.setBorderPainted(false);
 		btn_chat.setFocusPainted(false);
 		btn_chat.setContentAreaFilled(false);
-		
+
 		JPanel blank_btn = new JPanel();
 		blank_btn.setBackground(new Color(255, 255, 255));
 		blank_btn.setPreferredSize(new Dimension(20, 65));
-		
-		JPanel btn_panel = new JPanel(new BorderLayout(0,85));
-		btn_panel.setBackground(new Color(255,255,255));
-		btn_chat.addActionListener(this);
-		
-		//라인 넣기
-		
+
+		JPanel btn_panel = new JPanel(new BorderLayout(0, 85));
+		btn_panel.setBackground(new Color(255, 255, 255));
+
+		// 라인 넣기
+
 		ImageIcon line_icon = new ImageIcon("images/line2.png");
 		JLabel line = new JLabel(line_icon);
 		JPanel line_pn = new JPanel();
 		line_pn.add(line);
-		line_pn.setBackground(new Color(255,255,255));
-		
-		btn_panel.add(BorderLayout.NORTH,blank_btn);
-		btn_panel.add(BorderLayout.CENTER,line_pn);
-		btn_panel.add(BorderLayout.SOUTH,btn_chat);
-		
-		
+		line_pn.setBackground(new Color(255, 255, 255));
+
+		btn_panel.add(BorderLayout.NORTH, blank_btn);
+		btn_panel.add(BorderLayout.CENTER, line_pn);
+		btn_panel.add(BorderLayout.SOUTH, btn_chat);
+
 		middle_in.add(BorderLayout.NORTH, flow_gone);
 		middle_in.add(BorderLayout.CENTER, flow_arrive);
 		middle_in.add(BorderLayout.SOUTH, auto);
@@ -178,7 +171,9 @@ public class Orderstatus_on implements ActionListener {
 
 		panel.add(menu1);
 //		frame.setVisible(true);
-
+		btn_chat.addActionListener(this);
+		btn_home.addActionListener(this);
+		
 		return panel;
 
 	}
@@ -191,10 +186,18 @@ public class Orderstatus_on implements ActionListener {
 			panel.setVisible(false);
 //			main.panelinit();
 			main.switchPanel(InnerMain.MAIN);
-		}else if(obj == btn_chat) {
-			idnum += 1;
-			new ChatUI(idnum);
-			
+		} else if (obj == btn_chat) {
+			if (existchat == false) {
+				panel.setVisible(false);
+				main.switchPanel(InnerMain.CHATCON);
+				existchat = true;
+			}
+			else if (existchat == true) {
+				panel.setVisible(false);
+				main.switchPanel(InnerMain.CHATRE);
+				
+			}
+
 		}
 
 	}

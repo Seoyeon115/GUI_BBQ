@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
+import BBQ_VO.Temp_msgVO;
 
 public class InnerMain implements ActionListener {
 	
@@ -28,6 +29,8 @@ public class InnerMain implements ActionListener {
 	public static int ORDERLIST = 6;
 	public static int ORDERDETAIL = 7;
 	public static int PAY = 8;
+	public static int CHATCON = 9;
+	public static int CHATRE = 10;
 	
 	JFrame frame = new JFrame();
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
@@ -38,8 +41,9 @@ public class InnerMain implements ActionListener {
 	Orderstatus_on ing = new Orderstatus_on(this);
 	OrderListUI orderlistUI = new OrderListUI(this);
 	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
+	ChatUI chatUI = new ChatUI(this);
 	PayUI payUI = new PayUI(this);
-	
+	int idnum;
 	JPanel panel;
 	
 	//Constructor
@@ -266,6 +270,18 @@ public class InnerMain implements ActionListener {
 			frame.add(orderlistUI.init());
 		}else if(ui == PAY) {
 			frame.add(payUI.init());
+		}else if(ui == CHATCON) {
+			idnum += 1;
+			chatUI.createsocket(idnum);
+			frame.add(chatUI.init());
+		}else if(ui == CHATRE) {
+			frame.add(chatUI.init());
+			String[] array = chatUI.msg_array;
+			String msg = "";
+			for(int i=0;i<array.length;i++) {
+				msg += array[i]+"\n";
+			}
+			chatUI.chatmain.setText(msg);
 		}
 	}
 	

@@ -26,7 +26,7 @@ public class MenulistUI implements ActionListener {
 	JButton btn_cart;
 	JPanel panel;
 	InnerMain main;
-	MenulistUI2 list2;
+//	MenulistUI2 list2;
 	DetailMenuUI detail;
 	
 	public MenulistUI() {
@@ -34,8 +34,8 @@ public class MenulistUI implements ActionListener {
 	}
 	public MenulistUI(InnerMain main) {
 		this.main = main;
-		initialize();
-		list2 = new MenulistUI2(this,main);
+		//initialize();
+		//list2 = new MenulistUI2(this,main);
 		detail = new DetailMenuUI(main, this);
 	}
 	
