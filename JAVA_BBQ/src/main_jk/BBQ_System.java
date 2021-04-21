@@ -3,13 +3,14 @@ package main_jk;
 import java.util.ArrayList;
 
 import BBQ_DAO_jk.MemberDAO;
+import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.MemberVO;
 
 
 public class BBQ_System {
 	//Field
 	MemberDAO mdao = new MemberDAO();	
-	
+	OrderDAO odao = new OrderDAO();
 	//login 결과
 	public static boolean LOGIN_RESULT = false;
 	
@@ -34,6 +35,11 @@ public class BBQ_System {
 	public boolean idcheck(String id) {	
 		return mdao.getJoinIdResult(id);
 	}
+	
+//	/** 장바구니 메뉴생성 **/
+//	public	ArrayList<String> menulist() {	
+//		return odao.getShopBasketResult();
+//	}
 	
 	
 	/** 종료 **/

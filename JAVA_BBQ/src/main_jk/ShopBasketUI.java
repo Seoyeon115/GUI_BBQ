@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,6 +17,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+import BBQ_DAO_jk.OrderDAO;
+import BBQ_VO.MemberVO;
 import main.Commons;
 import main.OrderUI;
 
@@ -26,11 +28,13 @@ public class ShopBasketUI {
 	   JButton btn_check,btn_back,btn_alldel,btn_order,btn_pay,btn_all_delete,
 	         btn_mdelete, btn_madd, btn_minus;
 	   JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
-	   JLabel total_label,price_label;
+	   public JLabel total_label,price_label, menu_label, option_label, m_price_label;
 	   JTextField tf_madd;
 	   OrderUI order;
 	   InnerMain main;
 	   MenulistUI list1;
+	   OrderDAO orderlist = new OrderDAO();
+	   MemberVO member = new MemberVO();
 	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
 	   
 	   // Constructor
@@ -87,8 +91,7 @@ public class ShopBasketUI {
 	      top_panel.add(BorderLayout.EAST, new JPanel(new GridLayout(1, 1)).add(btn_all_delete));
 	      
 	      //center_panel
-	      
-	      menulist_btn();
+	      menulist();
 	      JPanel order_panel = new JPanel(new GridLayout(2,1));
 	      order_panel.setBackground(new Color(255, 255, 255));
 	      btn_order = new JButton("추가 주문");
@@ -124,39 +127,36 @@ public class ShopBasketUI {
 
 	   
 	   /** 메뉴 생성 GUI **/
-	   public JPanel menulist() {
-			JPanel pc = new JPanel();
-			
-			f.add(pc,BorderLayout.CENTER);
-			
-			menu_panel = new JPanel(new GridLayout(1,8)) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(50,100);
-				}
-			};
-			menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-			pc.add(menu_panel);
-			f.setVisible(true);
-		   
+	   public void menulist() {
+		   try {
+			   while(orderlist.rs.next()) {
+				JPanel pc = new JPanel();
+				
+				f.add(pc,BorderLayout.CENTER);
+				
+				menu_panel = new JPanel(new GridLayout(1,8)) {
+					@Override
+					public Dimension getPreferredSize() {
+						return new Dimension(50,100);
+					}
+				};
+				menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+				pc.add(menu_panel);
+				f.setVisible(true);
+			   
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
-	      JLabel menu_label = new JLabel("select menu");
-	      JLabel option_label = new JLabel("option");
-	      JLabel price_label = new JLabel("price");
-	      
-	      JPanel left_panel =new JPanel(new GridLayout(3,1));
-	      left_panel.add(menu_label);
-	      left_panel.add(option_label);
-	      left_panel.add(price_label);
-	      menu_panel.add(BorderLayout.WEST, left_panel);
-	      
-	      return menu_panel;
-	   }//menulist
-	   
-	   public void menulist_btn() {
-		   menulist();
-		   
+				orderlist.getShopBasketResult();
+			  menu_label = new JLabel();
+			  option_label = new JLabel();
+			  m_price_label = new JLabel();
+			  JPanel left_panel =new JPanel(new GridLayout(3,1));
+//			  left_panel.add(menu_label);
+//			  left_panel.add(option_label);
+//			  left_panel.add(price_label);
+			  left_panel.add(orderlist.getShopBasketResult());
+			  menu_panel.add(BorderLayout.WEST, left_panel);
+			  
 	      JPanel right_panel =new JPanel();
 	      btn_mdelete = new JButton("x");
 	      btn_mdelete.setFont(Commons.getFont(10));
@@ -165,7 +165,7 @@ public class ShopBasketUI {
 	      btn_madd = new JButton("+");
 	      btn_minus = new JButton("-");
 	      tf_madd = new JTextField(8);
-	     
+//	      tf_madd.setText(orderlist.rs.getString("b_amt"));
 	      JPanel count_panel = new JPanel();
 	      count_panel.add(btn_minus);
 	      count_panel.add(tf_madd);
@@ -179,13 +179,16 @@ public class ShopBasketUI {
 	      center_panel.add(menu_panel);    
 //	      panel_content.add(center_panel);     
 	      
-	      
 	      btn_mdelete.addActionListener(eventobj);
 	      tf_madd.addActionListener(eventobj);
 	      btn_madd.addActionListener(eventobj);
 	      btn_minus.addActionListener(eventobj);
-	      
-	    
+		}
+		   }catch (Exception e) {
+			// TODO: handle exception
+		}
+//		   }
+
 	   }//menulist_btn
 
 
