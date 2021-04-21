@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
-import BBQ_VO.Temp_msgVO;
 
 public class InnerMain implements ActionListener {
 	
