@@ -1,15 +1,7 @@
 package BBQ_VO;
 
 public class MemberVO {
-	String id, pass,cpass, name, hp1, hp2, hp3, addr1, addr2;
-
-	public String getCpass() {
-		return cpass;
-	}
-
-	public void setCpass(String cpass) {
-		this.cpass = cpass;
-	}
+	String id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;
 
 	public String getId() {
 		return id;
@@ -27,6 +19,14 @@ public class MemberVO {
 		this.pass = pass;
 	}
 
+	public String getCpass() {
+		return cpass;
+	}
+
+	public void setCpass(String cpass) {
+		this.cpass = cpass;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -34,7 +34,6 @@ public class MemberVO {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	public String getHp1() {
 		return hp1;
@@ -75,7 +74,5 @@ public class MemberVO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
-
-
+	
 }
-

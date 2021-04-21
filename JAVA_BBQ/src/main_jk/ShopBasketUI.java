@@ -19,19 +19,19 @@ import javax.swing.border.BevelBorder;
 
 import main.Commons;
 import main.OrderUI;
-import mainlistui.InnerMain;
-import mainlistui.MenulistUI;
 
-public class ShopBasketUI implements ActionListener{
+public class ShopBasketUI {
 	  // Field
 	   JFrame f;
 	   JButton btn_check,btn_back,btn_alldel,btn_order,btn_pay,btn_all_delete,
 	         btn_mdelete, btn_madd, btn_minus;
 	   JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
 	   JLabel total_label,price_label;
+	   JTextField tf_madd;
 	   OrderUI order;
 	   InnerMain main;
 	   MenulistUI list1;
+	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -115,10 +115,10 @@ public class ShopBasketUI implements ActionListener{
 	      
 	      f.setVisible(true);
 	      
-	      btn_back.addActionListener(this);
-	      btn_all_delete.addActionListener(this);
-	      btn_order.addActionListener(this);
-	      btn_pay.addActionListener(this);
+	      btn_back.addActionListener(eventobj);
+	      btn_all_delete.addActionListener(eventobj);
+	      btn_order.addActionListener(eventobj);
+	      btn_pay.addActionListener(eventobj);
 	      
 	   }//init
 
@@ -164,7 +164,7 @@ public class ShopBasketUI implements ActionListener{
 	      btn_mdelete.setBounds(200, 0, 40, 38);
 	      btn_madd = new JButton("+");
 	      btn_minus = new JButton("-");
-	      JTextField tf_madd = new JTextField(8);
+	      tf_madd = new JTextField(8);
 	     
 	      JPanel count_panel = new JPanel();
 	      count_panel.add(btn_minus);
@@ -180,45 +180,13 @@ public class ShopBasketUI implements ActionListener{
 //	      panel_content.add(center_panel);     
 	      
 	      
-	      btn_mdelete.addActionListener(this);
-	      btn_madd.addActionListener(this);
-	      btn_minus.addActionListener(this);
+	      btn_mdelete.addActionListener(eventobj);
+	      tf_madd.addActionListener(eventobj);
+	      btn_madd.addActionListener(eventobj);
+	      btn_minus.addActionListener(eventobj);
 	      
 	    
 	   }//menulist_btn
 
-	   @Override
-	   public void actionPerformed(ActionEvent e) {
-	      Object obj = e.getSource();
-	      
-	      if(obj == btn_back) {  
-	    	  f.setVisible(false);
-	    	  new InnerMain();
-	    	  
-	      }else if(obj == btn_all_delete) {
-	         System.out.println("전체삭제");
-	         
-	      }else if(obj == btn_order) {
-	         System.out.println("추가 주문");
-	         new MenulistUI();
-	         
-	      }else if(obj == btn_pay) {
-	         f.setVisible(false);
-	         new PayUI();
-	         
-	      }else if(obj == btn_mdelete) {
-	         System.out.println("삭제");
-	         menu_panel.setVisible(false);
-	         center_panel.remove(menu_panel);
-	         
-	      }else if(obj == btn_madd) {
-	         System.out.println("추가");
-	         
-	      }else if(obj == btn_minus) {
-	         System.out.println("빼기");
-	         
-	         
-	      }
-	   }//actionPerformed
 
 	}//ShopBasketUI

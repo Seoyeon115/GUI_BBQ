@@ -2,9 +2,7 @@ package BBQ_DAO_jk;
 
 import BBQ_VO.MemberVO;
 
-
 public class MemberDAO extends DBConn{
-	
 	
 	/** 로그인 처리 **/
 	public boolean getLoginResult (String id, String pass) {
