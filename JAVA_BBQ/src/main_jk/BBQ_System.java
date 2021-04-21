@@ -31,8 +31,8 @@ public class BBQ_System {
 	}
 	
 	/** 아이디 중복체크 **/
-	public boolean idcheck(MemberVO member) {	
-		return mdao.getJoinIdResult(member);
+	public boolean idcheck(String id) {	
+		return mdao.getJoinIdResult(id);
 	}
 	
 	

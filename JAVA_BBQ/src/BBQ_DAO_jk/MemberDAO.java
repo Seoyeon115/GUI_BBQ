@@ -56,14 +56,14 @@ public class MemberDAO extends DBConn{
 	}
 	
 	/** 아이디 중복 확인 **/
-	public boolean getJoinIdResult(MemberVO member) {
+	public boolean getJoinIdResult(String id) {
 		boolean result = false;
 		try {
 			String sql ="SELECT COUNT(*) FROM BBQ_MEMBER "
 					+ "WHERE ID =? "; 
 			getPreparedStatement(sql);
 			
-			pstmt.setString(1, member.getId());
+			pstmt.setString(1, id);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
