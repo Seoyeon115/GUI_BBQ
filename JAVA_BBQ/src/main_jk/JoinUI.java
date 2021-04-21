@@ -21,6 +21,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import BBQ_DAO_jk.MemberDAO;
+import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.MemberVO;
 
 
@@ -34,6 +35,7 @@ public class JoinUI implements ActionListener {
 	ArrayList<Object> list =new ArrayList<Object>();
 	LoginUI log;
 	MemberDAO mdao = new MemberDAO();
+	OrderDAO odao = new OrderDAO();
 	public BBQ_System system = new BBQ_System();
 	
 	
@@ -199,7 +201,6 @@ public class JoinUI implements ActionListener {
 				JOptionPane.showMessageDialog(null, 
 						Commons.getMsg("이미 사용중인 아이디입니다.."));
 			}
-			
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 
