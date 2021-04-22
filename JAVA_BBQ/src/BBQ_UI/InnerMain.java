@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
 
@@ -30,6 +31,7 @@ public class InnerMain implements ActionListener {
 	public static int PAY = 8;
 	
 	JFrame frame = new JFrame();
+	BBQ_System system;
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
 	MenulistUI list1 = new MenulistUI(this);
 	MenulistUI2 list2 = new MenulistUI2(this);
@@ -43,7 +45,16 @@ public class InnerMain implements ActionListener {
 	JPanel panel;
 	
 	//Constructor
-	public InnerMain() {
+	public InnerMain(BBQ_System system) {
+		this.system = system;
+		list1 = new MenulistUI(this);
+		list2 = new MenulistUI2(this);
+		detailMenu = new DetailMenuUI(this);
+		basket = new ShopBasketUI(this);
+		ing = new Orderstatus_on(this);
+		orderlistUI = new OrderListUI(this);
+		orderDetailUI = new OrderDetailUI(this);
+		payUI = new PayUI(this);
 		init();
 	}
 	

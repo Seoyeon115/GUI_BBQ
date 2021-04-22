@@ -3,12 +3,19 @@ package BBQ_SYSTEM;
 import java.util.ArrayList;
 
 import BBQ_DAO.MemberDAO;
+import BBQ_DAO.MenuDAO;
+import BBQ_DAO.OrderDAO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.MenuVO;
+import BBQ_VO.OrderVO;
 
 
 public class BBQ_System {
 	//Field
 	MemberDAO mdao = new MemberDAO();	
+	MenuDAO mndao = new MenuDAO();
+	OrderDAO odao = new OrderDAO();
+	ArrayList<MenuVO> cart; // 장바구니
 	
 	//login 결과
 	public static boolean LOGIN_RESULT = false;
@@ -64,6 +71,17 @@ public class BBQ_System {
 //		return sdao.getDeleteResult(name);
 //	}
 	
+	public boolean addCart(MenuVO menu) {
+		return cart.add(menu);
+	}
+	
+	public MenuVO getMenuInfo(int mid) {
+		return mndao.getMenu(mid);
+	}
+	
+	public ArrayList<OrderVO> getOrderList(){
+		return odao.getOrderList("test");
+	}
 	
 }//class
 

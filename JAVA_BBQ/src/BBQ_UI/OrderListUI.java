@@ -9,20 +9,20 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
-import BBQ_VO.MenuVO;
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.OrderVO;
 
 // 상세 메뉴창 미완성
 public class OrderListUI implements ActionListener{
 //	JFrame frame;
 	InnerMain main;
+	BBQ_System system;
 	JPanel panel_content;
 	JButton button_back;
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
@@ -35,12 +35,14 @@ public class OrderListUI implements ActionListener{
 	// 생성자, 메뉴 정보를 매개변수로 받는다
 		public OrderListUI(InnerMain main) {
 			this.main = main;
-//			this.orderlist = orderlist;
+			this.system = main.system;
 //			init();
 		}
 		
 	//Method	
 	public JPanel init() {
+		orderlist = system.getOrderList();
+		
 		// 프레임
 //		frame = new JFrame();
 //		frame.setResizable(false); // 크기 조절 불가
