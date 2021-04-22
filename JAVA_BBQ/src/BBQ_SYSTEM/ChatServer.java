@@ -43,10 +43,11 @@ public class ChatServer {
 
 	}// init
 
+	
 	public void broadcast(MessageVO vo) {
 		try {
 			if (vo.getStatus() == MessageVO.CONNECT) {
-				vo.setContent("Client ¥‘ ¿‘¿Â");
+				vo.setContent("¥‘ ¿‘¿Â");
 				idlist.add(String.valueOf(vo.getIdnum()));
 				users.add(vo.getName());
 
@@ -109,11 +110,10 @@ public class ChatServer {
 					MessageVO vo = (MessageVO) ois.readObject();
 					broadcast(vo);
 				}
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			
 		}
 
 	}

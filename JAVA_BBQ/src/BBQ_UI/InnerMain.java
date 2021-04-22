@@ -31,13 +31,14 @@ public class InnerMain implements ActionListener {
 	public static int CHATCON = 9;
 	public static int CHATRE = 10;
 	
+	String id,pass;
 	JFrame frame = new JFrame();
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
 	MenulistUI list1 = new MenulistUI(this);
 	MenulistUI2 list2 = new MenulistUI2(this);
 	DetailMenuUI detailMenu = new DetailMenuUI(this);
 	ShopBasketUI basket = new ShopBasketUI(this);
-	Orderstatus_on ing = new Orderstatus_on(this);
+	Orderstatus_on ing;
 	OrderListUI orderlistUI = new OrderListUI(this);
 	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
 	ChatUI chatUI = new ChatUI(this);
@@ -46,8 +47,10 @@ public class InnerMain implements ActionListener {
 	JPanel panel;
 	
 	//Constructor
-	public InnerMain() {
+	public InnerMain(String id) {
+		this.id =id;
 		init();
+		ing = new Orderstatus_on(this,id);
 	}
 	
 	//Method
@@ -270,8 +273,8 @@ public class InnerMain implements ActionListener {
 		}else if(ui == PAY) {
 			frame.add(payUI.init());
 		}else if(ui == CHATCON) {
-			idnum += 1;
-			chatUI.createsocket(idnum);
+//			idnum += 1;
+//			chatUI.createsocket(idnum);
 			frame.add(chatUI.init());
 		}else if(ui == CHATRE) {
 			frame.add(chatUI.init());

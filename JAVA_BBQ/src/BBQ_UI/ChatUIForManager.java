@@ -31,11 +31,15 @@ public class ChatUIForManager implements ActionListener {
 	JTextArea chatmain;
 	JButton btn_send;
 	JTextField send_jtf;
+	String name;
+	int idnum;
 	
 	// Construct
-	public ChatUIForManager(int idnum) {
+	public ChatUIForManager(int idnum,String name) {
 		try {
-			s = new Socket("localhost", 9000);
+			this.name = name;
+			this.idnum = idnum;
+			s = new Socket("127.0.0.1", 9000);
 
 			oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());
@@ -43,10 +47,9 @@ public class ChatUIForManager implements ActionListener {
 			// 1.처음접속
 			MessageVO vo = new MessageVO();
 			vo.setStatus(MessageVO.CONNECT);
-			vo.setName("Client");
+			vo.setName(name);
 			vo.setIdnum(idnum);
 			oos.writeObject(vo);
-
 			init();
 
 			// 수신작업 실행(무한루프) - inner class 형식의 쓰레드 객체 생성
@@ -104,7 +107,8 @@ public class ChatUIForManager implements ActionListener {
 				try {
 					MessageVO vo = new MessageVO();
 					vo.setStatus(MessageVO.EXIT);
-					vo.setName("Client");
+					vo.setName(name);
+					vo.setIdnum(idnum);
 					oos.writeObject(vo);
 					frame.dispose();
 				} catch (Exception e2) {
@@ -127,12 +131,19 @@ public class ChatUIForManager implements ActionListener {
 					
 					MessageVO vo = (MessageVO) ois.readObject();
 					if(vo.getStatus() == MessageVO.CONNECT) {
-						jlist.setListData(vo.getUsers());
-						chatmain.append(vo.getContent() + "\n");
+//						jlist.setListData(vo.getUsers());
+						if(vo.getIdnum() == idnum) {
+						chatmain.append("Owner" + vo.getContent() + "\n");
+						}else {
+							chatmain.append(vo.getName() + vo.getContent() + "\n");
+						}
 					}else if(vo.getStatus() == MessageVO.TALK) {
 						
-						chatmain.append(vo.getName()+" > "+vo.getContent() + "\n");
-						
+						if(vo.getIdnum() == idnum) {
+							chatmain.append("Owner > " + vo.getContent() + "\n");
+							}else {
+								chatmain.append(vo.getName()+ " > " + vo.getContent() + "\n");
+							}
 					}
 
 				}
@@ -152,10 +163,15 @@ public class ChatUIForManager implements ActionListener {
 				try {
 					MessageVO vo = new MessageVO();
 					vo.setStatus(MessageVO.TALK);
-					vo.setName("Client");
+					vo.setName(name);
 					vo.setContent(send_jtf.getText());
+					vo.setIdnum(idnum);
+					
+//					chatmain.append("Owner > "+send_jtf.getText() + "\n");
 					
 					oos.writeObject(vo);
+					send_jtf.setText("");
+					send_jtf.requestFocus();
 					
 				} catch (Exception e2) {
 					e2.printStackTrace();

@@ -16,18 +16,17 @@ import javax.swing.JPanel;
 
 public class Orderstatus_on implements ActionListener {
 	InnerMain main;
-	ChatUI chat;
 	
 	JFrame frame;
 	JPanel panel;
 	JButton btn_home, btn_cart,btn_chat;
 	boolean existchat = false;
+	ChatUI2 UI;
+	String id;
 
-
-	public Orderstatus_on(InnerMain main) {
+	public Orderstatus_on(InnerMain main,String id) {
 		this.main = main;
-		
-		//chat = new ChatUI(main,this);
+		this.id = id;
 	}
 	
 	public JPanel init() {
@@ -187,15 +186,28 @@ public class Orderstatus_on implements ActionListener {
 //			main.panelinit();
 			main.switchPanel(InnerMain.MAIN);
 		} else if (obj == btn_chat) {
+			int idnum=0;
 			if (existchat == false) {
-				panel.setVisible(false);
-				main.switchPanel(InnerMain.CHATCON);
+				idnum =+1;
+				
+				UI = new ChatUI2(idnum,main,id);
+//				panel.setVisible(false);
+//				main.chatUI.createsocket(idnum);
+//				main.switchPanel(InnerMain.CHATCON);
 				existchat = true;
 			}
 			else if (existchat == true) {
-				panel.setVisible(false);
-				main.switchPanel(InnerMain.CHATRE);
+				UI.frame.setLocationRelativeTo(main.frame);
+				main.frame.setVisible(false);
+				UI.frame.setVisible(true);
 				
+//				panel.setVisible(false);
+//				String[] array = UI.msg_array;
+//				String msg = "";
+//				for(int i=0;i<array.length;i++) {
+//					msg += array[i]+"\n";
+//				}
+//				main.switchPanel(InnerMain.CHATRE);
 			}
 
 		}
