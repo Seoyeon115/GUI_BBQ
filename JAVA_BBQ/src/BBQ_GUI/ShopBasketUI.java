@@ -1,4 +1,4 @@
-package main_sy;
+package BBQ_GUI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,8 +9,8 @@ import javax.swing.border.BevelBorder;
 import main.Commons;
 import main_jk.OrderUI;
 import main_jk.PayUI;
-import mainlistui.InnerMain;
-import mainlistui.MenulistUI;
+//import mainlistui.InnerMain;
+//import mainlistui.MenulistUI;
 
 public class ShopBasketUI implements ActionListener {
 	// Field
@@ -19,8 +19,8 @@ public class ShopBasketUI implements ActionListener {
 	JPanel panel_content, top_panel, center_panel, menu_panel, bottom_panel;
 	JLabel total_label, price_label;
 	OrderUI order;
-	InnerMain main;
-    MenulistUI list1;
+//	InnerMain main;
+//    MenulistUI list1;
 
  // Constructor
     public ShopBasketUI() {
@@ -171,14 +171,14 @@ public class ShopBasketUI implements ActionListener {
        
        if(obj == btn_back) {  
           f.setVisible(false);
-          new InnerMain();
+//          new InnerMain();
           
        }else if(obj == btn_all_delete) {
           System.out.println("전체삭제");
           
        }else if(obj == btn_order) {
           System.out.println("추가 주문");
-          new MenulistUI();
+//          new MenulistUI();
           
        }else if(obj == btn_pay) {
           f.setVisible(false);
