@@ -7,6 +7,7 @@ import BBQ_DAO.MenuDAO;
 import BBQ_DAO.OrderDAO;
 import BBQ_VO.MemberVO;
 import BBQ_VO.MenuVO;
+import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
 
 
@@ -80,7 +81,26 @@ public class BBQ_System {
 	}
 	
 	public ArrayList<OrderVO> getOrderList(){
-		return odao.getOrderList("test");
+		ArrayList<OrderVO> orderlist = odao.getOrderList("test");
+		for(OrderVO order : orderlist) {
+			order.setPrice(getOrderPrice(order));
+		}
+		
+		return orderlist;
+	}
+	
+	public int getOrderPrice(OrderVO order) {
+		int price = 0;
+		
+		for(MenuVO menu : order.getMenulist()) {
+			price += menu.getPrice();
+			
+			for(OptionVO option : menu.getOptions()) {
+				price += option.getPrice();
+			}
+		}
+		
+		return price;
 	}
 	
 }//class

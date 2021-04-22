@@ -14,7 +14,7 @@ public class OrderDAO extends DBConn {
 	
 	public ArrayList<OrderVO> getOrderList(String uid){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
-		ArrayList<Integer> idlist = new ArrayList<Integer>();
+		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
 		
 		try {
 			String sql = "select orderid, request, addr, odate "
@@ -27,7 +27,7 @@ public class OrderDAO extends DBConn {
 			while(rs.next()) {
 				OrderVO order = new OrderVO();
 				
-				idlist.add(rs.getInt(1));
+				orderIdList.add(rs.getInt(1));
 				
 //				order.setMenulist(getOrderDetail(rs.getInt(1)));
 				order.setMessage(rs.getString(2));
@@ -37,6 +37,10 @@ public class OrderDAO extends DBConn {
 				orderlist.add(order);
 			}
 			
+			for(int i=0;i<orderlist.size();i++) {
+				ArrayList<MenuVO> menulist = getOrderDetail(orderIdList.get(i));
+				orderlist.get(i).setMenulist(menulist);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,6 +51,8 @@ public class OrderDAO extends DBConn {
 	
 	public ArrayList<MenuVO> getOrderDetail(int orderId){
 		ArrayList<MenuVO> orderDetail = new ArrayList<MenuVO>();
+		ArrayList<Integer> midList = new ArrayList<Integer>();
+		ArrayList<String[]> oidList = new ArrayList<String[]>();
 		
 		try {
 			String sql = "select name, price, d.mid, options "
@@ -63,10 +69,16 @@ public class OrderDAO extends DBConn {
 				menu.setName(rs.getString(1));
 				menu.setPrice(rs.getInt(2));
 				
-				String[] options = rs.getString(4).split("/");
-				menu.setOptions(getOptions(rs.getInt(3), options));
+				midList.add(rs.getInt(3));
+				oidList.add(rs.getString(4).split("/"));
 				
 				orderDetail.add(menu);
+			}
+			
+			for(int i=0;i<orderDetail.size();i++) {
+				int mid = midList.get(i);
+				String[] options = oidList.get(i);
+				orderDetail.get(i).setOptions(getOptions(mid, options));
 			}
 			
 		} catch (Exception e) {
@@ -86,13 +98,13 @@ public class OrderDAO extends DBConn {
 			for(String oid : oidlist) {
 				getPreparedStatement(sql);
 				pstmt.setInt(1, mid);
-				pstmt.setInt(2, Integer.getInteger(oid));
+				pstmt.setInt(2, Integer.parseInt(oid));
 				
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					OptionVO op = new OptionVO();
 					
-					op.setOid(Integer.getInteger(oid));
+					op.setOid(Integer.parseInt(oid));
 					op.setName(rs.getString(1));
 					op.setPrice(rs.getInt(2));
 					

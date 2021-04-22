@@ -52,7 +52,7 @@ public class OrderListUI implements ActionListener{
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setLayout(null);
 		
-		this.orderlist = new ArrayList<OrderVO>(); // DB에서 주문 내역 리스트를 불러와서 orderlist에 저장하기
+//		this.orderlist = new ArrayList<OrderVO>(); // DB에서 주문 내역 리스트를 불러와서 orderlist에 저장하기
 		
 		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
