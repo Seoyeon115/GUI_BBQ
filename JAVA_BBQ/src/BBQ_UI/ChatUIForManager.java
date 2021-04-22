@@ -132,16 +132,16 @@ public class ChatUIForManager implements ActionListener {
 					MessageVO vo = (MessageVO) ois.readObject();
 					if(vo.getStatus() == MessageVO.CONNECT) {
 //						jlist.setListData(vo.getUsers());
-						if(vo.getIdnum() == idnum) {
+						if(vo.getName().equals(name) && vo.getIdnum() == idnum) {
 						chatmain.append("Owner" + vo.getContent() + "\n");
-						}else {
+						}else if(vo.getName().equals(name)) {
 							chatmain.append(vo.getName() + vo.getContent() + "\n");
 						}
 					}else if(vo.getStatus() == MessageVO.TALK) {
 						
-						if(vo.getIdnum() == idnum) {
+						if(vo.getName().equals(name) && vo.getIdnum() == idnum) {
 							chatmain.append("Owner > " + vo.getContent() + "\n");
-							}else {
+							}else if(vo.getName().equals(name)){
 								chatmain.append(vo.getName()+ " > " + vo.getContent() + "\n");
 							}
 					}
