@@ -8,8 +8,14 @@ public class MenuVO {
 	ImageIcon image;
 	String name, desc;
 	ArrayList<OptionVO> options;
-	int price;
+	int mid, price;
 	
+	public int getMid() {
+		return mid;
+	}
+	public void setMid(int mid) {
+		this.mid = mid;
+	}
 	public ImageIcon getImage() {
 		return image;
 	}
