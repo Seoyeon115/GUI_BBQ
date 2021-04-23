@@ -129,7 +129,6 @@ public class ShopBasketUI {
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
-		   list = orderlist.getShopBasketResult(String id);
 		   try {
 			   while(orderlist.rs.next()) {
 				JPanel pc = new JPanel();

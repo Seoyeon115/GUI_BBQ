@@ -23,7 +23,7 @@ OrderVO order;
 			
 			pstmt.setString(1, "1111");
 			pstmt.setString(2, member.getId());
-			pstmt.setString(3, "order.getMenulist()");
+			pstmt.setString(3, "order.getMenulist()");//menu리스트 고민중
 			pstmt.setInt(4, 3);
 			pstmt.setString(5, order.getMessage());
 			pstmt.setString(6, order.getAddr());
@@ -75,8 +75,8 @@ OrderVO order;
 		return ordervo;
 	}		
 	
-	/** 장바구니 주문 조회**/
-	public OrderVO getShopBasketResult(String id) {
+	/** 장바구니 주문 조회**/  //메뉴담기 고민중...
+	public ArrayList<MenuVO> getShopBasketResult(String id) {
 		ArrayList<MenuVO> menulist = new ArrayList<MenuVO>();
 		
 		try {
@@ -99,7 +99,7 @@ OrderVO order;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return vo;
+		return menulist;
 	}		
 		
 	/** 결제 처리**/
