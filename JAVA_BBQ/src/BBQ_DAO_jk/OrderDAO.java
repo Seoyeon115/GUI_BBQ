@@ -1,19 +1,17 @@
 package BBQ_DAO_jk;
 
-import java.awt.GridLayout;
-
-import javax.swing.JPanel;
+import java.util.ArrayList;
 
 import BBQ_VO.MemberVO;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
-import main_jk.ShopBasketUI;
 
 
 public class OrderDAO extends DBConn{
 MemberVO member;
 MenuVO menu;
 OrderVO order;
+
 
 	/** 주문 DB 등록 처리**/
 	public boolean getOrderResult() {
@@ -43,37 +41,66 @@ OrderVO order;
 		}
 		return result;
 	}
+
+	/** 전체 정보 조회 **/
+	public ArrayList<OrderVO> getShopBasket() {
+		ArrayList<OrderVO> ordervo = new ArrayList<OrderVO>();
+		
+		try {
+			String sql = " SELECT  ROWNUM RNO, B.ORDERID, M.NAME, M.PRICE, D.AMOUNT, D.OPTIONS "
+					+ " FROM BBQ_MEMBER I,BBQ_ORDER B , BBQ_ORDER_DETAIL D, MENU_DATA M "
+					+ " WHERE I.ID=B.USER_ID and B.ORDERID=D.ORDERID AND D.MID=M.MID  AND B.MID=M.MID " 
+					+ " AND B.ORDERID = ?";
+					
+			getPreparedStatement(sql);
+			pstmt.setString(1, "100"); //주문번호
+			rs = pstmt.executeQuery();
+			
+			
+			while(rs.next()) {	
+				OrderVO vo = new OrderVO();
+				vo.setRno(rs.getString(1));
+				vo.setOrderid(rs.getString(2));
+				vo.setMenu(rs.getString(3));
+				vo.setPrice(rs.getInt(4));
+				vo.setAmt(rs.getInt(5));	
+				vo.setOption(rs.getString(6));	
+				
+				ordervo.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ordervo;
+	}		
 	
 	/** 장바구니 주문 조회**/
-	public JPanel getShopBasketResult() {
-		ShopBasketUI shop =new ShopBasketUI();
-		JPanel left_panel =new JPanel(new GridLayout(3,1));
+	public OrderVO getShopBasketResult(String id) {
+		ArrayList<MenuVO> menulist = new ArrayList<MenuVO>();
+		
 		try {
-			String sql = "SELECT, ROWNUM RNO, M_NAME, O_OPTION, M_PRICE,B_AMT " 
+			String sql = "SELECT, ROWNUM RNO, B_ORDER_NO, M_NAME, O_OPTION, M_PRICE,B_AMT " 
 					+ " FROM BBQ_MEMBER I, BBQ_ORDER B, BBQ_MENU M, BBQ_OPTION O "
 					+" WHERE  I.ID=B.B_USER_ID AND M_NAME = B_MENU "
 					+ "AND I.ID = ? ";
+					
 			getPreparedStatement(sql);
-			
-			String id = member.getId();
 			pstmt.setString(1, id);
 			
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				shop.menu_label.add(rs.getString("m_name"), null);
-				shop.menu_label.add(rs.getString("o_option"), null);
-				shop.menu_label.add(rs.getString("m_price"), null);
-				
-				left_panel.add(shop.menu_label);
-				 left_panel.add(shop.option_label);
-				  left_panel.add(shop.price_label);
+			while(rs.next()) {					
+				menulist.add(rs.getString(3));
+				menulist.add(rs.getString(4));
+				menulist.add(rs.getInt(5));
+				menulist.add(rs.getInt(6));			
 			}
-		}catch (Exception e) {
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return left_panel;
-	}
+		return vo;
+	}		
 		
 	/** 결제 처리**/
 	public void getPayResult() {

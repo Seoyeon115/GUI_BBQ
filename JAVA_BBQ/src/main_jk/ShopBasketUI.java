@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,6 +18,7 @@ import javax.swing.border.BevelBorder;
 
 import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.OrderVO;
 import main.Commons;
 import main.OrderUI;
 
@@ -35,6 +35,7 @@ public class ShopBasketUI {
 	   MenulistUI list1;
 	   OrderDAO orderlist = new OrderDAO();
 	   MemberVO member = new MemberVO();
+	   ArrayList<OrderVO> list;
 	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
 	   
 	   // Constructor
@@ -128,6 +129,7 @@ public class ShopBasketUI {
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
+		   list = orderlist.getShopBasketResult(String id);
 		   try {
 			   while(orderlist.rs.next()) {
 				JPanel pc = new JPanel();
@@ -146,15 +148,14 @@ public class ShopBasketUI {
 			   
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
-				orderlist.getShopBasketResult();
+			  orderlist.getShopBasketResult(member.getId());
 			  menu_label = new JLabel();
 			  option_label = new JLabel();
 			  m_price_label = new JLabel();
 			  JPanel left_panel =new JPanel(new GridLayout(3,1));
-//			  left_panel.add(menu_label);
-//			  left_panel.add(option_label);
-//			  left_panel.add(price_label);
-			  left_panel.add(orderlist.getShopBasketResult());
+			  left_panel.add(menu_label);
+			  left_panel.add(option_label);
+			  left_panel.add(price_label);
 			  menu_panel.add(BorderLayout.WEST, left_panel);
 			  
 	      JPanel right_panel =new JPanel();

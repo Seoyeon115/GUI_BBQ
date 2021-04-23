@@ -103,7 +103,7 @@ public class PayUI implements ActionListener{
 		addr_panel.add(BorderLayout.WEST, addr_label);
 		addr_panel.add(BorderLayout.EAST, tf_panel);
 
-		menu_panel.add(new ShopBasketUI().menulist());
+//		menu_panel.add(new ShopBasketUI().menulist());
 		
 		total_panel.add(total_label);
 		total_panel.add(price_label);
