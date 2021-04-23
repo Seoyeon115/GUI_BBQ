@@ -21,6 +21,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import BBQ_DAO.MemberDAO;
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MemberVO;
 
 
