@@ -193,7 +193,10 @@ public class JoinUI implements ActionListener {
 				tf.setText("");}
 
 		} else if (obj == id_chk_btn) {
-			if(system.idcheck(tf_id.getText())) {
+			if(tf_id.getText().equals("")) {
+	            JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요."));
+			
+			}else if(system.idcheck(tf_id.getText())) {
 				JOptionPane.showMessageDialog(null, 
 						Commons.getMsg("사용가능 한 아이디입니다."));
 				
