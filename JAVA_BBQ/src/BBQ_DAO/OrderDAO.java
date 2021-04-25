@@ -12,6 +12,27 @@ public class OrderDAO extends DBConn {
 		
 	}
 	
+	public boolean pushOrder(String uid, OrderVO order) {
+		boolean result = false;
+		
+		try {
+			String sql = "insert into bbq_order "
+					+ "values(seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate)";
+			getPreparedStatement(sql);
+			pstmt.setString(1, uid);
+			pstmt.setString(2, order.getMessage());
+			pstmt.setString(3, order.getAddr());
+			
+			if(pstmt.executeUpdate() != 0) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public ArrayList<OrderVO> getOrderList(String uid){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		ArrayList<Integer> orderIdList = new ArrayList<Integer>();

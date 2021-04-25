@@ -13,29 +13,29 @@ import BBQ_VO.OrderVO;
 
 public class BBQ_System {
 	//Field
-	MemberDAO mdao = new MemberDAO();	
-	MenuDAO mndao = new MenuDAO();
-	OrderDAO odao = new OrderDAO();
+	BBQ_Client client;
 	ArrayList<MenuVO> cart; // 장바구니
+	
+	String uid = "test";
 	
 	//login 결과
 	public static boolean LOGIN_RESULT = false;
 	
 	//Constructor
 	public BBQ_System() {		
-		
+		client = new BBQ_Client();
 	}
 	
 	
 	/** 로그인 **/
 	public boolean loginCheck(String id, String pass) {
-		return mdao.getLoginResult(id, pass);
+		return client.getLoginResult(id, pass);
 	}
 
 	
 	/** 회원가입 **/
 	public boolean join(MemberVO member) {	
-		return mdao.getJoinResult(member);
+		return client.getJoinResult(member);
 	}
 	/** 종료 **/
 //	public void close() {
@@ -77,11 +77,11 @@ public class BBQ_System {
 	}
 	
 	public MenuVO getMenuInfo(int mid) {
-		return mndao.getMenu(mid);
+		return client.getMenuInfo(mid);
 	}
 	
 	public ArrayList<OrderVO> getOrderList(){
-		ArrayList<OrderVO> orderlist = odao.getOrderList("test");
+		ArrayList<OrderVO> orderlist = client.getOrderList(uid);
 		for(OrderVO order : orderlist) {
 			order.setPrice(getOrderPrice(order));
 		}
@@ -102,7 +102,6 @@ public class BBQ_System {
 		
 		return price;
 	}
-	
 }//class
 
 
