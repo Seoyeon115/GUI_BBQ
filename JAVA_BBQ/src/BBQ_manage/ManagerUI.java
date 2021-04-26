@@ -27,6 +27,8 @@ import BBQ_UI.Commons;
 import BBQ_VO.MessageVO;
 
 public class ManagerUI implements ActionListener {
+	ManagerUImember memberui = new ManagerUImember();
+	ManagerUIorder orderui = new ManagerUIorder();
 
 	ArrayList<String> namelist = new ArrayList<String>();
 	JButton btn_modify, btn_ordertake, btn_chat;
@@ -39,15 +41,16 @@ public class ManagerUI implements ActionListener {
 	ArrayList<String> nameList = new ArrayList<String>();
 	JFrame frame;
 	JPanel panel;
+	JPanel contents = new JPanel(new BorderLayout());
 	JPanel west_pn;
 	ChatUIForManager ui;
-//	HashMap<String, ArrayList<String>> msglist;
 	ArrayList<MessageVO> msglist = new ArrayList<MessageVO>();
+	
+	
 
 	public ManagerUI() {
-
+		createsocket(0);
 		init();
-
 	}
 
 	public void createsocket(int idnum) {
@@ -63,8 +66,6 @@ public class ManagerUI implements ActionListener {
 			vo.setName("Owner_pn");
 			vo.setIdnum(idnum);
 			oos.writeObject(vo);
-
-			// main.frame.add(init());
 
 			// 수신작업 실행(무한루프) - inner class 형식의 쓰레드 객체 생성
 			ClientThread1 ct = new ClientThread1();
@@ -85,20 +86,12 @@ public class ManagerUI implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		// test용
-//		nameList.add("Owner_pn");
-//		nameList.add("test");
-//		nameList.add("test2");
-
-		JPanel panel = new JPanel(new BorderLayout());
+		panel = new JPanel(new BorderLayout());
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(25, 20, 932, 617);
 
 		JPanel west_pn = new JPanel(new GridLayout(7, 1, 0, 0));
 		west_pn.setBackground(new Color(255, 255, 255));
-		JPanel contants_pn = new JPanel(new BorderLayout());
-//		contants_pn.setBackground(new Color(204,0,51));
-//		contants_pn.setBackground(new Color(255,255,255));
 
 		ImageIcon modicon = new ImageIcon("images/정보수정.png");
 		ImageIcon modicon2 = new ImageIcon("images/정보수정2.png");
@@ -153,11 +146,31 @@ public class ManagerUI implements ActionListener {
 		west_pn.add(btn_ordertake_pn);
 		west_pn.add(btn_chat_pn);
 
-		// 컨텐츠 패널 챗목록
+		contents.setBackground(new Color(255, 255, 255));
+
+		JPanel firstmain = new JPanel();
+		firstmain.setBackground(new Color(255, 255, 255));
+
+		contents.add(firstmain);
+
+		panel.add(BorderLayout.CENTER, contents);
+		panel.add(BorderLayout.WEST, west_pn);
+		
+		btn_modify.addActionListener(this);
+		btn_ordertake.addActionListener(this);
+		btn_chat.addActionListener(this);
+
+		frame.add(panel);
+
+		frame.setVisible(true);
+
+	}
+
+	public JPanel chatPanel() {
+
+		JPanel contants_pn = new JPanel(new BorderLayout());
 		JPanel main = new JPanel();
 		main.setBackground(new Color(255, 255, 255));
-		// contants_pn.setLayout(null);
-		// main.setBounds(23,20,725,580);
 		roomList = new ArrayList<JPanel>();
 		wpList = new ArrayList<JPanel>();
 		btnList = new ArrayList<JButton>();
@@ -200,16 +213,7 @@ public class ManagerUI implements ActionListener {
 
 		contants_pn.add(BorderLayout.CENTER, scroll);
 
-		panel.add(BorderLayout.CENTER, contants_pn);
-		panel.add(BorderLayout.WEST, west_pn);
-
-		btn_chat.addActionListener(this);
-		btn_ordertake.addActionListener(this);
-
-		frame.add(panel);
-
-		frame.setVisible(true);
-
+		return contants_pn;
 	}
 
 	class ClientThread1 extends Thread {
@@ -245,48 +249,7 @@ public class ManagerUI implements ActionListener {
 							}
 						}
 					}
-
-					// vo 싹다 저장
-
 					msglist.add(vo);
-
-					// System.out.println(vo.getName() + vo.getContent());
-//					msglist = new HashMap<String, ArrayList<String>>();
-//					for (int i = 0; i < namelist.size(); i++) {
-//						if (namelist.get(i).equals(vo.getName())) {
-//							ArrayList<String> contents = new ArrayList<String>();
-//							contents.add(vo.getContent());
-//							msglist.put(vo.getName(), contents);
-//						}
-//					}
-//
-//					ArrayList<String> test = msglist.get("test");
-//					if (test != null) {
-//						for (int i = 0; i < test.size(); i++) {
-//							System.out.println(test.get(i) + "\n");
-//						};
-//					};
-//					for (int i = 0; i < namelist.size(); i++) {
-//						ArrayList<String> contents = new ArrayList<String>();
-//						msglist.put(namelist.get(i), contents);
-//					}
-//					;
-//					for (int i = 0; i < namelist.size(); i++) {
-//						if (namelist.get(i).equals(vo.getName())) {
-//							ArrayList<String> getcon = msglist.get(vo.getName());
-//							getcon.add(vo.getContent());
-//							msglist.put(vo.getName(), getcon);
-//						}
-//					}
-//					for (int i = 0; i < namelist.size(); i++) {
-//						if (namelist.get(i).equals(vo.getName())) {
-//							ArrayList<String> test = msglist.get(vo.getName());
-//							for (int j = 0; j < test.size(); j++) {
-//								System.out.println(test.get(j) + "\n");
-//							}
-//						}
-//					}
-
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -299,27 +262,28 @@ public class ManagerUI implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		if (obj == btn_ordertake) {
-			createsocket(0);
+		if (obj == btn_modify) {
+			System.out.println("수정버튼");
+			contents.removeAll();			
+			contents.add(BorderLayout.CENTER, memberui.init());
+//			contents.setVisible(true);
+			
+		} else if (obj == btn_ordertake) {
+			System.out.println("주문버튼");
+			contents.removeAll();			
+			contents.add(BorderLayout.CENTER, orderui.init());
+			
 		} else if (obj == btn_chat) {
-			// 새로고침
-//			ArrayList<String> currentmsg = new ArrayList<String>();
-//			for (int i = 0; i < nameList.size(); i++) {
-//				System.out.println(nameList.get(i));
-//				for(int j=0;j<msglist.size();j++) {
-//						if(nameList.get(i).equals(msglist.get(j).getName())) {
-//						System.out.println(nameList.get(i)+" > "+msglist.get(j).getContent());
-//						currentmsg.add(nameList.get(i)+" > "+msglist.get(j).getContent()+"\n");
-//					}
-//				}
-//			}
+			// 챗 패널 바꾸기
+			contents.removeAll();
+			contents.add(BorderLayout.CENTER, chatPanel());
 
+			// 새로고침
 			if (nameList.size() != 0) {
 				for (int j = 0; j < nameList.size(); j++) {
 					JPanel room = roomList.get(j);
 					String name = nameList.get(j);
 					JPanel west_pn = wpList.get(j);
-//					JButton enterroom = btnList.get(j);
 
 					JLabel roomname = new JLabel(name);
 					String currentmsg = new String();
@@ -361,19 +325,15 @@ public class ManagerUI implements ActionListener {
 								if (check == false) {
 									idnum += 1;
 									ui = new ChatUIForManager(idnum, name, msglist);
-									// check = true;
 								}
-//								else {
-//									ui.frame.setVisible(true);
-//								}
 							}
 						}
 					});
 				}
 			}
 
-			frame.revalidate();
 		}
+		frame.revalidate();
 
 	}
 

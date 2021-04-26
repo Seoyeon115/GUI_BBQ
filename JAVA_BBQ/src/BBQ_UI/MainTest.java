@@ -3,7 +3,7 @@ package BBQ_UI;
 public class MainTest {
 
 	public static void main(String[] args) {
-		//new InnerMain("test");
-		new StartUI();
+		new InnerMain("test");
+		//new StartUI();
 	}
 }
