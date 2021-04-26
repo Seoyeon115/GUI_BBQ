@@ -1,8 +1,9 @@
 package BBQ_VO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OrderVO {
+public class OrderVO implements Serializable{
 	public static int PREPARING = 0;
 	public static int DELIVERING = 1;
 	public static int COMPLETE = 2;

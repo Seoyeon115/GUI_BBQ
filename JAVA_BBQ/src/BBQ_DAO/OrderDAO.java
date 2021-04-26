@@ -14,10 +14,11 @@ public class OrderDAO extends DBConn {
 	
 	public boolean pushOrder(String uid, OrderVO order) {
 		boolean result = false;
+		String orderId = "";
 		
 		try {
 			String sql = "insert into bbq_order "
-					+ "values(seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate)";
+					+ "values('order_'||seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate)";
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);
 			pstmt.setString(2, order.getMessage());
@@ -26,6 +27,62 @@ public class OrderDAO extends DBConn {
 			if(pstmt.executeUpdate() != 0) {
 				result = true;
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(result) orderId = getLastOrderId(uid);
+		if(!orderId.equals("")) result = pushOrderDetail(orderId, order.getMenulist());
+		
+		return result;
+	}
+	
+	public String getLastOrderId(String uid) {
+		String orderId = "";
+		
+		try {
+			String sql = "select orderId "
+					+ " from (select orderId from bbq_order "
+					+ " where user_id = ? order by orderId desc) "
+					+ " where rownum = 1";
+			
+			getPreparedStatement(sql);
+			pstmt.setString(1, uid);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				orderId = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderId;
+	}
+	
+	public boolean pushOrderDetail(String orderId, ArrayList<MenuVO> menulist) {
+		boolean result = false;
+		
+		try {
+			String sql = "insert into bbq_order_detail values("
+					+ " ?, ?, ?, 1)";
+			
+			getPreparedStatement(sql);
+			
+			for(MenuVO menu : menulist) {				
+				String ops = "";
+				for(OptionVO op : menu.getOptions()) {
+					if(ops.equals("")) ops = String.valueOf(op.getOid());
+					else ops += "/" + op.getOid();
+				}
+				
+				pstmt.setString(1, orderId);
+				pstmt.setInt(2, menu.getMid());
+				pstmt.setString(3, ops);
+				
+				pstmt.executeUpdate();
+			}
+			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,7 +96,7 @@ public class OrderDAO extends DBConn {
 		
 		try {
 			String sql = "select orderid, request, addr, odate "
-					+ "from bbq_order where user_id = ?";
+					+ " from bbq_order where user_id = ?";
 			
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);

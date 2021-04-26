@@ -10,6 +10,8 @@ import BBQ_DAO.MemberDAO;
 import BBQ_DAO.MenuDAO;
 import BBQ_DAO.OrderDAO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.MessageVO;
+import BBQ_VO.OrderVO;
 import BBQ_VO.RequestVO;
 
 public class BBQ_ServerSystem {
@@ -27,8 +29,8 @@ public class BBQ_ServerSystem {
 			server = new ServerSocket(9000);
 			System.out.println("서버 생성");
 			
-			mt = new ManagerThread(server.accept());
-			mt.start();
+//			mt = new ManagerThread(server.accept());
+//			mt.start();
 			
 			while(true) {				
 				Socket s = server.accept();
@@ -73,9 +75,11 @@ public class BBQ_ServerSystem {
 					if(result) uid = id;
 					oos.writeObject(result);
 				}else if(req.getRequest() == RequestVO.REQUEST_ORDER) { // 주문 요청
-					// 여기에 DB에 주문 데이터 입력하는 코드 넣기!
+					odao.pushOrder(uid, (OrderVO)req.getObj());
 					mt.recieveOrder(req);
 					oos.writeBoolean(true);
+				}else if(req.getRequest() == RequestVO.SEND_MESSAGE) {
+					// 
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -107,9 +111,10 @@ public class BBQ_ServerSystem {
 	
 	class ManagerThread extends ServerThread{
 		
+		final String uid = "manager";
+		
 		ManagerThread(Socket socket){
 			super(socket);
-			uid = "manager";
 		}
 		
 		void recieveOrder(RequestVO req) {
@@ -120,12 +125,13 @@ public class BBQ_ServerSystem {
 			}
 		}
 		
-//		@Override
-//		public void run() {
-//			boolean flag = true;
-//			while(flag) {
-//				
-//			}
-//		}
+		@Override
+		void response(RequestVO req) {
+			try {
+				// 유저에게 메시지 보내기 / 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

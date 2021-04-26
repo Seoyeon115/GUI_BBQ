@@ -1,10 +1,11 @@
 package BBQ_VO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class MenuVO {
+public class MenuVO implements Serializable{
 	ImageIcon image;
 	String name, desc;
 	ArrayList<OptionVO> options;

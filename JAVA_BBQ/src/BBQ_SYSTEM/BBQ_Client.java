@@ -12,14 +12,14 @@ import BBQ_VO.RequestVO;
 
 public class BBQ_Client {
 	Socket socket;
-	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	ObjectInputStream ois;
 	
 	BBQ_Client(){
 		try {
 			socket = new Socket("localhost", 9000);
-			ois = new ObjectInputStream(socket.getInputStream());
 			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class BBQ_Client {
 			member.setId(id);
 			member.setPass(pass);
 			oos.writeObject(new RequestVO(RequestVO.REQUEST_LOGIN, member));
-			result = (boolean) ((RequestVO)ois.readObject()).getObj();
+			result = (boolean)ois.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
