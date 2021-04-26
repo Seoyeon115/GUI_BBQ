@@ -17,7 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 import BBQ_DAO_jk.OrderDAO;
+import BBQ_VO.CartVO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
 import main.Commons;
 import main.OrderUI;
@@ -35,8 +37,10 @@ public class ShopBasketUI {
 	   MenulistUI list1;
 	   OrderDAO orderlist = new OrderDAO();
 	   MemberVO member = new MemberVO();
-	   ArrayList<OrderVO> list;
+	   BBQ_System system;
 	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
+	   ArrayList<CartVO> cvo ;
+	   ArrayList<OptionVO> ovo;
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -129,8 +133,11 @@ public class ShopBasketUI {
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
-		   try {
-			   while(orderlist.rs.next()) {
+		   cvo = orderlist.getShopBasketResult("test");
+		   ovo = orderlist.getShopBasketOption();
+		   int i;
+		   for(i=0; i< cvo.size();i++) {
+			 
 				JPanel pc = new JPanel();
 				
 				f.add(pc,BorderLayout.CENTER);
@@ -147,14 +154,18 @@ public class ShopBasketUI {
 			   
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
-			  orderlist.getShopBasketResult(member.getId());
+			 System.out.println(cvo.get(i).getMenu());
 			  menu_label = new JLabel();
+			  menu_label.setText("메뉴:" + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
+			  System.out.println("2222");
 			  option_label = new JLabel();
+			  option_label.setText("옵션:" +ovo.get(i).getOption() + ovo.get(i).getPrice());
 			  m_price_label = new JLabel();
+			  m_price_label.setText("가격:"+ (cvo.get(i).getPrice()+ovo.get(i).getPrice()));
 			  JPanel left_panel =new JPanel(new GridLayout(3,1));
 			  left_panel.add(menu_label);
 			  left_panel.add(option_label);
-			  left_panel.add(price_label);
+			  left_panel.add(m_price_label);
 			  menu_panel.add(BorderLayout.WEST, left_panel);
 			  
 	      JPanel right_panel =new JPanel();
@@ -165,7 +176,7 @@ public class ShopBasketUI {
 	      btn_madd = new JButton("+");
 	      btn_minus = new JButton("-");
 	      tf_madd = new JTextField(8);
-//	      tf_madd.setText(orderlist.rs.getString("b_amt"));
+	      tf_madd.setText(cvo.get(i).getAmt());
 	      JPanel count_panel = new JPanel();
 	      count_panel.add(btn_minus);
 	      count_panel.add(tf_madd);
@@ -183,11 +194,8 @@ public class ShopBasketUI {
 	      tf_madd.addActionListener(eventobj);
 	      btn_madd.addActionListener(eventobj);
 	      btn_minus.addActionListener(eventobj);
-		}
-		   }catch (Exception e) {
-			// TODO: handle exception
-		}
-//		   }
+		   
+		  }
 
 	   }//menulist_btn
 

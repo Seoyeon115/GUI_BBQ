@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import BBQ_DAO_jk.MemberDAO;
 import BBQ_DAO_jk.OrderDAO;
+import BBQ_VO.CartVO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.OptionVO;
 
 
 public class BBQ_System {
@@ -36,10 +38,13 @@ public class BBQ_System {
 		return mdao.getJoinIdResult(id);
 	}
 	
-//	/** 장바구니 메뉴생성 **/
-//	public	ArrayList<String> menulist() {	
-//		return odao.getShopBasketResult();
-//	}
+	/** 장바구니 메뉴생성 **/
+//	public	ArrayList<CartVO> shopBasketMenu(String id) {	
+//		return odao.getShopBasketResult(id);
+//		}
+//	public	ArrayList<OptionVO> shopBasketOption() {	
+//		return odao.getShopBasketOption();
+//		}
 	
 	
 	/** 종료 **/
