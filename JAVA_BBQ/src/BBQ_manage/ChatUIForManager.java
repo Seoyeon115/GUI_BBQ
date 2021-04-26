@@ -1,4 +1,4 @@
-package BBQ_UI;
+package BBQ_manage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,12 +34,16 @@ public class ChatUIForManager implements ActionListener {
 	JTextField send_jtf;
 	String name;
 	int idnum;
-	
+	String[] msgArray;
+	JFrame frame;
+	ArrayList<MessageVO> currentmsg;
+
 	// Construct
-	public ChatUIForManager(int idnum,String name) {
+	public ChatUIForManager(int idnum, String name, ArrayList<MessageVO> currentmsg) {
 		try {
 			this.name = name;
 			this.idnum = idnum;
+			this.currentmsg = currentmsg;
 			s = new Socket("127.0.0.1", 9000);
 
 			oos = new ObjectOutputStream(s.getOutputStream());
@@ -64,10 +69,10 @@ public class ChatUIForManager implements ActionListener {
 
 	// Method
 	public void init() {
-		
+
 		jlist = new JList();
-		
-		JFrame frame = new JFrame();
+
+		frame = new JFrame();
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(204, 0, 51));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
@@ -84,6 +89,16 @@ public class ChatUIForManager implements ActionListener {
 		chatmain = new JTextArea();
 		chatmain.setPreferredSize(new Dimension(360, 470));
 		JPanel middle_pn = new JPanel();
+		for (int i = 0; i < currentmsg.size(); i++) {
+			if (currentmsg.get(i).getName().equals(name))
+				if (currentmsg.get(i).getContent() != null) {
+					if(currentmsg.get(i).getIdnum()<10000) {
+						chatmain.append(name + " > " + currentmsg.get(i).getContent() + "\n");
+					}else {
+						chatmain.append("Owner" + " > " + currentmsg.get(i).getContent() + "\n");
+					}
+				}
+		}
 		middle_pn.add(chatmain);
 
 		JPanel South_pn = new JPanel();
@@ -92,7 +107,7 @@ public class ChatUIForManager implements ActionListener {
 		South_pn.add(send_jtf);
 		South_pn.add(btn_send);
 
-		//chat.add(BorderLayout.WEST, jlist);
+		// chat.add(BorderLayout.WEST, jlist);
 		chat.add(BorderLayout.CENTER, middle_pn);
 		chat.add(BorderLayout.SOUTH, South_pn);
 
@@ -101,22 +116,24 @@ public class ChatUIForManager implements ActionListener {
 		frame.add(panel);
 
 		frame.setVisible(true);
-		
+
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				try {
-					MessageVO vo = new MessageVO();
-					vo.setStatus(MessageVO.EXIT);
-					vo.setName(name);
-					vo.setIdnum(idnum);
-					oos.writeObject(vo);
+//					MessageVO vo = new MessageVO();
+//					vo.setStatus(MessageVO.EXIT);
+//					vo.setName(name);
+//					vo.setIdnum(idnum);
+//					oos.writeObject(vo);
+//					String msg = chatmain.getText();
+//					msgArray = msg.split("\n");
 					frame.dispose();
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
 			}
 		});
-		
+
 		btn_send.addActionListener(this);
 		send_jtf.addActionListener(this);
 
@@ -128,22 +145,22 @@ public class ChatUIForManager implements ActionListener {
 
 			try {
 				while (true) {
-					
+
 					MessageVO vo = (MessageVO) ois.readObject();
-					if(vo.getStatus() == MessageVO.CONNECT) {
+					if (vo.getStatus() == MessageVO.CONNECT) {
 //						jlist.setListData(vo.getUsers());
-						if(vo.getName().equals(name) && vo.getIdnum() == idnum) {
-						chatmain.append("Owner" + vo.getContent() + "\n");
-						}else if(vo.getName().equals(name)) {
-							chatmain.append(vo.getName() + vo.getContent() + "\n");
+						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
+							// chatmain.append("사장님이 입장하셨습니다." + "\n");
+						} else if (vo.getName().equals(name)) {
+							// chatmain.append(vo.getName() + vo.getContent() + "\n");
 						}
-					}else if(vo.getStatus() == MessageVO.TALK) {
-						
-						if(vo.getName().equals(name) && vo.getIdnum() == idnum) {
+					} else if (vo.getStatus() == MessageVO.TALK) {
+
+						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
 							chatmain.append("Owner > " + vo.getContent() + "\n");
-							}else if(vo.getName().equals(name)){
-								chatmain.append(vo.getName()+ " > " + vo.getContent() + "\n");
-							}
+						} else if (vo.getName().equals(name)) {
+							chatmain.append(vo.getName() + " > " + vo.getContent() + "\n");
+						}
 					}
 
 				}
@@ -166,13 +183,13 @@ public class ChatUIForManager implements ActionListener {
 					vo.setName(name);
 					vo.setContent(send_jtf.getText());
 					vo.setIdnum(idnum);
-					
+
 //					chatmain.append("Owner > "+send_jtf.getText() + "\n");
-					
+
 					oos.writeObject(vo);
 					send_jtf.setText("");
 					send_jtf.requestFocus();
-					
+
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}

@@ -127,7 +127,7 @@ public class ChatUI2 implements ActionListener {
 		btn_home_blank.addActionListener(this);
 
 		// 라벨 넣기
-		JLabel t_label = new JLabel("주인님과 직접연결~  ");
+		JLabel t_label = new JLabel("사장님과 직접연결~  ");
 		t_label.setFont(Commons.getFont(18));
 		JPanel label_pn = new JPanel(new FlowLayout(FlowLayout.LEFT, 125, 10));
 		label_pn.add(t_label);
@@ -199,9 +199,9 @@ public class ChatUI2 implements ActionListener {
 					if (vo.getStatus() == MessageVO.CONNECT) {
 						// jlist.setListData(vo.getUsers());
 						if (vo.getName().equals(id) && vo.getIdnum() == idnum) {
-							chatmain.append(vo.getName() + vo.getContent() + "\n");
+							//chatmain.append(vo.getName() + vo.getContent() + "\n");
 						} else if(vo.getName().equals(id)) {
-							chatmain.append("Owner" + vo.getContent() + "\n");
+							chatmain.append("사장님이 확인했습니다." + "\n");
 						}
 					} else if (vo.getStatus() == MessageVO.TALK) {
 						if (vo.getName().equals(id) && vo.getIdnum() == idnum) {

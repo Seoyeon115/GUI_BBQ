@@ -47,7 +47,7 @@ public class ChatServer {
 	public void broadcast(MessageVO vo) {
 		try {
 			if (vo.getStatus() == MessageVO.CONNECT) {
-				vo.setContent("¥‘ ¿‘¿Â");
+				//vo.setContent("¥‘ ¿‘¿Â");
 				idlist.add(String.valueOf(vo.getIdnum()));
 				users.add(vo.getName());
 
