@@ -10,44 +10,16 @@ import BBQ_VO.OrderVO;
 
 
 public class OrderDAO extends DBConn{
-MemberVO member;
-public ArrayList<CartVO> ordervo;
+public ArrayList<OrderVO> ordervo;
+public ArrayList<CartVO> cartvo;
 public ArrayList<OptionVO> optionvo;
 
 
 
-	/** 주문 DB 등록 처리**/
-//	public boolean getOrderResult() {
-//		boolean result = false;
-//		
-//		try {
-//			String sql = "insert into bbq_order values(?,?,?,?,?,?,?,?,?,sysdate)";
-//			getPreparedStatement(sql);
-//			
-//			pstmt.setString(1, "1111");
-//			pstmt.setString(2, member.getId());
-//			pstmt.setString(3, "order.getMenulist()");//menu리스트 고민중
-//			pstmt.setInt(4, 3);
-//			pstmt.setString(5, order.getMessage());
-//			pstmt.setString(6, order.getAddr());
-//			pstmt.setInt(7, order.getDPrice());
-//			pstmt.setInt(8, order.getDiscount());
-//			pstmt.setInt(9, order.getPayment());
-//			
-//
-//			
-//			int val = pstmt.executeUpdate();
-//			if(val != 0) result = true;
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
 
 /** 장바구니 주문 조회**/
 	public ArrayList<CartVO> getShopBasketResult(String id) {
-		ordervo = new ArrayList<CartVO>();
+		cartvo = new ArrayList<CartVO>();
 		
 		try {
 			String sql = " SELECT ROWNUM RNO, M.NAME, M.PRICE, C.AMOUNT "
@@ -67,13 +39,13 @@ public ArrayList<OptionVO> optionvo;
 				vo.setPrice(rs.getInt(3));
 				vo.setAmt(rs.getInt(4));
 				
-				ordervo.add(vo);
+				cartvo.add(vo);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ordervo;
+		return cartvo;
 	}		
 	/** 장바구니 옵션 조회**/
 	public ArrayList<OptionVO> getShopBasketOption() {
@@ -124,61 +96,39 @@ public ArrayList<OptionVO> optionvo;
 		return result;
 	}
 		
-	/** 결제 처리**/
-	public void getPayResult() {
+	/** 주문내역 결제 **/
+	public ArrayList<OrderVO> getPayResult(String id) {
+			ordervo = new ArrayList<OrderVO>();
 		
-	}
+		try {
+			String sql = " SELECT ROWNUM RNO, B.ORDERID, M.NAME, M.PRICE, D.OPTIONS, B.ADDR" 
+					+ " FROM BBQ_MEMBER I, BBQ_ORDER B, BBQ_ORDER_DETAIL D, MENU_DATA M "
+					+ " WHERE I.ID=B.USER_ID AND B.ORDERID=D.ORDERID  AND M.MID=D.MID " 
+					+ " AND I.ID = ? " ;
+					
+			getPreparedStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			
+			while(rs.next()) {	
+				OrderVO vo = new OrderVO();
+				vo.setRno(rs.getString(1));
+				vo.setOrderid(rs.getString(2));
+				vo.setMenu(rs.getString(3));
+				vo.setPrice(rs.getInt(4));
+				vo.setOption(rs.getString(5));
+				vo.setAddr(rs.getString(6));
+				
+				ordervo.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ordervo;
+	}		
 }
 
 
-//	/** 로그인 처리 **/
-//	public boolean getLoginResult (String id, String pass) {
-//		boolean result = false;
-//		try {
-//			String sql ="SELECT COUNT(*) FROM BBQ_MEMBER "
-//					+ "WHERE ID =? AND PASS =?"; 
-//			getPreparedStatement(sql);
-//			
-//			pstmt.setString(1, id);
-//			pstmt.setString(2, pass);
-//			
-//			rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				if(rs.getInt(1) ==1) result = true;
-//			}
-//			
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
-//	
-//	
-//	/** 회원가입 처리  **/
-//	public boolean getJoinResult(MemberVO member) {
-//		boolean result = false;
-//				
-//		try {
-//			String sql = "insert into bbq_member values(?,?,?,?,?,sysdate)";
-//			getPreparedStatement(sql);
-//			
-//			String hp = member.getHp1()+"-"+member.getHp2()+"-"+member.getHp3();
-//			String addr = member.getAddr1()+" " + member.getAddr2();
-//			pstmt.setString(1, member.getId());
-//			pstmt.setString(2, member.getPass());
-//			pstmt.setString(3, member.getName());
-//			pstmt.setString(4, hp);
-//			pstmt.setString(5, addr);
-//
-//			
-//			int val = pstmt.executeUpdate();
-//			if(val != 0) result = true;
-//			
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return result;
-//	
-//}
+

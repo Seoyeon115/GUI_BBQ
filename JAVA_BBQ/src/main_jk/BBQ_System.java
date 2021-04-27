@@ -1,12 +1,9 @@
 package main_jk;
 
-import java.util.ArrayList;
 
 import BBQ_DAO_jk.MemberDAO;
 import BBQ_DAO_jk.OrderDAO;
-import BBQ_VO.CartVO;
 import BBQ_VO.MemberVO;
-import BBQ_VO.OptionVO;
 
 
 public class BBQ_System {
@@ -53,35 +50,7 @@ public class BBQ_System {
 //		sdao.close();
 //		System.out.println("-----------DB연결 종료----------");
 //	}
-//	
-	/** 등록 **/
-//	public boolean insert(ScoreVO score) {	
-//		return sdao.getInsertResult(score);		
-//	}
-//	
-	/** 조회 **/
-//	public ArrayList<ScoreVO> getScoreList(){
-//		return sdao.getSelectResult();
-//		
-//	}
-	
-	/** 검색 **/
-//	public ScoreVO search(String name) {
-//		return sdao.getSelectResult(name);
-//	}
-//	
-	
-	/** 수정 **/
-//	public int update(ScoreVO score, String name) {
-//		return sdao.getUpdateResult(score, name);
-//	}
-//	
-	
-	/** 삭제 **/
-//	public boolean delete(String name) {
-//		return sdao.getDeleteResult(name);
-//	}
-	
+
 	
 }//class
 

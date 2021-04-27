@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 public class PayUI implements ActionListener{
 	// Field
 	StartUI main;
-	ShopBasketUI sb; // 활용 가능..?
+	ShopBasketUI shop; // 활용 가능..?
 	JFrame f;
 	JPanel label_panel, tf_panel, top_panel, center_panel, bottom_panel, total_panel, menu_panel, addr_panel,
 			panel_content;
@@ -71,6 +71,11 @@ public class PayUI implements ActionListener{
 		/** 메뉴리스트 패널 **/
 		menu_panel = new JPanel(new GridLayout(6,1));
 		menu_panel.setBackground(new Color(255, 255, 255));
+		
+		
+		
+		
+		
 		/** 결제금액 패널 **/
 		total_panel = new JPanel();
 		total_panel.setBackground(new Color(255, 255, 255));

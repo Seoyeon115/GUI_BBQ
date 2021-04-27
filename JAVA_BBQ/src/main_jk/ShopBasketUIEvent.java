@@ -23,11 +23,10 @@ public class ShopBasketUIEvent implements ActionListener {
 	    	  new InnerMain();
 	    	  
 	      }else if(obj == shop.btn_all_delete) {
-	    	 shop.menu_panel.setVisible(false);
-		     shop.center_panel.remove(shop.menu_panel);
+	    	  shop.menulist_del();
 		     
 	         System.out.println("전체삭제");
-	         
+	    	
 	      }else if(obj == shop.btn_order) {
 	         System.out.println("추가 주문");
 	         new MenulistUI();
@@ -44,7 +43,7 @@ public class ShopBasketUIEvent implements ActionListener {
 //	    		      shop.center_panel.remove(shop.menu_panel);
 //	    		  }
 //	    	 order.getcartdeleteResult(shop.cvo.get(0).getRno());
-	    		  
+//	    		  
 //	    	  }
 	         shop.menu_panel.setVisible(false);
 	         shop.center_panel.remove(shop.menu_panel);
