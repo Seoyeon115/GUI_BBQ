@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BBQ_DAO_jk.MemberDAO;
 import BBQ_VO.MemberVO;
 
 public class LoginUI implements ActionListener{
@@ -30,10 +31,11 @@ public class LoginUI implements ActionListener{
 	JPasswordField pass_tf;
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
-	String id;
+	public static String id;
 	StartUI main;
 	BBQ_System system = new BBQ_System();
 	MemberVO member = new MemberVO();
+	MemberDAO mdao = new MemberDAO();
 //	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// Constructor
@@ -131,8 +133,9 @@ public class LoginUI implements ActionListener{
 			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-				f.setVisible(false);
 				member.setId(id_tf.getText());
+				id = id_tf.getText();
+				f.setVisible(false);
 				new InnerMain();
 			} else {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));
@@ -141,6 +144,13 @@ public class LoginUI implements ActionListener{
 			
 		}
 	}
+	/** 로그인 결과 반환 **/
+//	public String loginId() {
+//		member.setId(id_tf.getText());
+//		String id = member.getId();
+//		System.out.println(id);
+//		return id;
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

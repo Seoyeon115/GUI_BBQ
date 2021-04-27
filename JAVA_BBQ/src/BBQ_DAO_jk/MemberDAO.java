@@ -1,8 +1,11 @@
 package BBQ_DAO_jk;
 
 import BBQ_VO.MemberVO;
+import main_jk.LoginUI;
 
 public class MemberDAO extends DBConn{
+	LoginUI login;
+	MemberVO member;
 	
 	/** 로그인 처리 **/
 	public boolean getLoginResult (String id, String pass) {
@@ -18,7 +21,6 @@ public class MemberDAO extends DBConn{
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getInt(1) ==1) result = true;
-				
 			}
 			
 		}catch (Exception e) {
@@ -28,6 +30,7 @@ public class MemberDAO extends DBConn{
 		return result;
 	}
 	
+
 	
 	/** 회원가입 처리  **/
 	public boolean getJoinResult(MemberVO member) {

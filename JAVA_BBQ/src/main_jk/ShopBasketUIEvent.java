@@ -38,19 +38,26 @@ public class ShopBasketUIEvent implements ActionListener {
 	         
 	      }else if(obj == shop.btn_mdelete) {
 	    	  //버튼클릭시 db삭제
-//	    	 order.getcartdeleteResult(shop.cvo.get(0).getrno());
+//	    	  for(int i=0; i<shop.cvo.size(); i++) {
+//	    		  if(shop.cvo.get(i).getRno() == ) {
+//	    			  shop.menu_panel.setVisible(false);
+//	    		      shop.center_panel.remove(shop.menu_panel);
+//	    		  }
+//	    	 order.getcartdeleteResult(shop.cvo.get(0).getRno());
+	    		  
+//	    	  }
 	         shop.menu_panel.setVisible(false);
 	         shop.center_panel.remove(shop.menu_panel);
 	         System.out.println("삭제");
 	    	
-	      }else if(obj == shop.tf_madd) {
-		         System.out.println("수량 추가");
-		         
-	      }else if(obj == shop.btn_madd) {
-	         System.out.println("추가");
-	         
-	      }else if(obj == shop.btn_minus) {
-	         System.out.println("빼기");
+//	      }else if(obj == shop.tf_madd) {
+//		         System.out.println("수량 추가");
+//		         
+//	      }else if(obj == shop.btn_madd) {
+//	         System.out.println("추가");
+//	         
+//	      }else if(obj == shop.btn_minus) {
+//	         System.out.println("빼기");
 	         
 	         
 	      }

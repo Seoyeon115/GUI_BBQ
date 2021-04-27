@@ -16,9 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
+import BBQ_DAO_jk.MemberDAO;
 import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.CartVO;
-import BBQ_VO.MemberVO;
 import BBQ_VO.OptionVO;
 import main.Commons;
 import main.OrderUI;
@@ -31,12 +31,14 @@ public class ShopBasketUI {
 	   JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
 	   public JLabel total_label,price_label, menu_label, option_label, m_price_label;
 	   JTextField tf_madd;
+	   int ttl_price;
 	   OrderUI order;
-	   LoginUI login;
 	   InnerMain main;
 	   OrderDAO orderlist = new OrderDAO();
+	   MemberDAO mdao = new MemberDAO();
 	   BBQ_System system;
 	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
+	   LoginUI login = new LoginUI();
 	   ArrayList<CartVO> cvo;
 	   ArrayList<OptionVO> ovo;
 	  
@@ -107,8 +109,7 @@ public class ShopBasketUI {
 //	      panel_content.add(btn_order);
 	      
 	      //bottom_panel
-	      
-	      JLabel total_label = new JLabel("총주문금액: ttl_price +원");
+	      JLabel total_label = new JLabel("총주문금액: " + ttl_price + "원");
 	      btn_pay = new JButton("   결제    ");
 	      bottom_panel.add(total_label);
 	      bottom_panel.add(btn_pay);
@@ -134,8 +135,7 @@ public class ShopBasketUI {
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
-		   cvo = orderlist.getShopBasketResult("test");//로그인시아이디받아오기
-		   System.out.println(login.id);
+		   cvo = orderlist.getShopBasketResult(login.id); 
 		   ovo = orderlist.getShopBasketOption();
 		   int i;
 		   for(i=0; i< cvo.size();i++) {
@@ -156,13 +156,14 @@ public class ShopBasketUI {
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
 			  menu_label = new JLabel();
-			  menu_label.setText("메뉴: " + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
-			  System.out.println("2222");
+			  menu_label.setText(cvo.get(i).getRno()+". 메뉴: " + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
 			  option_label = new JLabel();
 			  option_label.setText("옵션: " +ovo.get(i).getOption() + ovo.get(i).getPrice());
 			  m_price_label = new JLabel();
 			  m_price =((cvo.get(i).getPrice() * cvo.get(i).getAmt())+ovo.get(i).getPrice());
 			  m_price_label.setText("가격: "+ m_price);
+			  ttl_price += m_price; 
+			  
 			  JPanel left_panel =new JPanel(new GridLayout(3,1));
 			  left_panel.add(menu_label);
 			  left_panel.add(option_label);
@@ -174,17 +175,17 @@ public class ShopBasketUI {
 	      btn_mdelete.setFont(Commons.getFont(10));
 	      right_panel.setLayout(null);
 	      btn_mdelete.setBounds(200, 0, 40, 38);
-	      btn_madd = new JButton("+");
-	      btn_minus = new JButton("-");
-	      tf_madd = new JTextField(8);
-	      tf_madd.setText(Integer.toString(cvo.get(i).getAmt()));
-	      JPanel count_panel = new JPanel();
-	      count_panel.add(btn_minus);
-	      count_panel.add(tf_madd);
-	      count_panel.add(btn_madd);
-	      count_panel.setBounds(0,50, 300, 60);
+//	      btn_madd = new JButton("+");
+//	      btn_minus = new JButton("-");
+//	      tf_madd = new JTextField(8);
+//	      tf_madd.setText(Integer.toString(cvo.get(i).getAmt()));
+//	      JPanel count_panel = new JPanel();
+//	      count_panel.add(btn_minus);
+//	      count_panel.add(tf_madd);
+//	      count_panel.add(btn_madd);
+//	      count_panel.setBounds(0,50, 300, 60);
 	      right_panel.add(btn_mdelete);
-	      right_panel.add(count_panel);
+//	      right_panel.add(count_panel);
 	      
 	      menu_panel.add(BorderLayout.EAST, right_panel);
 //	      panel_content.add(menu_panel);     ///////
@@ -192,9 +193,9 @@ public class ShopBasketUI {
 //	      panel_content.add(center_panel);     
 	      
 	      btn_mdelete.addActionListener(eventobj);
-	      tf_madd.addActionListener(eventobj);
-	      btn_madd.addActionListener(eventobj);
-	      btn_minus.addActionListener(eventobj);
+//	      tf_madd.addActionListener(eventobj);
+//	      btn_madd.addActionListener(eventobj);
+//	      btn_minus.addActionListener(eventobj);
 		  }
 
 	   }//menulist_btn
