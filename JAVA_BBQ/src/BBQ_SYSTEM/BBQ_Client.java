@@ -53,6 +53,19 @@ public class BBQ_Client {
 		return result;
 	}
 	
+	public boolean idCheck(String id) {
+		boolean result = false;
+		
+		try {
+			oos.writeObject(new RequestVO(RequestVO.CHECK_ID_PRIMARY, id));
+			result = (boolean)ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public MenuVO getMenuInfo(int mid) {
 		MenuVO menu = null;
 		

@@ -129,6 +129,7 @@ public class LoginUI implements ActionListener {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
 				new InnerMain(system);
 				StartUI.LOGIN_RESULT = true;
+				f.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 실패"));
 

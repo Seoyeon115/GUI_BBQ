@@ -10,6 +10,7 @@ public class RequestVO implements Serializable{
 	public static int REQUEST_LOGIN = 4; // 로그인하기
 	public static int REQUEST_JOIN = 5; // 회원가입하기
 	public static int SEND_MESSAGE = 6; // 메시지 보내기
+	public static int CHECK_ID_PRIMARY = 7; // 아이디 중복 확인
 	
 	int request; // 요청 정보
 	Object obj; // 객체 데이터

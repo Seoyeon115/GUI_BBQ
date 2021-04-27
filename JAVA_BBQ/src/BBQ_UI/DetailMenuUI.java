@@ -7,18 +7,19 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
 import BBQ_SYSTEM.BBQ_System;
+import BBQ_VO.CartVO;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 
@@ -29,7 +30,7 @@ public class DetailMenuUI implements ActionListener{
 	MenulistUI prevPage;
 //	JFrame frame;
 	JPanel panel_content;
-	ArrayList<JCheckBox> check_options = new ArrayList<JCheckBox>(); // 옵션 선택 버튼
+	ArrayList<JCheckBox> check_options; // 옵션 선택 버튼
 	JButton button_back; // 뒤로가기 버튼
 	JButton button_onCart; // 담기 버튼
 	int price_final; // 메뉴 결제 가격
@@ -39,13 +40,6 @@ public class DetailMenuUI implements ActionListener{
 	public DetailMenuUI(InnerMain main) {
 		this.main = main;
 		system = main.system;
-	}
-	
-	public DetailMenuUI(InnerMain main, MenulistUI prevPage) {
-		this.main = main;
-		this.prevPage = prevPage;
-		
-//		init();
 	}
 		
 	//Method	
@@ -150,6 +144,7 @@ public class DetailMenuUI implements ActionListener{
 	}
 	
 	void init_option() {
+		check_options = new ArrayList<JCheckBox>();
 		JPanel panel_options = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 5));
 		panel_options.setBackground(new Color(255, 255, 255));
 		panel_options.setPreferredSize(new Dimension(500, 305));
@@ -238,16 +233,26 @@ public class DetailMenuUI implements ActionListener{
 		if(obj == button_onCart) { // 담기 버튼 클릭
 			
 			// 선택한 옵션만 남겨서 메뉴 정보를 장바구니에 담는다
-			int i = 0;
-			Iterator ie = vo.getOptions().iterator();
-			while(ie.hasNext()) {
-				ie.next();
-				if(!check_options.get(i++).isSelected()) {
-					ie.remove();
+//			int i = 0;
+//			Iterator ie = vo.getOptions().iterator();
+//			while(ie.hasNext()) {
+//				ie.next();
+//				if(!check_options.get(i++).isSelected()) {
+//					ie.remove();
+//				}
+//			}
+			
+			ArrayList<OptionVO> selectedOptions = new ArrayList<OptionVO>();
+			
+			for(int i=0;i<check_options.size();i++) {
+				if(check_options.get(i).isSelected()) {
+					selectedOptions.add(vo.getOptions().get(i));
+					System.out.println(vo.getOptions().get(i).getName());
 				}
 			}
 			
-			system.addCart(vo);
+			system.addCart(vo, price_final, selectedOptions);
+			JOptionPane.showMessageDialog(null, Commons.getMsg("장바구니에 추가되었습니다"));
 		}else if(obj == button_back) { // 뒤로가기 버튼 클릭
 //			System.out.println("뒤로가기");
 			panel_content.setVisible(false);

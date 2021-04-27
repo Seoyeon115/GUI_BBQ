@@ -32,6 +32,7 @@ public class JoinUI implements ActionListener {
 	ArrayList<Object> list = new ArrayList<Object>(); // 데이터 저장할 곳(배열)
 	LoginUI log;
 	BBQ_System system = new BBQ_System();
+	JTextField tf_id;
 
 	// Constructor
 	public JoinUI() {
@@ -79,12 +80,12 @@ public class JoinUI implements ActionListener {
 			JPanel t_panel = new JPanel();
 
 			if (name.equals("아이디")) {
-				JTextField id = new JTextField(12);
+				tf_id = new JTextField(12);
 				id_chk_btn = new JButton("중복확인");
-				t_panel.add(id);
+				t_panel.add(tf_id);
 				t_panel.add(id_chk_btn);
 				tf_panel.add(t_panel);
-				list.add(id);
+				list.add(tf_id);
 
 			} else if (name.equals("핸드폰")) {
 				JTextField hp1 = new JTextField(6);
@@ -175,6 +176,17 @@ public class JoinUI implements ActionListener {
 				tf.setText("");
 			}
 		} else if (obj == id_chk_btn) {
+			if(tf_id.getText().equals("")) {
+	            JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요."));
+			
+			}else if(system.idcheck(tf_id.getText())) {
+				JOptionPane.showMessageDialog(null, 
+						Commons.getMsg("사용가능 한 아이디입니다."));
+				
+			}else {
+				JOptionPane.showMessageDialog(null, 
+						Commons.getMsg("이미 사용중인 아이디입니다.."));
+			}
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 

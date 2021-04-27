@@ -80,6 +80,9 @@ public class BBQ_ServerSystem {
 					oos.writeBoolean(true);
 				}else if(req.getRequest() == RequestVO.SEND_MESSAGE) {
 					// 
+				}else if(req.getRequest() == RequestVO.CHECK_ID_PRIMARY) {
+					boolean result = mdao.getJoinIdResult((String)req.getObj());
+					oos.writeObject(result);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
