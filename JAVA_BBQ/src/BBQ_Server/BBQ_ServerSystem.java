@@ -26,7 +26,7 @@ public class BBQ_ServerSystem {
 	
 	BBQ_ServerSystem(){
 		try {
-			server = new ServerSocket(10000);
+			server = new ServerSocket(12345);
 			System.out.println("서버 생성");
 			
 //			mt = new ManagerThread(server.accept());
@@ -86,6 +86,8 @@ public class BBQ_ServerSystem {
 					oos.writeObject(mdao.getUpdateResult((MemberVO)req.getObj()));
 				}else if(req.getRequest() == RequestVO.GET_ORDER_INFO) {// 주문정보 가져오기
 					oos.writeObject(odao.getOrderchecklist());
+				}else if(req.getRequest() == RequestVO.ORDER_UPDATE) { // 회원가입
+					oos.writeObject(odao.getOrderUpdateResult((OrderVO)req.getObj()));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

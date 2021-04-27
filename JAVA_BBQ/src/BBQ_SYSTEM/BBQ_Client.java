@@ -17,7 +17,7 @@ public class BBQ_Client {
 	
 	BBQ_Client(){
 		try {
-			socket = new Socket("localhost", 10000);
+			socket = new Socket("localhost", 12345);
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
 			
@@ -40,6 +40,16 @@ public class BBQ_Client {
 		boolean result = false;
 		try {
 			oos.writeObject(new RequestVO(RequestVO.REQUEST_UPDATE, member));
+			result = (boolean) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public boolean getOrderUpdateResult(OrderVO order) {
+		boolean result = false;
+		try {
+			oos.writeObject(new RequestVO(RequestVO.ORDER_UPDATE, order));
 			result = (boolean) ois.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();

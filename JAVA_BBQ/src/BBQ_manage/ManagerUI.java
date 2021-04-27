@@ -28,7 +28,7 @@ import BBQ_VO.MessageVO;
 
 public class ManagerUI implements ActionListener {
 	ManagerUImember memberui = new ManagerUImember(this);
-	ManagerUIorder orderui = new ManagerUIorder();
+	ManagerUIorder orderui = new ManagerUIorder(this);
 
 	ArrayList<String> namelist = new ArrayList<String>();
 	JButton btn_modify, btn_ordertake, btn_chat;

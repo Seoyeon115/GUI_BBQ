@@ -230,59 +230,9 @@ public class ManagerUImember implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == searchbtn) {
-//			main.removeAll();
 			int x = 500;
 			int y = 35;
-//			String name = jtf.getText();
-//			ArrayList<MemberVO> member = system.getMemberList();
-//			for (int i = 0; i < 30; i++) {
-//				if (i == 0) {
-//					JPanel chatroom = new JPanel();
-//					chatroom.setPreferredSize(new Dimension(x, y));
-//					chatroom.setBackground(new Color(255, 255, 255));
-//					chatroom.setBorder(new LineBorder(new Color(0, 0, 0, 100), 2, true));
-//					JPanel wp = new JPanel();
-//					
-//					chatroom.setLayout(new BorderLayout());
-//					wp.removeAll();
-//					JButton roomBtn = new JButton("수정");
-//					JLabel roomlb = new JLabel(name);
-//					roomlb.setFont(Commons.getFont(1, 20));
-//					wp.add(roomlb);
-//					chatroom.add(BorderLayout.WEST, wp);
-//					chatroom.add(BorderLayout.EAST, roomBtn);
-//					
-//					MemberVO member1 = member.get(0);
-//
-//					roomBtn.addActionListener(new ActionListener() {
-//						@Override
-//						public void actionPerformed(ActionEvent e) {
-//							Object obj = e.getSource();
-//							if (obj == roomBtn) {
-//								new JoinUI(member1);
-//							}
-//						}
-//					});
-//					main.add(chatroom);
-//					roomList.add(chatroom);
-//					wpList.add(wp);
-//					btnList.add(roomBtn);
-//				} else {
-//					JPanel chatroom = new JPanel();
-//					chatroom.setPreferredSize(new Dimension(x, y));
-//					chatroom.setBackground(new Color(255, 255, 255));
-//					chatroom.setBorder(new LineBorder(new Color(0, 0, 0, 100), 2, true));
-//					main.add(chatroom);
-//					JPanel wp = new JPanel();
-//					JButton enter_btn = new JButton("수정");
-//					roomList.add(chatroom);
-//					wpList.add(wp);
-//					btnList.add(enter_btn);
-//				}
-//			}
 			ArrayList<MemberVO> member = system.getMemberList();
-			
-
 			String name = jtf.getText();
 			int check = 0;
 			for (int i = 0; i < member.size(); i++) {

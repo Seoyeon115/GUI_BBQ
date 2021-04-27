@@ -69,6 +69,9 @@ public class BBQ_System {
 	public boolean update(MemberVO member) {	
 		return client.getUpdateResult(member);
 	}	
+	public boolean orderupdate(OrderVO order) {	
+		return client.getOrderUpdateResult(order);
+	}	
 	/** ªË¡¶ **/
 //	public boolean delete(String name) {
 //		return sdao.getDeleteResult(name);

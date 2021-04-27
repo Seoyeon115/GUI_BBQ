@@ -89,6 +89,28 @@ public class OrderDAO extends DBConn {
 		
 		return result;
 	}
+	public boolean getOrderUpdateResult(OrderVO order) {
+		boolean result = false;
+		try {
+			String sql = " UPDATE BBQ_ORDER " + 
+					" SET ODATE = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),CHECKORDER=? " +
+					" WHERE ORDERID= ? "; 
+			
+			getPreparedStatement(sql);
+				
+			pstmt.setString(1, order.getDate());
+			pstmt.setInt(2, order.getState());
+			pstmt.setInt(3, order.getOrderId());
+				
+			pstmt.executeUpdate();
+			
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	public ArrayList<OrderVO> getOrderList(String uid){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
@@ -130,7 +152,7 @@ public class OrderDAO extends DBConn {
 	public ArrayList<OrderVO> getOrderchecklist(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		try {
-			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, TO_CHAR(ODATE,'hh24:mi'), B.AMOUNT ,OPTIONS "  
+			String sql = " SELECT A.ORDERID, USER_ID,C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, CHECKORDER "  
 					+ " FROM BBQ_ORDER A,bbq_order_detail B,MENU_DATA C " 
 					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
 			
@@ -148,6 +170,7 @@ public class OrderDAO extends DBConn {
 				order.setDate(rs.getString(6));
 				order.setAmount(rs.getInt(7));
 				order.setOption(rs.getString(8));
+				order.setState(rs.getInt(9));
 				orderlist.add(order);
 			}
 			
