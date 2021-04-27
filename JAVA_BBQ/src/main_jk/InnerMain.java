@@ -3,12 +3,10 @@ package main_jk;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -243,6 +241,7 @@ public class InnerMain implements ActionListener {
 			frame.add(list1.initialize());
 		}else if(obj == btn_cart) {
 			System.out.println("cart");
+			new ShopBasketUI();
 		}else if(obj == btn_ing) {
 			panel.setVisible(false);
 			frame.add(ing.init());

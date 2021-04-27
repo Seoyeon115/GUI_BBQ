@@ -18,11 +18,13 @@ public class MemberDAO extends DBConn{
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				if(rs.getInt(1) ==1) result = true;
+				
 			}
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return result;
 	}
 	

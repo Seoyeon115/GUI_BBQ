@@ -5,9 +5,9 @@ import main_jk.InnerMain;
 public class MainTest {
 
 	public static void main(String[] args) {
-//		new StartUI();
+		new StartUI();
 //		new InnerMain();
-		new ShopBasketUI();
+//		new ShopBasketUI();
 //		new PayUI();
 	}
 

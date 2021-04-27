@@ -20,7 +20,6 @@ import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.CartVO;
 import BBQ_VO.MemberVO;
 import BBQ_VO.OptionVO;
-import BBQ_VO.OrderVO;
 import main.Commons;
 import main.OrderUI;
 
@@ -33,14 +32,15 @@ public class ShopBasketUI {
 	   public JLabel total_label,price_label, menu_label, option_label, m_price_label;
 	   JTextField tf_madd;
 	   OrderUI order;
+	   LoginUI login;
 	   InnerMain main;
-	   MenulistUI list1;
 	   OrderDAO orderlist = new OrderDAO();
-	   MemberVO member = new MemberVO();
 	   BBQ_System system;
 	   ShopBasketUIEvent eventobj = new ShopBasketUIEvent(this);
-	   ArrayList<CartVO> cvo ;
+	   ArrayList<CartVO> cvo;
 	   ArrayList<OptionVO> ovo;
+	  
+	   int m_price;
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -107,7 +107,8 @@ public class ShopBasketUI {
 //	      panel_content.add(btn_order);
 	      
 	      //bottom_panel
-	      JLabel total_label = new JLabel("총주문금액: price +원");
+	      
+	      JLabel total_label = new JLabel("총주문금액: ttl_price +원");
 	      btn_pay = new JButton("   결제    ");
 	      bottom_panel.add(total_label);
 	      bottom_panel.add(btn_pay);
@@ -133,11 +134,11 @@ public class ShopBasketUI {
 	   
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
-		   cvo = orderlist.getShopBasketResult("test");
+		   cvo = orderlist.getShopBasketResult("test");//로그인시아이디받아오기
+		   System.out.println(login.id);
 		   ovo = orderlist.getShopBasketOption();
 		   int i;
 		   for(i=0; i< cvo.size();i++) {
-			 
 				JPanel pc = new JPanel();
 				
 				f.add(pc,BorderLayout.CENTER);
@@ -154,14 +155,14 @@ public class ShopBasketUI {
 			   
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
-			 System.out.println(cvo.get(i).getMenu());
 			  menu_label = new JLabel();
-			  menu_label.setText("메뉴:" + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
+			  menu_label.setText("메뉴: " + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
 			  System.out.println("2222");
 			  option_label = new JLabel();
-			  option_label.setText("옵션:" +ovo.get(i).getOption() + ovo.get(i).getPrice());
+			  option_label.setText("옵션: " +ovo.get(i).getOption() + ovo.get(i).getPrice());
 			  m_price_label = new JLabel();
-			  m_price_label.setText("가격:"+ (cvo.get(i).getPrice()+ovo.get(i).getPrice()));
+			  m_price =((cvo.get(i).getPrice() * cvo.get(i).getAmt())+ovo.get(i).getPrice());
+			  m_price_label.setText("가격: "+ m_price);
 			  JPanel left_panel =new JPanel(new GridLayout(3,1));
 			  left_panel.add(menu_label);
 			  left_panel.add(option_label);
@@ -176,7 +177,7 @@ public class ShopBasketUI {
 	      btn_madd = new JButton("+");
 	      btn_minus = new JButton("-");
 	      tf_madd = new JTextField(8);
-	      tf_madd.setText(cvo.get(i).getAmt());
+	      tf_madd.setText(Integer.toString(cvo.get(i).getAmt()));
 	      JPanel count_panel = new JPanel();
 	      count_panel.add(btn_minus);
 	      count_panel.add(tf_madd);
@@ -194,7 +195,6 @@ public class ShopBasketUI {
 	      tf_madd.addActionListener(eventobj);
 	      btn_madd.addActionListener(eventobj);
 	      btn_minus.addActionListener(eventobj);
-		   
 		  }
 
 	   }//menulist_btn

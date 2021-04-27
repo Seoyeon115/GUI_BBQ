@@ -4,7 +4,7 @@ public class CartVO {
 	String menu;
 	int rno;
 	int price;
-	String amt;
+	int amt;
 	
 	public String getMenu() {
 		return menu;
@@ -24,10 +24,10 @@ public class CartVO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getAmt() {
+	public int getAmt() {
 		return amt;
 	}
-	public void setAmt(String amt) {
+	public void setAmt(int amt) {
 		this.amt = amt;
 	}
 }

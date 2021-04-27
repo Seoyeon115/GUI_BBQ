@@ -3,8 +3,11 @@ package main_jk;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import BBQ_DAO_jk.OrderDAO;
+
 public class ShopBasketUIEvent implements ActionListener {
 	ShopBasketUI shop;
+	OrderDAO order;
 	
 	
 	public ShopBasketUIEvent(ShopBasketUI shop) {
@@ -22,6 +25,7 @@ public class ShopBasketUIEvent implements ActionListener {
 	      }else if(obj == shop.btn_all_delete) {
 	    	 shop.menu_panel.setVisible(false);
 		     shop.center_panel.remove(shop.menu_panel);
+		     
 	         System.out.println("전체삭제");
 	         
 	      }else if(obj == shop.btn_order) {
@@ -33,10 +37,12 @@ public class ShopBasketUIEvent implements ActionListener {
 	         new PayUI();
 	         
 	      }else if(obj == shop.btn_mdelete) {
+	    	  //버튼클릭시 db삭제
+//	    	 order.getcartdeleteResult(shop.cvo.get(0).getrno());
 	         shop.menu_panel.setVisible(false);
 	         shop.center_panel.remove(shop.menu_panel);
 	         System.out.println("삭제");
-	         
+	    	
 	      }else if(obj == shop.tf_madd) {
 		         System.out.println("수량 추가");
 		         

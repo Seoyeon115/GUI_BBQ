@@ -65,7 +65,7 @@ public ArrayList<OptionVO> optionvo;
 				vo.setRno(rs.getInt(1));
 				vo.setMenu(rs.getString(2));
 				vo.setPrice(rs.getInt(3));
-				vo.setAmt(rs.getString(4));
+				vo.setAmt(rs.getInt(4));
 				
 				ordervo.add(vo);
 			}
@@ -102,7 +102,27 @@ public ArrayList<OptionVO> optionvo;
 		}
 		return optionvo;
 	}	
-	
+	/** 메뉴 삭제시 DB 삭제 **/
+	public boolean getcartdeleteResult(int rno) {
+		boolean result =false;
+		try {
+			String sql = " DELETE FROM BBQ_CART  "
+					+ " WHERE RNO=? ";
+			
+			getPreparedStatement(sql);
+			pstmt.setInt(1, rno);
+			
+		
+			while(rs.next()) {	
+				int val = pstmt.executeUpdate();
+				if(val == 0) result= true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 		
 	/** 결제 처리**/
 	public void getPayResult() {
