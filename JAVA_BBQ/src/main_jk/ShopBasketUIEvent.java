@@ -3,12 +3,14 @@ package main_jk;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
 import BBQ_DAO_jk.OrderDAO;
 
 public class ShopBasketUIEvent implements ActionListener {
 	ShopBasketUI shop;
 	OrderDAO order;
-	
+	 int i;
 	
 	public ShopBasketUIEvent(ShopBasketUI shop) {
 		this.shop = shop;
@@ -17,16 +19,19 @@ public class ShopBasketUIEvent implements ActionListener {
 	   @Override
 	   public void actionPerformed(ActionEvent e) {
 	      Object obj = e.getSource();
+	     
 	      
 	      if(obj ==shop.btn_back) {  
 	    	  shop.f.setVisible(false);
 	    	  new InnerMain();
 	    	  
 	      }else if(obj == shop.btn_all_delete) {
-	    	  shop.menulist_del();
-		     
+	    	 for(JPanel panel :shop.m_panel) {
+	    		 panel.setVisible(false);
+	    		 shop.center_panel.remove(panel);
+	    	 }
 	         System.out.println("전체삭제");
-	    	
+	         
 	      }else if(obj == shop.btn_order) {
 	         System.out.println("추가 주문");
 	         new MenulistUI();
@@ -35,7 +40,7 @@ public class ShopBasketUIEvent implements ActionListener {
 	         shop.f.setVisible(false);
 	         new PayUI();
 	         
-	      }else if(obj == shop.btn_mdelete) {
+	      }else if(obj == shop.btn_mdelete || shop.btn_mdelete== shop.m_btn.get(i)) {
 	    	  //버튼클릭시 db삭제
 //	    	  for(int i=0; i<shop.cvo.size(); i++) {
 //	    		  if(shop.cvo.get(i).getRno() == ) {
@@ -45,18 +50,19 @@ public class ShopBasketUIEvent implements ActionListener {
 //	    	 order.getcartdeleteResult(shop.cvo.get(0).getRno());
 //	    		  
 //	    	  }
-	         shop.menu_panel.setVisible(false);
+	         shop.m_panel.get(i).setVisible(false);
 	         shop.center_panel.remove(shop.menu_panel);
+	    		  
 	         System.out.println("삭제");
-	    	
-//	      }else if(obj == shop.tf_madd) {
-//		         System.out.println("수량 추가");
-//		         
-//	      }else if(obj == shop.btn_madd) {
-//	         System.out.println("추가");
-//	         
-//	      }else if(obj == shop.btn_minus) {
-//	         System.out.println("빼기");
+	    	  
+	      }else if(obj == shop.tf_madd) {
+		         System.out.println("수량 추가");
+		         
+	      }else if(obj == shop.btn_madd) {
+	         System.out.println("추가");
+	         
+	      }else if(obj == shop.btn_minus) {
+	         System.out.println("빼기");
 	         
 	         
 	      }

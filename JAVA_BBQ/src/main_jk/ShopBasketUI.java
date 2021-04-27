@@ -41,6 +41,8 @@ public class ShopBasketUI {
 	   LoginUI login = new LoginUI();
 	   ArrayList<CartVO> cvo;
 	   ArrayList<OptionVO> ovo;
+	   ArrayList<JPanel> m_panel;
+	   ArrayList<JButton> m_btn;
 	  
 	   int m_price;
 	   
@@ -135,6 +137,8 @@ public class ShopBasketUI {
 	   public void menulist() {
 		   cvo = orderlist.getShopBasketResult(login.id); 
 		   ovo = orderlist.getShopBasketOption();
+		   m_panel = new ArrayList<JPanel>();
+		   m_btn = new ArrayList<JButton>();
 		   int i;
 		   for(i=0; i< cvo.size();i++) {
 				JPanel pc = new JPanel();
@@ -173,78 +177,36 @@ public class ShopBasketUI {
 	      btn_mdelete.setFont(Commons.getFont(10));
 	      right_panel.setLayout(null);
 	      btn_mdelete.setBounds(200, 0, 40, 38);
-//	      btn_madd = new JButton("+");
-//	      btn_minus = new JButton("-");
-//	      tf_madd = new JTextField(8);
-//	      tf_madd.setText(Integer.toString(cvo.get(i).getAmt()));
-//	      JPanel count_panel = new JPanel();
-//	      count_panel.add(btn_minus);
-//	      count_panel.add(tf_madd);
-//	      count_panel.add(btn_madd);
-//	      count_panel.setBounds(0,50, 300, 60);
+	      btn_madd = new JButton("+");
+	      btn_minus = new JButton("-");
+	      tf_madd = new JTextField(8);
+	      tf_madd.setText(Integer.toString(cvo.get(i).getAmt()));
+	      JPanel count_panel = new JPanel();
+	      count_panel.add(btn_minus);
+	      count_panel.add(tf_madd);
+	      count_panel.add(btn_madd);
+	      count_panel.setBounds(0,50, 300, 60);
 	      right_panel.add(btn_mdelete);
-//	      right_panel.add(count_panel);
+	      right_panel.add(count_panel);
 	      
 	      menu_panel.add(BorderLayout.EAST, right_panel);
-//	      panel_content.add(menu_panel);     ///////
 	      center_panel.add(menu_panel);    
-//	      panel_content.add(center_panel);     
+	      panel_content.add(center_panel);     
 	      
 	      btn_mdelete.addActionListener(eventobj);
-//	      tf_madd.addActionListener(eventobj);
-//	      btn_madd.addActionListener(eventobj);
-//	      btn_minus.addActionListener(eventobj);
+	      tf_madd.addActionListener(eventobj);
+	      btn_madd.addActionListener(eventobj);
+	      btn_minus.addActionListener(eventobj);
+	      
+	      m_btn.add(btn_mdelete);
+	      
+	      m_panel.add(menu_panel);
+	      
 		  }
+		   
 		   
 	   }//menulist
 
 	   
-	/**메뉴리스트 삭제 GUI**/   
-	   public void menulist_del() {
-//		   int i;
-//		   for(i=0; i< cvo.size();i++) {
-//				JPanel pc = new JPanel();
-//				
-//				f.add(pc,BorderLayout.CENTER);
-//				
-//				menu_panel = new JPanel(new GridLayout(1,8)) {
-//					@Override
-//					public Dimension getPreferredSize() {
-//						return new Dimension(50,100);
-//					}
-//				};
-//				menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-//				pc.add(menu_panel);
-//				f.setVisible(true);
-//			   
-//			  menu_label = new JLabel();
-//			  menu_label.setText(cvo.get(i).getRno()+". 메뉴: " + cvo.get(i).getMenu() + cvo.get(i).getPrice());;
-//			  option_label = new JLabel();
-//			  option_label.setText("옵션: " +ovo.get(i).getOption() + ovo.get(i).getPrice());
-//			  m_price_label = new JLabel();
-//			  m_price =((cvo.get(i).getPrice() * cvo.get(i).getAmt())+ovo.get(i).getPrice());
-//			  m_price_label.setText("가격: "+ m_price);
-//			  ttl_price += m_price; 
-//			  
-//			  JPanel left_panel =new JPanel(new GridLayout(3,1));
-//			  left_panel.add(menu_label);
-//			  left_panel.add(option_label);
-//			  left_panel.add(m_price_label);
-//			  menu_panel.add(BorderLayout.WEST, left_panel);
-//			  
-//	      JPanel right_panel =new JPanel();
-//	      btn_mdelete = new JButton("x");
-//	      btn_mdelete.setFont(Commons.getFont(10));
-//	      right_panel.setLayout(null);
-//	      btn_mdelete.setBounds(200, 0, 40, 38);
-//	      right_panel.add(btn_mdelete);
-//	      
-//	      menu_panel.add(BorderLayout.EAST, right_panel);
-//	      center_panel.add(menu_panel);    
-//	      
-//	      btn_mdelete.addActionListener(eventobj);
-//		  }
-		   
-	   }//menulist_del
 
 	}//ShopBasketUI
