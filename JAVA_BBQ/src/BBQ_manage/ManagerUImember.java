@@ -27,21 +27,14 @@ import BBQ_VO.MemberVO;
 public class ManagerUImember implements ActionListener {
 
 	ArrayList<String> namelist = new ArrayList<String>();
-//	JButton btn_modify, btn_ordertake, btn_chat;
-//	int idnum = 10000;
-//	Socket s;
 	ArrayList<JPanel> roomList, wpList;
 	ArrayList<JButton> btnList;
 	JButton searchbtn;
 	JTextField jtf;
-//	ObjectOutputStream oos;
-//	ObjectInputStream ois;
 	ArrayList<String> nameList = new ArrayList<String>();
 	JFrame frame;
 	JPanel main;
 	JPanel west_pn;
-//	ChatUIForManager ui;
-//	ArrayList<MessageVO> msglist = new ArrayList<MessageVO>();
 	BBQ_System system = new BBQ_System();
 	JPanel contants_pn;
 	ManagerUI ui;
@@ -130,12 +123,12 @@ public class ManagerUImember implements ActionListener {
 		// 컨텐츠 패널 멤버목록
 		main = new JPanel();
 		JPanel nmain = new JPanel();
+		nmain.setLayout(new BoxLayout(nmain, BoxLayout.Y_AXIS));
 		main.setBackground(new Color(255, 255, 255));
 		roomList = new ArrayList<JPanel>();
 		wpList = new ArrayList<JPanel>();
 		btnList = new ArrayList<JButton>();
 		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-		nmain.setLayout(new BoxLayout(nmain, BoxLayout.Y_AXIS));
 		int x = 500;
 		int y = 35;
 
@@ -288,22 +281,23 @@ public class ManagerUImember implements ActionListener {
 //				}
 //			}
 			ArrayList<MemberVO> member = system.getMemberList();
-			for (int i = 1; i < 30; i++) {
-				JPanel room = roomList.get(i);
-				room.removeAll();
-				JPanel wp = wpList.get(i);
-				wp.removeAll();
-				wp.revalidate();
-				wp.setVisible(false);
-				room.revalidate();
-				room.setVisible(false);
-			}
-		
+			
+
 			String name = jtf.getText();
 			int check = 0;
 			for (int i = 0; i < member.size(); i++) {
-				
+
 				if (member.get(i).getId().equals(name)) {
+					for (int j = 1; j < 30;j++) {
+						JPanel room = roomList.get(j);
+						room.removeAll();
+						JPanel wp = wpList.get(j);
+						wp.removeAll();
+						wp.revalidate();
+						wp.setVisible(false);
+						room.revalidate();
+						room.setVisible(false);
+					}
 					check = +1;
 					JPanel room = roomList.get(0);
 					room.removeAll();
@@ -316,7 +310,7 @@ public class ManagerUImember implements ActionListener {
 					wp.add(roomlb);
 					room.add(BorderLayout.WEST, wp);
 					room.add(BorderLayout.EAST, roomBtn);
-					
+
 					MemberVO member1 = member.get(i);
 
 					roomBtn.addActionListener(new ActionListener() {
@@ -335,21 +329,23 @@ public class ManagerUImember implements ActionListener {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("해당하는 데이터가 없습니다."));
 
 			}
-			for (int i = 0; i < 29; i++) {
-				JPanel chatroom = new JPanel();
-				chatroom.setPreferredSize(new Dimension(x, y));
-				chatroom.setBackground(new Color(255, 255, 255));
-				chatroom.setBorder(new LineBorder(new Color(0, 0, 0, 100), 2, true));
-				main.add(chatroom);
-				JPanel wp = new JPanel();
-				JButton enter_btn = new JButton("수정");
-				roomList.add(chatroom);
-				wpList.add(wp);
-				btnList.add(enter_btn);
+			if (check != 0) {
+				for (int i = 0; i < 29; i++) {
+					JPanel chatroom = new JPanel();
+					chatroom.setPreferredSize(new Dimension(x, y));
+					chatroom.setBackground(new Color(255, 255, 255));
+					chatroom.setBorder(new LineBorder(new Color(0, 0, 0, 100), 2, true));
+					main.add(chatroom);
+					JPanel wp = new JPanel();
+					JButton enter_btn = new JButton("수정");
+					roomList.add(chatroom);
+					wpList.add(wp);
+					btnList.add(enter_btn);
+				}
+				main.revalidate();
+				contants_pn.revalidate();
+				ui.frame.revalidate();
 			}
-			main.revalidate();
-			contants_pn.revalidate();
-			ui.frame.revalidate();
 		}
 
 	}

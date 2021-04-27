@@ -80,10 +80,12 @@ public class BBQ_ServerSystem {
 					oos.writeBoolean(true);
 				}else if(req.getRequest() == RequestVO.SEND_MESSAGE) {
 					// 
-				}else if(req.getRequest() == RequestVO.GET_MEMBER_INFO) {
+				}else if(req.getRequest() == RequestVO.GET_MEMBER_INFO) {// 멤버정보 가져오기
 					oos.writeObject(mdao.getmemberlist());
 				}else if(req.getRequest() == RequestVO.REQUEST_UPDATE) { // 회원가입
 					oos.writeObject(mdao.getUpdateResult((MemberVO)req.getObj()));
+				}else if(req.getRequest() == RequestVO.GET_ORDER_INFO) {// 주문정보 가져오기
+					oos.writeObject(odao.getOrderchecklist());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

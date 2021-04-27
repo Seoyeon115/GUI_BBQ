@@ -127,6 +127,37 @@ public class OrderDAO extends DBConn {
 		return orderlist;
 	}
 	
+	public ArrayList<OrderVO> getOrderchecklist(){
+		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+		try {
+			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, TO_CHAR(ODATE,'hh24:mi'), B.AMOUNT ,OPTIONS "  
+					+ " FROM BBQ_ORDER A,bbq_order_detail B,MENU_DATA C " 
+					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
+			
+			getPreparedStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OrderVO order = new OrderVO();
+				
+				order.setOrderId(rs.getInt(1));
+				order.setName(rs.getString(2));
+				order.setMname(rs.getString(3));
+				order.setMessage(rs.getString(4));
+				order.setAddr(rs.getString(5));
+				order.setDate(rs.getString(6));
+				order.setAmount(rs.getInt(7));
+				order.setOption(rs.getString(8));
+				orderlist.add(order);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderlist;
+	}
+	
 	public ArrayList<MenuVO> getOrderDetail(int orderId){
 		ArrayList<MenuVO> orderDetail = new ArrayList<MenuVO>();
 		ArrayList<Integer> midList = new ArrayList<Integer>();

@@ -89,7 +89,7 @@ public class MemberDAO extends DBConn{
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		//id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;	
 		try {
-			String sql ="SELECT ID,PASS,NAME,HP,ADDR FROM BBQ_MEMBER ORDER BY orderday";
+			String sql ="SELECT ID,PASS,NAME,HP,ADDR FROM BBQ_MEMBER ORDER BY MDATE";
 			getPreparedStatement(sql);
 			
 			rs = pstmt.executeQuery();

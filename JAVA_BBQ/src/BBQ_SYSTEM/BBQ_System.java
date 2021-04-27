@@ -54,6 +54,11 @@ public class BBQ_System {
 		return client.getMemberInfo();
 		
 	}
+	/** 주문 확인 조회 **/
+	public ArrayList<OrderVO> getOrdercheckList(){
+		return client.getOrderInfo();
+		
+	}
 	/** 검색 **/
 //	public ScoreVO search(String name) {
 //		return sdao.getSelectResult(name);

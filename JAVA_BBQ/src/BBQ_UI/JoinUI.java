@@ -89,8 +89,17 @@ public class JoinUI implements ActionListener {
 				t_panel.add(id_chk_btn);
 				tf_panel.add(t_panel);
 				list.add(id);
-
-			} else if (name.equals("핸드폰")) {
+			}else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
+				JPasswordField tf = new JPasswordField(20);
+				t_panel.add(tf);
+				tf_panel.add(t_panel);
+				list.add(tf);
+			} else if (name.equals("이름")) {
+				JTextField tf = new JTextField(20);
+				t_panel.add(tf);
+				tf_panel.add(t_panel);
+				list.add(tf);
+			}else if (name.equals("핸드폰")) {
 				JTextField hp1 = new JTextField(6);
 				JTextField hp2 = new JTextField(6);
 				JTextField hp3 = new JTextField(6);
@@ -100,23 +109,18 @@ public class JoinUI implements ActionListener {
 				t_panel.add(new JLabel("-"));
 				t_panel.add(hp3);
 				tf_panel.add(t_panel);
+				list.add(hp1);
+				list.add(hp2);
+				list.add(hp3);
 			} else if (name.equals("주소")) {
-				JTextField addr1 = new JTextField(28);
-				JTextField addr2 = new JTextField(28);
+				JTextField addr1 = new JTextField(22);
 				t_panel.add(addr1);
+				JTextField addr2 = new JTextField(22);
 				t_panel.add(addr2);
 				tf_panel.add(t_panel);
-			} else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
-				JPasswordField tf = new JPasswordField(20);
-				t_panel.add(tf);
-				tf_panel.add(t_panel);
-				list.add(tf);
-			} else {
-				JTextField tf = new JTextField(20);
-				t_panel.add(tf);
-				tf_panel.add(t_panel);
-				list.add(tf);
-			}
+				list.add(addr1);
+				list.add(addr2);
+			} 
 		} // for
 		f.add(BorderLayout.NORTH, title_panel);
 		f.add(BorderLayout.WEST, label_panel);

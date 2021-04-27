@@ -150,7 +150,7 @@ public class ManagerUI implements ActionListener {
 
 		JPanel firstmain = new JPanel();
 		firstmain.setBackground(new Color(255, 255, 255));
-
+		
 		contents.add(firstmain);
 
 		panel.add(BorderLayout.CENTER, contents);
@@ -169,6 +169,8 @@ public class ManagerUI implements ActionListener {
 	public JPanel chatPanel() {
 
 		JPanel contants_pn = new JPanel(new BorderLayout());
+		JPanel nmain = new JPanel();
+		nmain.setLayout(new BoxLayout(nmain, BoxLayout.Y_AXIS));
 		JPanel main = new JPanel();
 		main.setBackground(new Color(255, 255, 255));
 		roomList = new ArrayList<JPanel>();
@@ -182,11 +184,11 @@ public class ManagerUI implements ActionListener {
 		JPanel northblank = new JPanel();
 		northblank.setPreferredSize(new Dimension(x, 20));
 		northblank.setBackground(new Color(255, 255, 255));
-		main.add(northblank);
+		nmain.add(northblank);
 		JPanel northname = new JPanel();
 		northname.setPreferredSize(new Dimension(x, y));
 		northname.setBackground(new Color(255, 255, 255));
-		main.add(northname);
+		nmain.add(northname);
 		JLabel lb = new JLabel("채팅 대화 목록");
 		lb.setFont(Commons.getFont(1, 28));
 		northname.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 0));
@@ -211,6 +213,7 @@ public class ManagerUI implements ActionListener {
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+		contants_pn.add(BorderLayout.NORTH, nmain);
 		contants_pn.add(BorderLayout.CENTER, scroll);
 
 		return contants_pn;

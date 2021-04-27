@@ -87,6 +87,18 @@ public class BBQ_Client {
 		
 		return memberlist;
 	}
+	public ArrayList<OrderVO> getOrderInfo() {
+		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+		
+		try {			
+			oos.writeObject(new RequestVO(RequestVO.GET_ORDER_INFO));
+			orderlist = (ArrayList<OrderVO>) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderlist;
+	}
 	
 	public ArrayList<OrderVO> getOrderList(String uid){
 		ArrayList<OrderVO> orderlist = null;

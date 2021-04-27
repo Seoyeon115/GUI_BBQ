@@ -4,16 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,11 +18,14 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_UI.Commons;
-import BBQ_VO.MessageVO;
+import BBQ_VO.OrderVO;
 
 public class ManagerUIorder implements ActionListener {
 
+	BBQ_System system = new BBQ_System();
+	
 	ArrayList<String> namelist = new ArrayList<String>();
 	ArrayList<JPanel> roomList, wpList;
 	ArrayList<JButton> btnList;
@@ -35,11 +33,13 @@ public class ManagerUIorder implements ActionListener {
 	JFrame frame;
 	JPanel panel;
 	JPanel west_pn;
-
+	
 	public JPanel init() {
 
 //
 		JPanel contants_pn = new JPanel(new BorderLayout());
+		JPanel nmain = new JPanel();
+		nmain.setLayout(new BoxLayout(nmain, BoxLayout.Y_AXIS));
 		contants_pn.setBackground(new Color(255,255,255));
 		// ÄÁÅÙÃ÷ ÆÐ³Î ¸â¹ö¸ñ·Ï
 		JPanel main = new JPanel();
@@ -79,16 +79,16 @@ public class ManagerUIorder implements ActionListener {
 		
 		search_pn.add(BorderLayout.CENTER,jtf_pn);
 		
-		main.add(northblank);
-		main.add(northname);
-		main.add(search_pn);
+		nmain.add(northblank);
+		nmain.add(northname);
+		nmain.add(search_pn);
 
 		// ¸ñ·Ï Ãß°¡
 		for (int i = 0; i < 30; i++) {
 			JPanel chatroom = new JPanel();
 			chatroom.setPreferredSize(new Dimension(x, y));
 			chatroom.setBackground(new Color(255, 255, 255));
-			chatroom.setBorder(new LineBorder(new Color(0, 0, 0, 150), 2, true));
+			chatroom.setBorder(new LineBorder(new Color(214, 164, 41, 150), 2, true));
 			roomList.add(chatroom);
 			main.add(chatroom);
 			JPanel wp = new JPanel();
@@ -96,12 +96,17 @@ public class ManagerUIorder implements ActionListener {
 			wpList.add(wp);
 			btnList.add(enter_btn);
 		}
-
+		ArrayList<OrderVO> orderlist = system.getOrdercheckList();
+		
+		System.out.println(orderlist.size());
+		System.out.println(orderlist.get(2).getOrderId());
+		
 		JScrollPane scroll = new JScrollPane(main);
 		scroll.setBounds(23, 20, 725, 580);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+		contants_pn.add(BorderLayout.NORTH, nmain);
 		contants_pn.add(BorderLayout.CENTER, scroll);
 
 		return contants_pn;

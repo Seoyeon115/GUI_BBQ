@@ -12,6 +12,7 @@ public class RequestVO implements Serializable{
 	public static int SEND_MESSAGE = 6; // 메시지 보내기
 	public static int GET_MEMBER_INFO = 7; // 회원정보 가져오기
 	public static int REQUEST_UPDATE = 8; // 회원정보 가져오기
+	public static int GET_ORDER_INFO = 9; // 주문정보 가져오기
 	
 	int request; // 요청 정보
 	Object obj; // 객체 데이터
