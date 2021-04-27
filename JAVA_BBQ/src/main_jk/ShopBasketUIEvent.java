@@ -1,8 +1,12 @@
 package main_jk;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import BBQ_DAO_jk.OrderDAO;
@@ -10,7 +14,6 @@ import BBQ_DAO_jk.OrderDAO;
 public class ShopBasketUIEvent implements ActionListener {
 	ShopBasketUI shop;
 	OrderDAO order;
-	 int i;
 	
 	public ShopBasketUIEvent(ShopBasketUI shop) {
 		this.shop = shop;
@@ -19,7 +22,15 @@ public class ShopBasketUIEvent implements ActionListener {
 	   @Override
 	   public void actionPerformed(ActionEvent e) {
 	      Object obj = e.getSource();
-	     
+	      
+	    for(int i=0; i < shop.cvo.size(); i++) {
+	    	if(obj == shop.m_btn.get(i)) {
+	    		shop.m_panel.get(i).setVisible(false);
+	    		shop.center_panel.remove(shop.m_panel.get(i));
+	    		shop.ttl_price -= (shop.cvo.get(i).getPrice() * shop.cvo.get(i).getAmt())+shop.ovo.get(i).getPrice(); //총주문금액 set해야함
+//	    		order.getcartdeleteResult(new LoginUI().id, shop.cvo.get(i).getCartid()); //db에서 삭제
+	     }
+	    }
 	      
 	      if(obj ==shop.btn_back) {  
 	    	  shop.f.setVisible(false);
@@ -30,7 +41,7 @@ public class ShopBasketUIEvent implements ActionListener {
 	    		 panel.setVisible(false);
 	    		 shop.center_panel.remove(panel);
 	    	 }
-	         System.out.println("전체삭제");
+	    	 order.getcartdeleteResult(new LoginUI().id);
 	         
 	      }else if(obj == shop.btn_order) {
 	         System.out.println("추가 주문");
@@ -40,21 +51,6 @@ public class ShopBasketUIEvent implements ActionListener {
 	         shop.f.setVisible(false);
 	         new PayUI();
 	         
-	      }else if(obj == shop.btn_mdelete || shop.btn_mdelete== shop.m_btn.get(i)) {
-	    	  //버튼클릭시 db삭제
-//	    	  for(int i=0; i<shop.cvo.size(); i++) {
-//	    		  if(shop.cvo.get(i).getRno() == ) {
-//	    			  shop.menu_panel.setVisible(false);
-//	    		      shop.center_panel.remove(shop.menu_panel);
-//	    		  }
-//	    	 order.getcartdeleteResult(shop.cvo.get(0).getRno());
-//	    		  
-//	    	  }
-	         shop.m_panel.get(i).setVisible(false);
-	         shop.center_panel.remove(shop.menu_panel);
-	    		  
-	         System.out.println("삭제");
-	    	  
 	      }else if(obj == shop.tf_madd) {
 		         System.out.println("수량 추가");
 		         
@@ -64,6 +60,7 @@ public class ShopBasketUIEvent implements ActionListener {
 	      }else if(obj == shop.btn_minus) {
 	         System.out.println("빼기");
 	         
+	      
 	         
 	      }
 	   }//actionPerformed

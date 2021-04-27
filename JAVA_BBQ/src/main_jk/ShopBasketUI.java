@@ -44,7 +44,6 @@ public class ShopBasketUI {
 	   ArrayList<JPanel> m_panel;
 	   ArrayList<JButton> m_btn;
 	  
-	   int m_price;
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -109,16 +108,13 @@ public class ShopBasketUI {
 //	      panel_content.add(btn_order);
 	      
 	      //bottom_panel
-	      JLabel total_label = new JLabel("총주문금액: " + ttl_price + "원");
-	      btn_pay = new JButton("   결제    ");
-	      bottom_panel.add(total_label);
-	      bottom_panel.add(btn_pay);
 	      
 	      //setting
 	      
 	      panel_content.add(BorderLayout.NORTH, top_panel);
 	      panel_content.add(BorderLayout.CENTER, center_panel);
-	      panel_content.add(BorderLayout.SOUTH, bottom_panel);
+	      panel_content.add(BorderLayout.SOUTH, ttlOrderPrice(ttl_price));
+
 	      
 	      JScrollPane content = new JScrollPane(center_panel); 
 	      panel_content.add(content);
@@ -131,8 +127,14 @@ public class ShopBasketUI {
 	      btn_pay.addActionListener(eventobj);
 	      
 	   }//init
-
-	   
+	   /** 주문금액 패널**/
+	   public JPanel ttlOrderPrice(int price) {
+	   total_label = new JLabel("총주문금액: " + price + "원");
+	      btn_pay = new JButton("   결제    ");
+	      bottom_panel.add(total_label);
+	      bottom_panel.add(btn_pay);
+	      return bottom_panel;
+	   }
 	   /** 메뉴 생성 GUI **/
 	   public void menulist() {
 		   cvo = orderlist.getShopBasketResult(login.id); 
@@ -162,7 +164,7 @@ public class ShopBasketUI {
 			  option_label = new JLabel();
 			  option_label.setText("옵션: " +ovo.get(i).getOption() + ovo.get(i).getPrice());
 			  m_price_label = new JLabel();
-			  m_price =((cvo.get(i).getPrice() * cvo.get(i).getAmt())+ovo.get(i).getPrice());
+			  int m_price =((cvo.get(i).getPrice() * cvo.get(i).getAmt())+ovo.get(i).getPrice());
 			  m_price_label.setText("가격: "+ m_price);
 			  ttl_price += m_price; 
 			  
@@ -199,7 +201,6 @@ public class ShopBasketUI {
 	      btn_minus.addActionListener(eventobj);
 	      
 	      m_btn.add(btn_mdelete);
-	      
 	      m_panel.add(menu_panel);
 	      
 		  }

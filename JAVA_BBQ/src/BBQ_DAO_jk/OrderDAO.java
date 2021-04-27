@@ -22,7 +22,7 @@ public ArrayList<OptionVO> optionvo;
 		cartvo = new ArrayList<CartVO>();
 		
 		try {
-			String sql = " SELECT ROWNUM RNO, M.NAME, M.PRICE, C.AMOUNT "
+			String sql = " SELECT ROWNUM RNO, M.NAME, M.PRICE, C.AMOUNT, C.CARTID"
 					+ " FROM BBQ_MEMBER I, BBQ_CART C, MENU_DATA M "
 					+ " WHERE I.ID=C.USER_ID AND M.MID=C.MID "
 					+ " AND I.ID =? ";
@@ -38,6 +38,7 @@ public ArrayList<OptionVO> optionvo;
 				vo.setMenu(rs.getString(2));
 				vo.setPrice(rs.getInt(3));
 				vo.setAmt(rs.getInt(4));
+				vo.setCartid(rs.getString(5));
 				
 				cartvo.add(vo);
 			}
@@ -74,26 +75,37 @@ public ArrayList<OptionVO> optionvo;
 		}
 		return optionvo;
 	}	
-	/** 메뉴 삭제시 DB 삭제 **/
-	public boolean getcartdeleteResult(int rno) {
-		boolean result =false;
+	/** 메뉴 삭제시 DB 전체삭제 **/
+	public void getcartdeleteResult(String id) {
 		try {
-			String sql = " DELETE FROM BBQ_CART  "
-					+ " WHERE RNO=? ";
+			String sql = " DELETE FROM BBQ_CART WHERE USER_ID =?  ";
 			
 			getPreparedStatement(sql);
-			pstmt.setInt(1, rno);
+			pstmt.setString(1, id);
 			
 		
 			while(rs.next()) {	
-				int val = pstmt.executeUpdate();
-				if(val == 0) result= true;
+				pstmt.executeUpdate();
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+	}
+	/** 메뉴 개별 삭제**/
+	public void getcartdeleteResult(String id, String cartid) {
+		try {
+			String sql =" delete from bbq_cart where user_id=? and cartid =? ";
+			
+			getPreparedStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, cartid);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 		
 	/** 주문내역 결제 **/
