@@ -27,10 +27,10 @@ public class MenulistUI2 implements ActionListener {
 	public MenulistUI2(InnerMain main) {
 		this.main = main;
 	}
-//	public MenulistUI2(MenulistUI ui, InnerMain main) {
-//		this.list1 = ui;
-//		this.main = main;
-//	}
+	public MenulistUI2(MenulistUI ui, InnerMain main) {
+		this.list1 = ui;
+		this.main = main;
+	}
 
 	public JPanel initialize() {
 //		frame = new JFrame();
@@ -251,7 +251,6 @@ public class MenulistUI2 implements ActionListener {
 			main.panelinit();
 		} else if (obj == btn_cart) {
 //			System.out.println("cart2");
-			panel.setVisible(false);
 			main.switchPanel(InnerMain.CART);
 		}
 

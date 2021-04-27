@@ -7,22 +7,24 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 
 // 상세 메뉴창 미완성
 public class DetailMenuUI implements ActionListener{
+	BBQ_System system;
 	InnerMain main;
 	MenulistUI prevPage;
 //	JFrame frame;
@@ -36,6 +38,7 @@ public class DetailMenuUI implements ActionListener{
 	// 생성자, 메뉴 정보를 매개변수로 받는다
 	public DetailMenuUI(InnerMain main) {
 		this.main = main;
+		system = main.system;
 	}
 	
 	public DetailMenuUI(InnerMain main, MenulistUI prevPage) {
@@ -176,7 +179,7 @@ public class DetailMenuUI implements ActionListener{
 			panel_option.setBounds(5, h, 473, 40);
 			h += 45;
 			panel_option.setBackground(new Color(255, 255, 255));
-			JCheckBox check_option = new JCheckBox(option.getOption()
+			JCheckBox check_option = new JCheckBox(option.getName()
 										+ "(+" + option.getPrice() + ")");
 			check_option.setBackground(new Color(255, 255, 255));
 			check_option.setFont(Commons.getFont(15));
@@ -233,11 +236,23 @@ public class DetailMenuUI implements ActionListener{
 		Object obj = e.getSource();
 		
 		if(obj == button_onCart) { // 담기 버튼 클릭
-			System.out.println("장바구니 담기");
+			
+			// 선택한 옵션만 남겨서 메뉴 정보를 장바구니에 담는다
+			int i = 0;
+			Iterator ie = vo.getOptions().iterator();
+			while(ie.hasNext()) {
+				ie.next();
+				if(!check_options.get(i++).isSelected()) {
+					ie.remove();
+				}
+			}
+			
+			system.addCart(vo);
 		}else if(obj == button_back) { // 뒤로가기 버튼 클릭
 //			System.out.println("뒤로가기");
 			panel_content.setVisible(false);
-			main.frame.add(prevPage.initialize());
+//			main.frame.add(prevPage.initialize());
+			main.switchPanel(InnerMain.MENULIST);
 		}else { // 옵션 메뉴 선택
 			int op = isInOption(obj);
 			if(op != -1) {

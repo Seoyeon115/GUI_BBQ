@@ -27,7 +27,7 @@ import BBQ_UI.Commons;
 import BBQ_VO.MessageVO;
 
 public class ManagerUI implements ActionListener {
-	ManagerUImember memberui = new ManagerUImember();
+	ManagerUImember memberui = new ManagerUImember(this);
 	ManagerUIorder orderui = new ManagerUIorder();
 
 	ArrayList<String> namelist = new ArrayList<String>();
@@ -263,7 +263,7 @@ public class ManagerUI implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btn_modify) {
-			System.out.println("수정버튼");
+//			System.out.println("수정버튼");
 			contents.removeAll();			
 			contents.add(BorderLayout.CENTER, memberui.init());
 //			contents.setVisible(true);

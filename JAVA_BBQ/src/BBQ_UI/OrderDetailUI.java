@@ -153,7 +153,7 @@ public class OrderDetailUI implements ActionListener{
 			
 			for(OptionVO option : menu.getOptions()) {
 				height += 10;
-				JLabel label_option = new JLabel(" + "+ option.getOption() +"("+ option.getPrice() +")");
+				JLabel label_option = new JLabel(" + "+ option.getName() +"("+ option.getPrice() +")");
 				label_option.setFont(Commons.getFont(10));
 				label_option.setPreferredSize(new Dimension(460, 12));
 //				label_option.setBounds(5, height, 460, 50);

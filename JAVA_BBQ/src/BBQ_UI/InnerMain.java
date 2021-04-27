@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
 
@@ -28,11 +29,9 @@ public class InnerMain implements ActionListener {
 	public static int ORDERLIST = 6;
 	public static int ORDERDETAIL = 7;
 	public static int PAY = 8;
-	public static int CHATCON = 9;
-	public static int CHATRE = 10;
 	
-	String id,pass;
 	JFrame frame = new JFrame();
+	BBQ_System system;
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
 	MenulistUI list1 = new MenulistUI(this);
 	MenulistUI2 list2 = new MenulistUI2(this);
@@ -41,16 +40,22 @@ public class InnerMain implements ActionListener {
 	Orderstatus_on ing;
 	OrderListUI orderlistUI = new OrderListUI(this);
 	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
-	ChatUI chatUI = new ChatUI(this);
 	PayUI payUI = new PayUI(this);
-	int idnum;
+	
 	JPanel panel;
 	
 	//Constructor
-	public InnerMain(String id) {
-		this.id =id;
+	public InnerMain(BBQ_System system,String id) {
+		this.system = system;
+		list1 = new MenulistUI(this);
+		list2 = new MenulistUI2(this); 
+		detailMenu = new DetailMenuUI(this);
+		basket = new ShopBasketUI(this);
+		ing = new Orderstatus_on(this, id);
+		orderlistUI = new OrderListUI(this);
+		orderDetailUI = new OrderDetailUI(this);
+		payUI = new PayUI(this);
 		init();
-		ing = new Orderstatus_on(this,id);
 	}
 	
 	//Method
@@ -272,18 +277,6 @@ public class InnerMain implements ActionListener {
 			frame.add(orderlistUI.init());
 		}else if(ui == PAY) {
 			frame.add(payUI.init());
-		}else if(ui == CHATCON) {
-//			idnum += 1;
-//			chatUI.createsocket(idnum);
-			frame.add(chatUI.init());
-		}else if(ui == CHATRE) {
-			frame.add(chatUI.init());
-			String[] array = chatUI.msg_array;
-			String msg = "";
-			for(int i=0;i<array.length;i++) {
-				msg += array[i]+"\n";
-			}
-			chatUI.chatmain.setText(msg);
 		}
 	}
 	
