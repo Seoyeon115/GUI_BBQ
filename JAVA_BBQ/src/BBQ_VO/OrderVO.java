@@ -14,6 +14,7 @@ public class OrderVO implements Serializable{
 	String name; // 주문자 id
 	String mname; // 메뉴 이름
 	String date; // 주문 날짜
+	String delitime; //배달 도착 시간
 	String addr; // 배달주소
 	String option; // 사이드메뉴
 	String message; // 요청 사항
@@ -23,6 +24,12 @@ public class OrderVO implements Serializable{
 //	int discount; // 할인 금액
 //	int payment; // 총 결제 금액
 	
+	public String getDelitime() {
+		return delitime;
+	}
+	public void setDelitime(String delitime) {
+		this.delitime = delitime;
+	}
 	public String getMname() {
 		return mname;
 	}

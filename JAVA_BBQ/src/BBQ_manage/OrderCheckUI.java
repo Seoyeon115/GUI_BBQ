@@ -124,7 +124,6 @@ public class OrderCheckUI implements ActionListener {
 		}
 		
 		JLabel option = new JLabel(optionfinal);
-//		JLabel option = new JLabel("Ä¡Å²¹«");
 		option.setFont(Commons.getFont(1, 20));
 		
 		norCenterpn.add(pname);
@@ -289,8 +288,13 @@ public class OrderCheckUI implements ActionListener {
 					
 					int addvalue = (hour*60) + min + 30;
 					
-					String addhour = String.valueOf(addvalue/60);
+					int prehour = addvalue/60;
 					String addmin = String.valueOf(addvalue%60);
+					
+					if(prehour>=24) {
+						prehour = prehour - 24;
+					}
+					String addhour = String.valueOf(prehour);
 					
 					String finaldate = datevalue+" "+addhour+":"+addmin+":"+sec;
 					
@@ -315,8 +319,13 @@ public class OrderCheckUI implements ActionListener {
 					
 					int addvalue = (hour*60) + min + 60;
 					
-					String addhour = String.valueOf(addvalue/60);
+					int prehour = addvalue/60;
 					String addmin = String.valueOf(addvalue%60);
+					
+					if(prehour>=24) {
+						prehour = prehour - 24;
+					}
+					String addhour = String.valueOf(prehour);
 					
 					String finaldate = datevalue+" "+addhour+":"+addmin+":"+sec;
 					
@@ -342,8 +351,13 @@ public class OrderCheckUI implements ActionListener {
 					
 					int addvalue = (hour*60) + min + 90;
 					
-					String addhour = String.valueOf(addvalue/60);
+					int prehour = addvalue/60;
 					String addmin = String.valueOf(addvalue%60);
+					
+					if(prehour>=24) {
+						prehour = prehour - 24;
+					}
+					String addhour = String.valueOf(prehour);
 					
 					String finaldate = datevalue+" "+addhour+":"+addmin+":"+sec;
 					

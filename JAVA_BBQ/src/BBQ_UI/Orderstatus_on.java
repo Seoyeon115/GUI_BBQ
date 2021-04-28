@@ -123,7 +123,8 @@ public class Orderstatus_on implements ActionListener {
 				datalist.add(order);
 			}
 		}
-		String ordertime = datalist.get(0).getDate();
+		//배달 도착 시간 가져오기
+		String ordertime = datalist.get(0).getDelitime();
 		
 		Date now = new Date();
 		String nowtime = format1.format(now);
@@ -141,6 +142,9 @@ public class Orderstatus_on implements ActionListener {
 		
 		//시간 값 빼주기
 		int remaintime = odvalue - nowvalue;
+		if(remaintime <= -1350) {
+			remaintime += 1440;
+		}
 		
 		String namedata = datalist.get(0).getMname();
 		int amount = 0;

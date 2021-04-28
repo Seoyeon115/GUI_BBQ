@@ -95,7 +95,7 @@ public class OrderDAO extends DBConn {
 		boolean result = false;
 		try {
 			String sql = " UPDATE BBQ_ORDER " + 
-					" SET deledate = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
+					" SET DELITIME = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
 					" WHERE ORDERID= ? "; 
 			
 			getPreparedStatement(sql);
@@ -154,7 +154,7 @@ public class OrderDAO extends DBConn {
 	public ArrayList<OrderVO> getOrderchecklist(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		try {
-			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK "  
+			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK , DELITIME "  
 					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
 					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
 			
@@ -173,6 +173,7 @@ public class OrderDAO extends DBConn {
 				order.setAmount(rs.getInt(7));
 				order.setOption(rs.getString(8));
 				order.setState(rs.getInt(9));
+				order.setDelitime(rs.getString(10));
 				
 				orderlist.add(order);
 			}
