@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,21 +17,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
+import BBQ_VO.OrderVO;
+
 public class Orderstatus_on implements ActionListener {
 	InnerMain main;
-	
+	BBQ_System system = new BBQ_System();
 	JFrame frame;
 	JPanel panel;
-	JButton btn_home, btn_cart,btn_chat;
+	JButton btn_home, btn_cart, btn_chat;
 	boolean existchat = false;
 	ChatUI2 UI;
 	String id;
+	SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	OrderVO order;
+	ArrayList<OrderVO> datalist = new ArrayList<OrderVO>();
 
-	public Orderstatus_on(InnerMain main,String id) {
+	public Orderstatus_on(InnerMain main, String id) {
 		this.main = main;
 		this.id = id;
 	}
-	
+
 	public JPanel init() {
 //		frame = new JFrame();
 //		frame.setResizable(false);
@@ -106,10 +115,42 @@ public class Orderstatus_on implements ActionListener {
 		ImageIcon gone = new ImageIcon("images/gone.png");
 		JLabel goneimg = new JLabel(gone);
 
-		JLabel havegone = new JLabel("후라이드 치킨 외1");
+		// 데이터 값 가져오기
+		ArrayList<OrderVO> orderlist = system.getOrdercheckList();
+		for (int i = 0; i < orderlist.size(); i++) {
+			if (orderlist.get(i).getName().equals(id)) {
+				order = orderlist.get(i);
+				datalist.add(order);
+			}
+		}
+		String ordertime = datalist.get(0).getDate();
+		
+		Date now = new Date();
+		String nowtime = format1.format(now);
+		System.out.println(nowtime);
+		System.out.println(ordertime);
+		
+		//시간 값 인트로 가져오기
+		String[] od1= ordertime.split(" ");
+		String[] od2 = od1[1].split(":");
+		int odvalue = (Integer.parseInt(od2[0])*60) + (Integer.parseInt(od2[1]));
+		
+		String[] now1 = nowtime.split(" ");
+		String[] now2 = now1[1].split(":");
+		int nowvalue = (Integer.parseInt(now2[0])*60) + (Integer.parseInt(now2[1]));
+		
+		//시간 값 빼주기
+		int remaintime = odvalue - nowvalue;
+		
+		String namedata = datalist.get(0).getMname();
+		int amount = 0;
+		for(int i=0; i<datalist.size();i++) {
+			amount += datalist.get(i).getAmount();
+		}
+		JLabel havegone = new JLabel(namedata +" 외" + amount);
 		havegone.setFont(Commons.getFont(16));
 		havegone.setForeground(new Color(0, 0, 0, 150));
-		JLabel arrive = new JLabel("30분 후에 도착할 예정입니다.");
+		JLabel arrive = new JLabel(remaintime + "분후에 도착할 예정입니다.");
 		arrive.setFont(Commons.getFont(16));
 		arrive.setForeground(new Color(0, 0, 0, 150));
 
@@ -172,7 +213,7 @@ public class Orderstatus_on implements ActionListener {
 //		frame.setVisible(true);
 		btn_chat.addActionListener(this);
 		btn_home.addActionListener(this);
-		
+
 		return panel;
 
 	}
@@ -186,21 +227,20 @@ public class Orderstatus_on implements ActionListener {
 //			main.panelinit();
 			main.switchPanel(InnerMain.MAIN);
 		} else if (obj == btn_chat) {
-			int idnum=0;
+			int idnum = 0;
 			if (existchat == false) {
-				idnum =+1;
-				
-				UI = new ChatUI2(idnum,main,id);
+				idnum = +1;
+
+				UI = new ChatUI2(idnum, main, id);
 //				panel.setVisible(false);
 //				main.chatUI.createsocket(idnum);
 //				main.switchPanel(InnerMain.CHATCON);
 				existchat = true;
-			}
-			else if (existchat == true) {
+			} else if (existchat == true) {
 				UI.frame.setLocationRelativeTo(main.frame);
 				main.frame.setVisible(false);
 				UI.frame.setVisible(true);
-				
+
 //				panel.setVisible(false);
 //				String[] array = UI.msg_array;
 //				String msg = "";

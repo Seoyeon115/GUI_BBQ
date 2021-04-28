@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -112,13 +114,38 @@ public class ManagerUIorder implements ActionListener {
 			btnList.add(enter_btn);
 		}
 		ArrayList<OrderVO> orderlist = system.getOrdercheckList();
-		for (int i = 0; i < orderlist.size(); i++) {
+		
+
+		HashSet<Integer> nameset = new HashSet<Integer>();
+		for(int i =0; i<orderlist.size();i++) {
+			nameset.add(orderlist.get(i).getOrderId());
+		}
+		System.out.println(nameset);
+		ArrayList<Integer> idlist = new ArrayList<Integer>();
+		Iterator<Integer> it = nameset.iterator(); // Iterator(반복자) 생성
+
+		while (it.hasNext()) { 
+			idlist.add(it.next());
+		}
+		System.out.println(idlist.size());
+		
+		
+		
+		
+		for (int i = 0; i < idlist.size(); i++) {
 			JPanel room = roomList.get(i);
 			room.setLayout(new BorderLayout());
 			JPanel wp = wpList.get(i);
 			JButton roomBtn = new JButton("접수");
-			JLabel roomlb = new JLabel(String.valueOf(orderlist.get(i).getOrderId()));
-			JLabel roomname = new JLabel(String.valueOf(orderlist.get(i).getName()));
+			int id = idlist.get(i);
+			JLabel roomlb = new JLabel(String.valueOf(idlist.get(i)));
+			String name = "";
+			for(int j=0; j<orderlist.size();j++) {
+				if(idlist.get(i)==(orderlist.get(j).getOrderId())) {
+					name = orderlist.get(j).getName();
+				}
+			}
+			JLabel roomname = new JLabel(name);
 			roomlb.setFont(Commons.getFont(1, 20));
 			roomname.setFont(Commons.getFont(1, 20));
 			wp.add(roomlb);
@@ -132,7 +159,7 @@ public class ManagerUIorder implements ActionListener {
 				public void actionPerformed(ActionEvent e) {
 					Object obj = e.getSource();
 					if (obj == roomBtn) {
-						new OrderCheckUI(order);
+						new OrderCheckUI(id,orderlist);
 					}
 				}
 			});
@@ -173,15 +200,25 @@ public class ManagerUIorder implements ActionListener {
 						room.setVisible(false);
 					}
 					check = +1;
+					
 					JPanel room = roomList.get(0);
 					room.removeAll();
 					room.setLayout(new BorderLayout());
 					JPanel wp = wpList.get(0);
 					wp.removeAll();
+					int id2 = 0;
+					for(int j =0; j<orderlist.size();j++) {
+						if(name.equals(orderlist.get(j).getName())) {
+							id2 = orderlist.get(j).getOrderId();
+						}
+					}
+					String name1 = String.valueOf(id2);
+					JLabel roomlb = new JLabel(String.valueOf(name1));
 					JButton roomBtn = new JButton("접수");
-					JLabel roomlb = new JLabel(name);
+					JLabel roomname = new JLabel(name);
 					roomlb.setFont(Commons.getFont(1, 20));
 					wp.add(roomlb);
+					wp.add(roomname);
 					room.add(BorderLayout.WEST, wp);
 					room.add(BorderLayout.EAST, roomBtn);
 
@@ -192,7 +229,7 @@ public class ManagerUIorder implements ActionListener {
 						public void actionPerformed(ActionEvent e) {
 							Object obj = e.getSource();
 							if (obj == roomBtn) {
-								new OrderCheckUI(order);
+								new OrderCheckUI(Integer.parseInt(name1),orderlist);
 							}
 						}
 					});

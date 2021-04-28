@@ -9,9 +9,9 @@ public class OrderVO implements Serializable{
 	public static int COMPLETE = 2;
 	
 	int state; // 주문 상태 0:준비중, 1:배달중, 2:배달완료
-	int orderId;// 주문 번호
+	int orderId; // 주문 번호
 	ArrayList<MenuVO> menulist; // 주문한 메뉴 리스트
-	String name; // 주문자 이름
+	String name; // 주문자 id
 	String mname; // 메뉴 이름
 	String date; // 주문 날짜
 	String addr; // 배달주소

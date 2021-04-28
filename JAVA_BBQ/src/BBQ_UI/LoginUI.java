@@ -46,6 +46,8 @@ public class LoginUI implements ActionListener {
 	// Method
 	public void init() {
 		f = new JFrame("login system");
+		f.getContentPane().setBackground(new Color(204, 0, 51));
+		f.setBounds(100, 90, 450, 550);
 		String[] namelist = { "   ID", "   PW" };
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
@@ -92,7 +94,6 @@ public class LoginUI implements ActionListener {
 		f.add(BorderLayout.CENTER, tf_panel);
 		f.add(BorderLayout.SOUTH, btn_panel);
 
-		f.setSize(250, 230);
 		f.setVisible(true);
 
 		btn_login.addActionListener(this);

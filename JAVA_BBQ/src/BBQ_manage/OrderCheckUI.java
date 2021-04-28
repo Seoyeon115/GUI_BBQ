@@ -25,11 +25,14 @@ public class OrderCheckUI implements ActionListener {
 
 	BBQ_System system = new BBQ_System();
 	JFrame f;
-	OrderVO order;
 	JButton dele30, dele60, dele90, delete;
+	int id;
+	ArrayList<OrderVO> orderlist;
+	OrderVO order;
 
-	OrderCheckUI(OrderVO order) {
-		this.order = order;
+	OrderCheckUI(int id,ArrayList<OrderVO> orderlist) {
+		this.id = id;
+		this.orderlist = orderlist;
 		init();
 
 	}
@@ -42,32 +45,56 @@ public class OrderCheckUI implements ActionListener {
 		f.getContentPane().setBackground(new Color(204, 0, 51));
 		f.getContentPane().setLayout(null);
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		
+		for(int i =0;i<orderlist.size();i++) {
+			if(id == orderlist.get(i).getOrderId()) {
+				order = orderlist.get(i);
+			}
+		}
+		
+		
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(25, 25, 382, 510);
 
-		JPanel northPn = new JPanel(new BorderLayout());
-		northPn.setBackground(new Color(255, 255, 255));
-		JPanel norCenterpn = new JPanel(new GridLayout(1, 3));
-		norCenterpn.setBorder(new LineBorder(new Color(0, 0, 0, 120), 2, true));
-		norCenterpn.setBackground(new Color(255, 255, 255));
-		JLabel pname = new JLabel("    " + order.getMname());
-		pname.setFont(Commons.getFont(1, 20));
-		JLabel amount = new JLabel("     " + order.getAmount() + "마리");
-		amount.setFont(Commons.getFont(1, 20));
-		JLabel option = new JLabel("치킨무,콜라");
-		option.setFont(Commons.getFont(1, 20));
 
 		JPanel norNorthPn = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		norNorthPn.setBackground(new Color(255, 255, 255));
 		JLabel orderpro = new JLabel("주문 제품");
 		orderpro.setFont(Commons.getFont(1, 28));
 		norNorthPn.add(orderpro);
-
+		
+		ArrayList<OrderVO> prolist = new ArrayList<OrderVO>();
+		for(int i =0; i<orderlist.size();i++) {
+			if(id == orderlist.get(i).getOrderId()) {
+				OrderVO or = new OrderVO();
+				or = orderlist.get(i);
+				prolist.add(or);
+			}
+			
+		}
+		JPanel northPn = new JPanel(new BorderLayout());
+		northPn.setBackground(new Color(255, 255, 255));
+		
+		JPanel norcen = new JPanel(new GridLayout(prolist.size(),1));
+		norcen.setBorder(new LineBorder(new Color(0, 0, 0, 120), 2, true));
+		
+		for(int i=0;i<prolist.size();i++) {
+		JPanel norCenterpn = new JPanel(new GridLayout(1, 3));
+		norCenterpn.setBackground(new Color(255, 255, 255));
+		JLabel pname = new JLabel("    " + prolist.get(i).getMname());
+		pname.setFont(Commons.getFont(1, 20));
+		JLabel amount = new JLabel("     " + prolist.get(i).getAmount() + "마리");
+		amount.setFont(Commons.getFont(1, 20));
+		JLabel option = new JLabel("치킨무,콜라");
+		option.setFont(Commons.getFont(1, 20));
+		
 		norCenterpn.add(pname);
 		norCenterpn.add(amount);
 		norCenterpn.add(option);
+		norcen.add(norCenterpn);
+		}
+		
 
 		// 여백
 		JPanel north = new JPanel(new BorderLayout());
@@ -76,7 +103,7 @@ public class OrderCheckUI implements ActionListener {
 		JPanel blank2 = new JPanel();
 		blank2.setBackground(new Color(255, 255, 255));
 		north.add(BorderLayout.NORTH, blank1);
-		north.add(BorderLayout.CENTER, norCenterpn);
+		north.add(BorderLayout.CENTER, norcen);
 		north.add(BorderLayout.SOUTH, blank2);
 
 		northPn.add(BorderLayout.NORTH, norNorthPn);

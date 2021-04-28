@@ -1,6 +1,8 @@
 package BBQ_DAO;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
@@ -152,8 +154,8 @@ public class OrderDAO extends DBConn {
 	public ArrayList<OrderVO> getOrderchecklist(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		try {
-			String sql = " SELECT A.ORDERID, USER_ID,C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, CHECKORDER "  
-					+ " FROM BBQ_ORDER A,bbq_order_detail B,MENU_DATA C " 
+			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, CHECKORDER "  
+					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
 					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
 			
 			getPreparedStatement(sql);
@@ -171,8 +173,16 @@ public class OrderDAO extends DBConn {
 				order.setAmount(rs.getInt(7));
 				order.setOption(rs.getString(8));
 				order.setState(rs.getInt(9));
+				
 				orderlist.add(order);
 			}
+			
+			
+	
+
+
+
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
