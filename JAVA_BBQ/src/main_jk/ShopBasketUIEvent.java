@@ -28,7 +28,9 @@ public class ShopBasketUIEvent implements ActionListener {
 	    		shop.m_panel.get(i).setVisible(false);
 	    		shop.center_panel.remove(shop.m_panel.get(i));
 	    		shop.ttl_price -= (shop.cvo.get(i).getPrice() * shop.cvo.get(i).getAmt())+shop.ovo.get(i).getPrice(); //총주문금액 set해야함
-//	    		order.getcartdeleteResult(new LoginUI().id, shop.cvo.get(i).getCartid()); //db에서 삭제
+	    		
+	    		
+	    		order.getcartdeleteResult(new LoginUI().id, shop.cvo.get(i).getCartid()); //db에서 삭제
 	     }
 	    }
 	      
