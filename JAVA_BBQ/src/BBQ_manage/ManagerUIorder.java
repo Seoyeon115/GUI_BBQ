@@ -116,13 +116,13 @@ public class ManagerUIorder implements ActionListener {
 		ArrayList<OrderVO> orderlist = system.getOrdercheckList();
 		
 
-		HashSet<Integer> nameset = new HashSet<Integer>();
+		HashSet<String> nameset = new HashSet<String>();
 		for(int i =0; i<orderlist.size();i++) {
 			nameset.add(orderlist.get(i).getOrderId());
 		}
 		System.out.println(nameset);
-		ArrayList<Integer> idlist = new ArrayList<Integer>();
-		Iterator<Integer> it = nameset.iterator(); // Iterator(반복자) 생성
+		ArrayList<String> idlist = new ArrayList<String>();
+		Iterator<String> it = nameset.iterator(); // Iterator(반복자) 생성
 
 		while (it.hasNext()) { 
 			idlist.add(it.next());
@@ -137,11 +137,11 @@ public class ManagerUIorder implements ActionListener {
 			room.setLayout(new BorderLayout());
 			JPanel wp = wpList.get(i);
 			JButton roomBtn = new JButton("접수");
-			int id = idlist.get(i);
-			JLabel roomlb = new JLabel(String.valueOf(idlist.get(i)));
+			String id = idlist.get(i);
+			JLabel roomlb = new JLabel(idlist.get(i));
 			String name = "";
 			for(int j=0; j<orderlist.size();j++) {
-				if(idlist.get(i)==(orderlist.get(j).getOrderId())) {
+				if(idlist.get(i).equals((orderlist.get(j).getOrderId()))) {
 					name = orderlist.get(j).getName();
 				}
 			}
@@ -206,7 +206,7 @@ public class ManagerUIorder implements ActionListener {
 					room.setLayout(new BorderLayout());
 					JPanel wp = wpList.get(0);
 					wp.removeAll();
-					int id2 = 0;
+					String id2 = "";
 					for(int j =0; j<orderlist.size();j++) {
 						if(name.equals(orderlist.get(j).getName())) {
 							id2 = orderlist.get(j).getOrderId();
@@ -229,7 +229,7 @@ public class ManagerUIorder implements ActionListener {
 						public void actionPerformed(ActionEvent e) {
 							Object obj = e.getSource();
 							if (obj == roomBtn) {
-								new OrderCheckUI(Integer.parseInt(name1),orderlist);
+								new OrderCheckUI(name1,orderlist);
 							}
 						}
 					});

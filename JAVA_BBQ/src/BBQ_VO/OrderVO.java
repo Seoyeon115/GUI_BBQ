@@ -9,7 +9,7 @@ public class OrderVO implements Serializable{
 	public static int COMPLETE = 2;
 	
 	int state; // 주문 상태 0:준비중, 1:배달중, 2:배달완료
-	int orderId; // 주문 번호
+	String orderId; // 주문 번호
 	ArrayList<MenuVO> menulist; // 주문한 메뉴 리스트
 	String name; // 주문자 id
 	String mname; // 메뉴 이름
@@ -35,10 +35,10 @@ public class OrderVO implements Serializable{
 	public void setState(int state) {
 		this.state = state;
 	}
-	public int getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
-	public void setOrderId(int orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 	public String getName() {

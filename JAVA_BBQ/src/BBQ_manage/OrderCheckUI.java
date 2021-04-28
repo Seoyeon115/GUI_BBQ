@@ -26,11 +26,11 @@ public class OrderCheckUI implements ActionListener {
 	BBQ_System system = new BBQ_System();
 	JFrame f;
 	JButton dele30, dele60, dele90, delete;
-	int id;
+	String id;
 	ArrayList<OrderVO> orderlist;
 	OrderVO order;
 
-	OrderCheckUI(int id,ArrayList<OrderVO> orderlist) {
+	OrderCheckUI(String id,ArrayList<OrderVO> orderlist) {
 		this.id = id;
 		this.orderlist = orderlist;
 		init();
@@ -66,7 +66,7 @@ public class OrderCheckUI implements ActionListener {
 		
 		ArrayList<OrderVO> prolist = new ArrayList<OrderVO>();
 		for(int i =0; i<orderlist.size();i++) {
-			if(id == orderlist.get(i).getOrderId()) {
+			if(id.equals(orderlist.get(i).getOrderId())) {
 				OrderVO or = new OrderVO();
 				or = orderlist.get(i);
 				prolist.add(or);

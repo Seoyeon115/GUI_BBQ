@@ -25,7 +25,7 @@ public class ChatServer {
 
 	public void init() {
 		try {
-			server = new ServerSocket(9000);
+			server = new ServerSocket(15151);
 			System.out.println("-------->> 서버 실행중");
 
 			while (true) {

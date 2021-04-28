@@ -95,14 +95,14 @@ public class OrderDAO extends DBConn {
 		boolean result = false;
 		try {
 			String sql = " UPDATE BBQ_ORDER " + 
-					" SET ODATE = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),CHECKORDER=? " +
+					" SET ODATE = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
 					" WHERE ORDERID= ? "; 
 			
 			getPreparedStatement(sql);
 				
 			pstmt.setString(1, order.getDate());
 			pstmt.setInt(2, order.getState());
-			pstmt.setInt(3, order.getOrderId());
+			pstmt.setString(3, order.getOrderId());
 				
 			pstmt.executeUpdate();
 			
@@ -116,7 +116,7 @@ public class OrderDAO extends DBConn {
 	
 	public ArrayList<OrderVO> getOrderList(String uid){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
-		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
+		ArrayList<String> orderIdList = new ArrayList<String>();
 		
 		try {
 			String sql = "select orderid, request, addr, odate "
@@ -129,7 +129,7 @@ public class OrderDAO extends DBConn {
 			while(rs.next()) {
 				OrderVO order = new OrderVO();
 				
-				orderIdList.add(rs.getInt(1));
+				orderIdList.add(rs.getString(1));
 				
 //				order.setMenulist(getOrderDetail(rs.getInt(1)));
 				order.setMessage(rs.getString(2));
@@ -154,7 +154,7 @@ public class OrderDAO extends DBConn {
 	public ArrayList<OrderVO> getOrderchecklist(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		try {
-			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, CHECKORDER "  
+			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK "  
 					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
 					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
 			
@@ -164,7 +164,7 @@ public class OrderDAO extends DBConn {
 			while(rs.next()) {
 				OrderVO order = new OrderVO();
 				
-				order.setOrderId(rs.getInt(1));
+				order.setOrderId(rs.getString(1));
 				order.setName(rs.getString(2));
 				order.setMname(rs.getString(3));
 				order.setMessage(rs.getString(4));
@@ -191,7 +191,7 @@ public class OrderDAO extends DBConn {
 		return orderlist;
 	}
 	
-	public ArrayList<MenuVO> getOrderDetail(int orderId){
+	public ArrayList<MenuVO> getOrderDetail(String orderId){
 		ArrayList<MenuVO> orderDetail = new ArrayList<MenuVO>();
 		ArrayList<Integer> midList = new ArrayList<Integer>();
 		ArrayList<String[]> oidList = new ArrayList<String[]>();
@@ -202,7 +202,7 @@ public class OrderDAO extends DBConn {
 					+ " where orderid = ? and d.mid = m.mid ";
 			
 			getPreparedStatement(sql);
-			pstmt.setInt(1, orderId);
+			pstmt.setString(1, orderId);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
