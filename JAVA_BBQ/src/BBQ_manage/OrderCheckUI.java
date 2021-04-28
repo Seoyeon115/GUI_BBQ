@@ -30,17 +30,36 @@ public class OrderCheckUI implements ActionListener {
 	ArrayList<OrderVO> orderlist;
 	OrderVO order;
 
-	OrderCheckUI(String id,ArrayList<OrderVO> orderlist) {
+	public OrderCheckUI() {
+			init2();
+	}
+	public OrderCheckUI(String id,ArrayList<OrderVO> orderlist) {
 		this.id = id;
 		this.orderlist = orderlist;
 		init();
 
 	}
 
+	public void init2() {
+		f = new JFrame();
+		f.setSize(588, 712);
+		f.setLocation(700, 100);
+		f.getContentPane().setBackground(new Color(204, 0, 51));
+		f.getContentPane().setLayout(null);
+		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBounds(25, 25, 520, 620);
+		f.add(panel);
+
+		f.setVisible(true);
+		
+	}
 	public void init() {
 
 		f = new JFrame();
-		f.setSize(450, 600);
+		f.setSize(588, 712);
 		f.setLocation(700, 100);
 		f.getContentPane().setBackground(new Color(204, 0, 51));
 		f.getContentPane().setLayout(null);
@@ -55,7 +74,7 @@ public class OrderCheckUI implements ActionListener {
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(25, 25, 382, 510);
+		panel.setBounds(25, 25, 520, 620);
 
 
 		JPanel norNorthPn = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -86,7 +105,26 @@ public class OrderCheckUI implements ActionListener {
 		pname.setFont(Commons.getFont(1, 20));
 		JLabel amount = new JLabel("     " + prolist.get(i).getAmount() + "마리");
 		amount.setFont(Commons.getFont(1, 20));
-		JLabel option = new JLabel("치킨무,콜라");
+		
+		String optionpro = prolist.get(i).getOption();
+		System.out.println(optionpro);
+		String[] optionlist = optionpro.split("/");
+		
+		String optionfinal = "";
+		for(int j = 0; j<optionlist.length; j++) {
+			if(optionlist[j].equals("1")) {
+				optionfinal += "치킨무 ";
+				
+			}else if(optionlist[j].equals("2")) {
+				optionfinal += "콜라 ";
+				
+			}else if(optionlist[j].equals("3")) {
+				optionfinal += "사이다 ";
+			}
+		}
+		
+		JLabel option = new JLabel(optionfinal);
+//		JLabel option = new JLabel("치킨무");
 		option.setFont(Commons.getFont(1, 20));
 		
 		norCenterpn.add(pname);
