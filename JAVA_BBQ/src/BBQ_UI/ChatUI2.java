@@ -48,7 +48,7 @@ public class ChatUI2 implements ActionListener {
 		this.idnum = idnum;
 		this.id = id;
 		try {
-			s = new Socket("127.0.0.1", 9000);
+			s = new Socket("127.0.0.1", 15151);
 
 			oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());

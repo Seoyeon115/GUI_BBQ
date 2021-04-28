@@ -6,7 +6,7 @@ public class MainTest {
 		//new Orderstatus_on();
 //		new InnerMain();
 		new StartUI();
-		new LoginUI();
-		new Orderstatus_end();
+//		new LoginUI();
+//		new Orderstatus_end();
 	}
 }

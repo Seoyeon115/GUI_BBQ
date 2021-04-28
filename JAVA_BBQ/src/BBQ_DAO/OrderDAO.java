@@ -95,7 +95,7 @@ public class OrderDAO extends DBConn {
 		boolean result = false;
 		try {
 			String sql = " UPDATE BBQ_ORDER " + 
-					" SET ODATE = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
+					" SET deledate = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
 					" WHERE ORDERID= ? "; 
 			
 			getPreparedStatement(sql);
