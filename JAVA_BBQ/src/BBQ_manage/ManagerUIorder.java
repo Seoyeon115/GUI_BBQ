@@ -118,7 +118,9 @@ public class ManagerUIorder implements ActionListener {
 
 		HashSet<String> nameset = new HashSet<String>();
 		for(int i =0; i<orderlist.size();i++) {
+			if(orderlist.get(i).getState()==0) {
 			nameset.add(orderlist.get(i).getOrderId());
+			}
 		}
 		System.out.println(nameset);
 		ArrayList<String> idlist = new ArrayList<String>();
@@ -127,7 +129,6 @@ public class ManagerUIorder implements ActionListener {
 		while (it.hasNext()) { 
 			idlist.add(it.next());
 		}
-		System.out.println(idlist.size());
 		
 		
 		
