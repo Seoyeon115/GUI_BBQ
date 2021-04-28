@@ -2,6 +2,7 @@ package BBQ_DAO;
 
 import java.util.ArrayList;
 
+import BBQ_VO.CartVO;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
@@ -18,11 +19,12 @@ public class OrderDAO extends DBConn {
 		
 		try {
 			String sql = "insert into bbq_order "
-					+ "values('order_'||seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate)";
+					+ "values('order_'||seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate, ?)";
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);
 			pstmt.setString(2, order.getMessage());
 			pstmt.setString(3, order.getAddr());
+			pstmt.setInt(4, 0);
 			
 			if(pstmt.executeUpdate() != 0) {
 				result = true;
@@ -60,18 +62,19 @@ public class OrderDAO extends DBConn {
 		return orderId;
 	}
 	
-	public boolean pushOrderDetail(String orderId, ArrayList<MenuVO> menulist) {
+	public boolean pushOrderDetail(String orderId, ArrayList<CartVO> menulist) {
 		boolean result = false;
 		
 		try {
 			String sql = "insert into bbq_order_detail values("
-					+ " ?, ?, ?, 1)";
+					+ " ?, ?, ?, ?)";
 			
 			getPreparedStatement(sql);
 			
-			for(MenuVO menu : menulist) {				
+			for(CartVO cart : menulist) {
+				MenuVO menu = cart.getMenu();
 				String ops = "";
-				for(OptionVO op : menu.getOptions()) {
+				for(OptionVO op : cart.getOptions()) {
 					if(ops.equals("")) ops = String.valueOf(op.getOid());
 					else ops += "/" + op.getOid();
 				}
@@ -79,6 +82,7 @@ public class OrderDAO extends DBConn {
 				pstmt.setString(1, orderId);
 				pstmt.setInt(2, menu.getMid());
 				pstmt.setString(3, ops);
+				pstmt.setInt(4, cart.getAmt());
 				
 				pstmt.executeUpdate();
 			}
@@ -95,7 +99,7 @@ public class OrderDAO extends DBConn {
 		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
 		
 		try {
-			String sql = "select orderid, request, addr, odate "
+			String sql = "select orderid, user_id, request, addr, odate, state "
 					+ " from bbq_order where user_id = ?";
 			
 			getPreparedStatement(sql);
@@ -106,17 +110,18 @@ public class OrderDAO extends DBConn {
 				OrderVO order = new OrderVO();
 				
 				orderIdList.add(rs.getInt(1));
-				
+				order.setName(rs.getString(2));
 //				order.setMenulist(getOrderDetail(rs.getInt(1)));
-				order.setMessage(rs.getString(2));
-				order.setAddr(rs.getString(3));
-				order.setDate(rs.getString(4));
+				order.setMessage(rs.getString(3));
+				order.setAddr(rs.getString(4));
+				order.setDate(rs.getString(5));
+				order.setState(rs.getInt(6));
 				
 				orderlist.add(order);
 			}
 			
 			for(int i=0;i<orderlist.size();i++) {
-				ArrayList<MenuVO> menulist = getOrderDetail(orderIdList.get(i));
+				ArrayList<CartVO> menulist = getOrderDetail(orderIdList.get(i));
 				orderlist.get(i).setMenulist(menulist);
 			}
 			
@@ -127,13 +132,113 @@ public class OrderDAO extends DBConn {
 		return orderlist;
 	}
 	
-	public ArrayList<MenuVO> getOrderDetail(int orderId){
-		ArrayList<MenuVO> orderDetail = new ArrayList<MenuVO>();
+	public ArrayList<OrderVO> getOrderList(){
+		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
+		
+		try {
+			String sql = "select orderid, user_id, request, addr, odate, orderCheck "
+					+ " from bbq_order";
+			
+			getPreparedStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OrderVO order = new OrderVO();
+				
+				orderIdList.add(rs.getInt(1));
+				order.setName(rs.getString(2));
+//				order.setMenulist(getOrderDetail(rs.getInt(1)));
+				order.setMessage(rs.getString(3));
+				order.setAddr(rs.getString(4));
+				order.setDate(rs.getString(5));
+				order.setState(rs.getInt(6));
+				
+				orderlist.add(order);
+			}
+			
+			for(int i=0;i<orderlist.size();i++) {
+				ArrayList<CartVO> menulist = getOrderDetail(orderIdList.get(i));
+				orderlist.get(i).setMenulist(menulist);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderlist;
+	}
+	
+	public boolean getOrderUpdateResult(OrderVO order) {
+		boolean result = false;
+		try {
+			String sql = " UPDATE BBQ_ORDER " + 
+					" SET deledate = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
+					" WHERE ORDERID= ? "; 
+			
+			getPreparedStatement(sql);
+				
+			pstmt.setString(1, order.getDate());
+			pstmt.setInt(2, order.getState());
+			pstmt.setString(3, order.getOrderId());
+				
+			pstmt.executeUpdate();
+			
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+//	public ArrayList<OrderVO> getOrderchecklist(){
+//		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+//		try {
+//			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK "  
+//					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
+//					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
+//			
+//			getPreparedStatement(sql);
+//			
+//			rs = pstmt.executeQuery();
+//			while(rs.next()) {
+//				OrderVO order = new OrderVO();
+//				
+//				order.setOrderId(rs.getString(1));
+//				order.setName(rs.getString(2));
+//				order.setMname(rs.getString(3));
+//				order.setMessage(rs.getString(4));
+//				order.setAddr(rs.getString(5));
+//				order.setDate(rs.getString(6));
+//				order.setAmount(rs.getInt(7));
+//				order.setOption(rs.getString(8));
+//				order.setState(rs.getInt(9));
+//				
+//				orderlist.add(order);
+//			}
+//			
+//			
+//	
+//
+//
+//
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return orderlist;
+//	}
+	
+	public ArrayList<CartVO> getOrderDetail(int orderId){
+		ArrayList<CartVO> orderDetail = new ArrayList<CartVO>();
 		ArrayList<Integer> midList = new ArrayList<Integer>();
 		ArrayList<String[]> oidList = new ArrayList<String[]>();
 		
 		try {
-			String sql = "select name, price, d.mid, options "
+			String sql = "select name, price, d.mid, options, amount "
 					+ " from bbq_order_detail d, menu_data m "
 					+ " where orderid = ? and d.mid = m.mid ";
 			
@@ -142,6 +247,7 @@ public class OrderDAO extends DBConn {
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
+				CartVO cart = new CartVO();
 				MenuVO menu = new MenuVO();
 				
 				menu.setName(rs.getString(1));
@@ -149,8 +255,12 @@ public class OrderDAO extends DBConn {
 				
 				midList.add(rs.getInt(3));
 				oidList.add(rs.getString(4).split("/"));
+				cart.setAmt(rs.getInt(5));
 				
-				orderDetail.add(menu);
+				cart.setMenu(menu);
+				cart.setPrice(menu.getPrice());
+				
+				orderDetail.add(cart);
 			}
 			
 			for(int i=0;i<orderDetail.size();i++) {

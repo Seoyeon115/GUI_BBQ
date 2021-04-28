@@ -11,12 +11,21 @@ public class RequestVO implements Serializable{
 	public static int REQUEST_JOIN = 5; // 회원가입하기
 	public static int SEND_MESSAGE = 6; // 메시지 보내기
 	public static int CHECK_ID_PRIMARY = 7; // 아이디 중복 확인
+	public static int GET_MEMBER_INFO = 8; // 회원정보 가져오기
+	public static int REQUEST_UPDATE = 9; // 회원정보 가져오기
+	public static int GET_ORDER_INFO = 10; // 주문정보 가져오기
+	public static int ORDER_UPDATE = 11; // 주문 접수 하기
+	public static int GET_ADDRESS = 12; // 주소 불러오기
 	
 	int request; // 요청 정보
 	Object obj; // 객체 데이터
 	
 	public RequestVO() {
 		
+	}
+	
+	public RequestVO(int request) {
+		this.request =request;
 	}
 	
 	public RequestVO(int request, Object obj) {

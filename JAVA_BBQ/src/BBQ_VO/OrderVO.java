@@ -9,8 +9,9 @@ public class OrderVO implements Serializable{
 	public static int COMPLETE = 2;
 	
 	int state; // 주문 상태 0:준비중, 1:배달중, 2:배달완료
-	int orderId;
-	ArrayList<MenuVO> menulist; // 주문한 메뉴 리스트
+	String orderId;
+	String name;
+	ArrayList<CartVO> menulist; // 주문한 메뉴 리스트
 	String date; // 주문 날짜
 	String message; // 요청 사항
 	String addr; // 배달주소
@@ -19,10 +20,28 @@ public class OrderVO implements Serializable{
 //	int discount; // 할인 금액
 //	int payment; // 총 결제 금액
 	
-	public ArrayList<MenuVO> getMenulist() {
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	} 
+	public ArrayList<CartVO> getMenulist() {
 		return menulist;
 	}
-	public void setMenulist(ArrayList<MenuVO> menulist) {
+	public void setMenulist(ArrayList<CartVO> menulist) {
 		this.menulist = menulist;
 	}
 	public String getDate() {

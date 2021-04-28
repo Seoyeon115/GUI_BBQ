@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import BBQ_VO.CartVO;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
@@ -138,21 +138,24 @@ public class OrderDetailUI implements ActionListener{
 		panel_detail.setPreferredSize(new Dimension(480, 385));
 		panel_detail.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
-		int height = 5;
-		for(MenuVO menu : vo.getMenulist()) {
-			int size_panel = 25 + 17 * menu.getOptions().size();
+//		int height = 5;
+		for(CartVO cart : vo.getMenulist()) {
+			MenuVO menu = cart.getMenu();
+			int size_panel = 25 + 17 * cart.getOptions().size();
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.setBackground(new Color(255, 255, 255));
 			panel.setPreferredSize(new Dimension(460, size_panel));
 //			panel.setLayout(null);
-			JLabel label_menu = new JLabel(menu.getName() +"("+ menu.getPrice() +")");
+			String menuName = menu.getName() +"("+ menu.getPrice() +")";
+			if(cart.getAmt() > 1) menuName += " x "+ cart.getAmt();
+			JLabel label_menu = new JLabel(menuName);
 			label_menu.setFont(Commons.getFont(12));
 			label_menu.setPreferredSize(new Dimension(460, 15));
 //			label_menu.setBounds(0, height, 460, 50);
 			panel.add(label_menu);
 			
-			for(OptionVO option : menu.getOptions()) {
-				height += 10;
+			for(OptionVO option : cart.getOptions()) {
+//				height += 10;
 				JLabel label_option = new JLabel(" + "+ option.getName() +"("+ option.getPrice() +")");
 				label_option.setFont(Commons.getFont(10));
 				label_option.setPreferredSize(new Dimension(460, 12));

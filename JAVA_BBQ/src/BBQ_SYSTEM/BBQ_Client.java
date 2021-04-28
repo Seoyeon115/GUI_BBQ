@@ -91,4 +91,30 @@ public class BBQ_Client {
 		
 		return orderlist;
 	}
+	
+	public String getAddr(String uid) {
+		String addr = "";
+		
+		try {
+			oos.writeObject(new RequestVO(RequestVO.GET_ADDRESS, uid));
+			addr = (String) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return addr;
+	}
+	
+	public boolean pushOrder(OrderVO order) {
+		boolean result = false;
+		
+		try {
+			oos.writeObject(new RequestVO(RequestVO.REQUEST_ORDER, order));
+			result = (boolean) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

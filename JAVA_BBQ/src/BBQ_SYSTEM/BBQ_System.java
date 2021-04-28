@@ -135,12 +135,12 @@ public class BBQ_System {
 	public int getOrderPrice(OrderVO order) {
 		int price = 0;
 		
-		for(MenuVO menu : order.getMenulist()) {
-			price += menu.getPrice();
-			
-			for(OptionVO option : menu.getOptions()) {
-				price += option.getPrice();
+		for(CartVO cart : order.getMenulist()) {
+			cart.setPrice(cart.getMenu().getPrice());
+			for(OptionVO op : cart.getOptions()) {
+				cart.addPrice(op.getPrice());
 			}
+			price += cart.getPrice() * cart.getAmt();
 		}
 		
 		return price;
@@ -156,5 +156,13 @@ public class BBQ_System {
 	
 	public void deleteCartAll() {
 		cart = new ArrayList<CartVO>();
+	}
+	
+	public boolean pushOrder(OrderVO order) {
+		return client.pushOrder(order);
+	}
+	
+	public String getAddress() {
+		return client.getAddr(uid);
 	}
 }//class

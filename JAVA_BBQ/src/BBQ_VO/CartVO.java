@@ -1,8 +1,9 @@
 package BBQ_VO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CartVO {
+public class CartVO implements Serializable{
 	MenuVO menu; // 메뉴id
 	int price; // 가격(옵션 포함)
 	int amt; // 수량
@@ -21,6 +22,10 @@ public class CartVO {
 	
 	public void add(int amt) {
 		this.amt += amt;
+	}
+	
+	public void addPrice(int price) {
+		this.price += price;
 	}
 	
 	public MenuVO getMenu() {

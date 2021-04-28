@@ -10,7 +10,6 @@ import BBQ_DAO.MemberDAO;
 import BBQ_DAO.MenuDAO;
 import BBQ_DAO.OrderDAO;
 import BBQ_VO.MemberVO;
-import BBQ_VO.MessageVO;
 import BBQ_VO.OrderVO;
 import BBQ_VO.RequestVO;
 
@@ -76,13 +75,21 @@ public class BBQ_ServerSystem {
 					oos.writeObject(result);
 				}else if(req.getRequest() == RequestVO.REQUEST_ORDER) { // 주문 요청
 					odao.pushOrder(uid, (OrderVO)req.getObj());
-					mt.recieveOrder(req);
-					oos.writeBoolean(true);
-				}else if(req.getRequest() == RequestVO.SEND_MESSAGE) {
-					// 
+//					mt.recieveOrder(req);
+					oos.writeObject(true);
 				}else if(req.getRequest() == RequestVO.CHECK_ID_PRIMARY) {
 					boolean result = mdao.getJoinIdResult((String)req.getObj());
 					oos.writeObject(result);
+				}else if(req.getRequest() == RequestVO.GET_MEMBER_INFO) {// 멤버정보 가져오기
+					oos.writeObject(mdao.getmemberlist());
+				}else if(req.getRequest() == RequestVO.REQUEST_UPDATE) { // 회원가입
+					oos.writeObject(mdao.getUpdateResult((MemberVO)req.getObj()));
+				}else if(req.getRequest() == RequestVO.GET_ORDER_INFO) {// 주문정보 가져오기
+					oos.writeObject(odao.getOrderList());
+				}else if(req.getRequest() == RequestVO.ORDER_UPDATE) { // 회원가입
+					oos.writeObject(odao.getOrderUpdateResult((OrderVO)req.getObj()));
+				}else if(req.getRequest() == RequestVO.GET_ADDRESS) { // 주소 불러오기
+					oos.writeObject(mdao.getAddress((String)req.getObj()));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -97,7 +104,6 @@ public class BBQ_ServerSystem {
 					RequestVO req = (RequestVO) ois.readObject();
 					if(req.getRequest() == RequestVO.EXIT) { // 종료 신호 수신
 						flag = false;
-						
 					}else {
 						response(req);
 					}

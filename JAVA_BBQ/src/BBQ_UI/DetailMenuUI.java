@@ -41,6 +41,10 @@ public class DetailMenuUI implements ActionListener{
 		this.main = main;
 		system = main.system;
 	}
+	public DetailMenuUI(InnerMain main, BBQ_System system) {
+		this.main = main;
+		this.system = system;
+	}
 		
 	//Method	
 	public JPanel init(MenuVO vo) {
@@ -250,6 +254,8 @@ public class DetailMenuUI implements ActionListener{
 					System.out.println(vo.getOptions().get(i).getName());
 				}
 			}
+			System.out.println(selectedOptions);
+			
 			
 			system.addCart(vo, price_final, selectedOptions);
 			JOptionPane.showMessageDialog(null, Commons.getMsg("장바구니에 추가되었습니다"));

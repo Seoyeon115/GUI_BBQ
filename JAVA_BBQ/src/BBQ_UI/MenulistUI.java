@@ -38,9 +38,8 @@ public class MenulistUI implements ActionListener {
 	public MenulistUI(InnerMain main) {
 		this.main = main;
 		this.system = main.system;
-		initialize();
 		list2 = new MenulistUI2(this,main);
-		detail = new DetailMenuUI(main);
+		detail = main.detailMenu;
 	}
 	
 	public JPanel initialize() {

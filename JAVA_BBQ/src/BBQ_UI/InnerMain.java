@@ -33,23 +33,23 @@ public class InnerMain implements ActionListener {
 	JFrame frame = new JFrame();
 	BBQ_System system;
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
-	MenulistUI list1 = new MenulistUI(this);
-	MenulistUI2 list2 = new MenulistUI2(this);
-	DetailMenuUI detailMenu = new DetailMenuUI(this);
-	ShopBasketUI basket = new ShopBasketUI(this);
-	Orderstatus_on ing = new Orderstatus_on(this);
-	OrderListUI orderlistUI = new OrderListUI(this);
-	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
-	PayUI payUI = new PayUI(this);
+	MenulistUI list1;
+	MenulistUI2 list2;
+	DetailMenuUI detailMenu;
+	ShopBasketUI basket;
+	Orderstatus_on ing;
+	OrderListUI orderlistUI;
+	OrderDetailUI orderDetailUI;
+	PayUI payUI;
 	
 	JPanel panel;
 	
 	//Constructor
 	public InnerMain(BBQ_System system) {
 		this.system = system;
+		detailMenu = new DetailMenuUI(this);
 		list1 = new MenulistUI(this);
 		list2 = new MenulistUI2(this);
-		detailMenu = new DetailMenuUI(this);
 		basket = new ShopBasketUI(this);
 		ing = new Orderstatus_on(this);
 		orderlistUI = new OrderListUI(this);
@@ -61,6 +61,7 @@ public class InnerMain implements ActionListener {
 	//Method
 	
 	public void init() {
+		System.out.println(system);
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.getContentPane().setBackground(new Color(204, 0, 51));
