@@ -36,7 +36,7 @@ public class PayUI implements ActionListener {
 	StartUI main;
 	JFrame f;
 	JPanel label_panel, tf_panel, top_panel, center_panel, bottom_panel, total_panel, menu_panel, addr_panel,
-			panel_content;
+			panel_content,pn_panel;
 	JButton btn_back, btn_pay, btn_cancel, btn_mdelete, btn_madd, btn_minus;
 	JLabel addr_label, total_label, price_label, menu_label, option_label, m_price_label;
 	JTextField addr1_tf, addr2_tf;
@@ -127,7 +127,7 @@ public class PayUI implements ActionListener {
 		total_panel.add(total_label);
 
 		center_panel.add(BorderLayout.NORTH, addr_panel);
-//		center_panel.add(BorderLayout.CENTER, menu_panel);
+		center_panel.add(BorderLayout.CENTER, menu_panel);
 		center_panel.add(BorderLayout.SOUTH, total_panel);
 
 		// bottom_panel
@@ -198,7 +198,7 @@ public class PayUI implements ActionListener {
 			left_panel.add(option_label);
 			left_panel.add(m_price_label);
 			menu_panel.add(BorderLayout.WEST, left_panel);
-			center_panel.add(menu_panel);
+//			center_panel.add(menu_panel);
 
 		}
 //		return menu_panel;
