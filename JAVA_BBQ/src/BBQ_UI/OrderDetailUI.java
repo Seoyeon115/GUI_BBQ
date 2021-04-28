@@ -54,7 +54,7 @@ public class OrderDetailUI implements ActionListener{
 		init_upper();
 		init_summary();
 		init_detail();
-		init_bottom();
+//		init_bottom();
 		//
 		
 //		frame.add(panel_content);
@@ -135,7 +135,7 @@ public class OrderDetailUI implements ActionListener{
 		
 		JPanel panel_detail = new JPanel();
 		panel_detail.setBackground(new Color(255, 255, 255));
-		panel_detail.setPreferredSize(new Dimension(480, 360));
+		panel_detail.setPreferredSize(new Dimension(480, 385));
 		panel_detail.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
 		int height = 5;

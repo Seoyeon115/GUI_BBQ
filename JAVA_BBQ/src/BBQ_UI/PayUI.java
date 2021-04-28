@@ -142,7 +142,6 @@ public class PayUI implements ActionListener {
 			panel_content.setVisible(false);
 			main.switchPanel(InnerMain.CART);
 			// 닫기
-			new ShopBasketUI();
 		} else if (obj == btn_pay) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("주문이 완료되었습니다."));
 			// 닫기

@@ -24,12 +24,14 @@ import BBQ_VO.OptionVO;
 
 public class ShopBasketUI implements ActionListener{
 	  // Field
-	   JButton btn_check,btn_back,btn_alldel,btn_order,btn_pay,btn_all_delete, 
-	   			btn_madd, btn_minus;
+	   JButton btn_check,btn_back,btn_alldel,btn_order,btn_pay,btn_all_delete;
 	   ArrayList<JButton> btns_del;
+	   ArrayList<JButton> btns_madd;
+	   ArrayList<JButton> btns_minus;
+	   ArrayList<JLabel> labels_menuPrice;
+	   ArrayList<JLabel> labels_amt;
 	   JPanel panel_content,top_panel,center_panel,menu_panel,bottom_panel;
-	   public JLabel total_label,price_label, menu_label, option_label, m_price_label;
-	   JTextField tf_madd;
+	   JLabel total_label,price_label, menu_label, option_label;
 	   OrderUI order;
 	   LoginUI login;
 	   InnerMain main;
@@ -37,6 +39,7 @@ public class ShopBasketUI implements ActionListener{
 	   ArrayList<CartVO> cart;
 	  
 	   int m_price;
+	   int price_final;
 	   
 	   // Constructor
 	   public ShopBasketUI() {
@@ -96,8 +99,8 @@ public class ShopBasketUI implements ActionListener{
 //	      panel_content.add(btn_order);
 	      
 	      //bottom_panel
-	      
-	      JLabel total_label = new JLabel("총주문금액: "+ m_price +"원");
+	      total_label = new JLabel();
+	      priceChanged();
 	      btn_pay = new JButton("   결제    ");
 	      bottom_panel.add(total_label);
 	      bottom_panel.add(btn_pay);
@@ -124,6 +127,10 @@ public class ShopBasketUI implements ActionListener{
 	   public void menulist() {
 		   cart = system.getCart();
 		   btns_del = new ArrayList<JButton>();
+		   btns_madd = new ArrayList<JButton>();
+		   btns_minus = new ArrayList<JButton>();
+		   labels_menuPrice = new ArrayList<JLabel>();
+		   labels_amt = new ArrayList<JLabel>();
 		   for(int i=0; i< cart.size();i++) {
 //				JPanel pc = new JPanel();
 				
@@ -144,7 +151,7 @@ public class ShopBasketUI implements ActionListener{
 //	      menu_panel = new JPanel(new GridLayout(1,2));
 //	      menu_panel.setBounds(0, 40, 400, 200);
 			  menu_label = new JLabel();
-			  menu_label.setText("메뉴: " + menu.getName() + cart.get(i).getPrice());;
+			  menu_label.setText("메뉴: " + menu.getName() + cart.get(i).getMenu().getPrice());
 			  System.out.println("2222");
 			  
 			  String optionInfo = "";
@@ -154,7 +161,7 @@ public class ShopBasketUI implements ActionListener{
 			  }
 			  option_label = new JLabel();
 			  option_label.setText("옵션: " +optionInfo);
-			  m_price_label = new JLabel();
+			  JLabel m_price_label = new JLabel();
 			  m_price =((cart.get(i).getPrice() * cart.get(i).getAmt()));
 			  m_price_label.setText("가격: "+ m_price);
 			  JPanel left_panel =new JPanel(new GridLayout(3,1));
@@ -168,34 +175,44 @@ public class ShopBasketUI implements ActionListener{
 		      btn_mdelete.setFont(Commons.getFont(10));
 		      right_panel.setLayout(null);
 		      btn_mdelete.setBounds(200, 0, 40, 38);
-		      btn_madd = new JButton("+");
-		      btn_minus = new JButton("-");
-		      tf_madd = new JTextField(8);
-		      tf_madd.setText(Integer.toString(cart.get(i).getAmt()));
+		      JButton btn_madd = new JButton("+");
+		      JButton btn_minus = new JButton("-");
+		      JLabel label_amt = new JLabel();
+		      label_amt.setText(Integer.toString(cart.get(i).getAmt()));
 		      JPanel count_panel = new JPanel();
 		      count_panel.add(btn_minus);
-		      count_panel.add(tf_madd);
+		      count_panel.add(label_amt);
 		      count_panel.add(btn_madd);
 		      count_panel.setBounds(0,50, 300, 60);
 		      right_panel.add(btn_mdelete);
 		      right_panel.add(count_panel);
+		      
 		      
 		      menu_panel.add(BorderLayout.EAST, right_panel);
 	//	      panel_content.add(menu_panel);     ///////
 		      center_panel.add(menu_panel);    
 	//	      panel_content.add(center_panel);     
 		      
+		      labels_menuPrice.add(m_price_label);
+		      labels_amt.add(label_amt);
 		      btns_del.add(btn_mdelete);
+		      btns_madd.add(btn_madd);
+		      btns_minus.add(btn_minus);
 		      
 		      btn_mdelete.addActionListener(this);
-		      tf_madd.addActionListener(this);
 		      btn_madd.addActionListener(this);
 		      btn_minus.addActionListener(this);
 		  }
 
 	   }//menulist_btn
 	   
-	   
+	   void priceChanged() {
+		   price_final = 0;
+		   for(CartVO menu : cart) {
+			   price_final += menu.getPrice() * menu.getAmt();
+		   }
+		   total_label.setText("총주문금액: "+ price_final +"원");
+	   }
 
 	   void deleteMenu(Object obj) {
 		   for(int i=0;i<btns_del.size();i++) {
@@ -204,6 +221,32 @@ public class ShopBasketUI implements ActionListener{
 				   i = btns_del.size();
 			   }
 		   }
+	   }
+	   
+	   void addAmt(Object obj) {
+		   for(int i=0;i<btns_madd.size();i++) {
+			   if(btns_madd.get(i) == obj) {
+				   system.addCart(i);
+				   labels_menuPrice.get(i).setText("가격: "+ cart.get(i).getPrice() * cart.get(i).getAmt());
+				   labels_amt.get(i).setText(String.valueOf(cart.get(i).getAmt())); 
+				   i = btns_madd.size();
+			   }
+		   }
+		   priceChanged();
+	   }
+	   
+	   void reduceAmt(Object obj) {
+		   for(int i=0;i<btns_minus.size();i++) {
+			   if(btns_minus.get(i) == obj) {
+				   if(cart.get(i).getAmt() > 1) {					   
+					   system.reduceCart(i);
+					   labels_menuPrice.get(i).setText("가격: "+ cart.get(i).getPrice() * cart.get(i).getAmt());
+					   labels_amt.get(i).setText(String.valueOf(cart.get(i).getAmt()));
+				   }
+				   i = btns_minus.size();
+			   }
+		   }
+		   priceChanged();
 	   }
 	   
 	   public void actionPerformed(ActionEvent e) {
@@ -233,30 +276,11 @@ public class ShopBasketUI implements ActionListener{
 		    	  deleteMenu(obj);
 		    	  panel_content.setVisible(false);
 		    	  main.switchPanel(InnerMain.CART);
-		    	  //버튼클릭시 db삭제
-//		    	  for(int i=0; i<shop.cvo.size(); i++) {
-//		    		  if(shop.cvo.get(i).getRno() == ) {
-//		    			  shop.menu_panel.setVisible(false);
-//		    		      shop.center_panel.remove(shop.menu_panel);
-//		    		  }
-//		    	 order.getcartdeleteResult(shop.cvo.get(0).getRno());
-//		    		  
-//		    	  }
-//		         menu_panel.setVisible(false);
-//		         center_panel.remove(menu_panel);
-//		         System.out.println("삭제");
-		         
-		    	
-//		      }else if(obj == shop.tf_madd) {
-//			         System.out.println("수량 추가");
-//			         
-//		      }else if(obj == shop.btn_madd) {
-//		         System.out.println("추가");
-//		         
-//		      }else if(obj == shop.btn_minus) {
-//		         System.out.println("빼기");
-		         
-		         
+		      }else if(btns_madd.contains(obj)) {
+		    	  addAmt(obj);
+		      }else if(btns_minus.contains(obj)) {
+		    	  reduceAmt(obj);
+		    	  System.out.println("빼기 클릭");
 		      }
 		  }//actionPerformed
 

@@ -97,16 +97,23 @@ public class BBQ_ServerSystem {
 					RequestVO req = (RequestVO) ois.readObject();
 					if(req.getRequest() == RequestVO.EXIT) { // 종료 신호 수신
 						flag = false;
-						ois.close();
-						oos.close();
-						socket.close();
-						stlist.remove(this);
+						
 					}else {
 						response(req);
 					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					ois.close();
+					oos.close();
+					socket.close();
+					stlist.remove(this);
+					System.out.println(uid +" 종료");
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
 			}
 			System.out.println("클라이언트 종료");
 		}

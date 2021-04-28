@@ -115,6 +115,7 @@ public class OrderListUI implements ActionListener{
 		scroll.setHorizontalScrollBar(null);
 		scroll.setBorder(null);
 		
+		buttons = new ArrayList<JButton>();
 		for(OrderVO order : orderlist) {
 			JPanel panel_order = new JPanel();
 			panel_order.setLayout(null);
@@ -158,6 +159,7 @@ public class OrderListUI implements ActionListener{
 			}
 		}
 		
+		System.out.println(result);
 		return result;
 	}
 	

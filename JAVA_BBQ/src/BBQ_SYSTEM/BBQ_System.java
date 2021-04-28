@@ -102,6 +102,14 @@ public class BBQ_System {
 		return result;
 	}
 	
+	public void addCart(int idx) {
+		cart.get(idx).add(1);
+	}
+	
+	public void reduceCart(int idx) {
+		cart.get(idx).add(-1);
+	}
+	
 	public String optionToStr(ArrayList<OptionVO> optionlist) {
 		String ops = "";
 		for(OptionVO op : optionlist) {
