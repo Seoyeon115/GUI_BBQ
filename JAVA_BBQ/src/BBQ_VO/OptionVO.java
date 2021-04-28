@@ -1,33 +1,27 @@
 package BBQ_VO;
 
+import java.io.Serializable;
+
 // 메뉴 옵션 vo
-public class OptionVO {
-	String menu;
-	String option;
-	int price;
-	
+public class OptionVO implements Serializable{
+	String name;
+	int oid, price;
 	
 	public OptionVO() {
-	
-	}
-	public OptionVO(String option, int price) {
-		setOption(option);
-		setPrice(price);
+		
 	}
 	
-	
-	public String getMenu() {
-		return menu;
+	public int getOid() {
+		return oid;
 	}
-	
-	public void setMenu(String menu) {
-		this.menu = menu;
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
-	public String getOption() {
-		return option;
+	public String getName() {
+		return name;
 	}
-	public void setOption(String option) {
-		this.option = option;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getPrice() {
 		return price;

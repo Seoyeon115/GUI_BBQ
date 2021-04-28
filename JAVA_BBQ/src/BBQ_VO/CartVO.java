@@ -1,29 +1,33 @@
 package BBQ_VO;
 
+import java.util.ArrayList;
+
 public class CartVO {
-	String menu;
-	String cartid;
-	int rno;
-	int price;
-	int amt;
+	MenuVO menu; // 메뉴id
+	int price; // 가격(옵션 포함)
+	int amt; // 수량
+	ArrayList<OptionVO> options; // 옵션
 	
-	public String getCartid() {
-		return cartid;
+	public CartVO() {
+		
 	}
-	public void setCartid(String cartid) {
-		this.cartid = cartid;
+	
+	public CartVO(MenuVO menu, int price, ArrayList<OptionVO> options) {
+		this.menu = menu;
+		this.price = price;
+		this.options = options;
+		this.amt = 1;
 	}
-	public String getMenu() {
+	
+	public void add(int amt) {
+		this.amt += amt;
+	}
+	
+	public MenuVO getMenu() {
 		return menu;
 	}
-	public void setMenu(String menu) {
+	public void setMenu(MenuVO menu) {
 		this.menu = menu;
-	}
-	public int getRno() {
-		return rno;
-	}
-	public void setRno(int rno) {
-		this.rno = rno;
 	}
 	public int getPrice() {
 		return price;
@@ -37,4 +41,11 @@ public class CartVO {
 	public void setAmt(int amt) {
 		this.amt = amt;
 	}
+	public ArrayList<OptionVO> getOptions() {
+		return options;
+	}
+	public void setOptions(ArrayList<OptionVO> options) {
+		this.options = options;
+	}
+	
 }
