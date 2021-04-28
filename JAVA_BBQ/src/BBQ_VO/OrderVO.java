@@ -13,6 +13,7 @@ public class OrderVO implements Serializable{
 	String name;
 	ArrayList<CartVO> menulist; // 주문한 메뉴 리스트
 	String date; // 주문 날짜
+	String delitime;
 	String message; // 요청 사항
 	String addr; // 배달주소
 	int price; // 주문 금액
@@ -49,6 +50,12 @@ public class OrderVO implements Serializable{
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getDelitime() {
+		return delitime;
+	}
+	public void setDelitime(String delitime) {
+		this.delitime = delitime;
 	}
 	public String getMessage() {
 		return message;

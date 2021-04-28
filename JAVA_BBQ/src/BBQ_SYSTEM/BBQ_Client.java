@@ -117,4 +117,17 @@ public class BBQ_Client {
 		
 		return result;
 	}
+	
+	public OrderVO getLastOrder(String uid) {
+		OrderVO order = null;
+		
+		try {
+			oos.writeObject(new RequestVO(RequestVO.GET_LAST_ORDER, uid));
+			order = (OrderVO) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return order;
+	}
 }

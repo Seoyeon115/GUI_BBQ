@@ -122,14 +122,16 @@ public class MemberDAO extends DBConn{
 				member.setPass(rs.getString(2));
 				member.setName(rs.getString(3));
 				String HP = rs.getString(4);
-				String[] hpsplit = HP.split("-");
+				String[] hpsplit = new String[3];
+				if(!(HP == null)) hpsplit = HP.split("-");
 				member.setHp1(hpsplit[0]);
 				member.setHp2(hpsplit[1]);
 				member.setHp3(hpsplit[2]);
 				String addr = rs.getString(5);
-				String[] addrsplit = addr.split(" ");
-				member.setAddr1(addrsplit[0]);
-				member.setAddr2(addrsplit[1]);
+				member.setAddr1(addr);
+//				String[] addrsplit = addr.split(" ");
+//				member.setAddr1(addrsplit[0]);
+//				member.setAddr2(addrsplit[1]);
 				
 				list.add(member);
 			}

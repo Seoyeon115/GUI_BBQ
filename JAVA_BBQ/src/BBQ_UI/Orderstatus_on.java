@@ -22,7 +22,7 @@ import BBQ_VO.OrderVO;
 
 public class Orderstatus_on implements ActionListener {
 	InnerMain main;
-	BBQ_System system = new BBQ_System();
+	BBQ_System system;
 	JFrame frame;
 	JPanel panel;
 	JButton btn_home, btn_cart, btn_chat;
@@ -31,8 +31,13 @@ public class Orderstatus_on implements ActionListener {
 	String id;
 	SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	OrderVO order;
-	ArrayList<OrderVO> datalist = new ArrayList<OrderVO>();
+//	ArrayList<OrderVO> datalist = new ArrayList<OrderVO>();
 
+	public Orderstatus_on(InnerMain main) {
+		this.main = main;
+		this.system = main.system;
+	}
+	
 	public Orderstatus_on(InnerMain main, String id) {
 		this.main = main;
 		this.id = id;
@@ -116,14 +121,16 @@ public class Orderstatus_on implements ActionListener {
 		JLabel goneimg = new JLabel(gone);
 
 		// 데이터 값 가져오기
-		ArrayList<OrderVO> orderlist = system.getOrderList();
-		for (int i = 0; i < orderlist.size(); i++) {
-			if (orderlist.get(i).getName().equals(id)) {
-				order = orderlist.get(i);
-				datalist.add(order);
-			}
-		}
-		String ordertime = datalist.get(0).getDate();
+//		ArrayList<OrderVO> orderlist = system.getOrderList();
+//		for (int i = 0; i < orderlist.size(); i++) {
+//			order = orderlist.get(i);
+//			datalist.add(order);
+//		}
+		order = system.getLastOrder();
+		
+		String ordertime = order.getDelitime();
+		System.out.println(ordertime);
+//		String ordertime = datalist.get(0).getDate();
 		
 		Date now = new Date();
 		String nowtime = format1.format(now);
@@ -141,16 +148,23 @@ public class Orderstatus_on implements ActionListener {
 		
 		//시간 값 빼주기
 		int remaintime = odvalue - nowvalue;
-		
-		String namedata = datalist.get(0).getMname();
-		int amount = 0;
-		for(int i=0; i<datalist.size();i++) {
-			amount += datalist.get(i).getAmount();
+		if(remaintime <= -1350) {
+			remaintime += 1440;
 		}
-		JLabel havegone = new JLabel(namedata +" 외" + amount);
+		
+		String namedata = order.getMenulist().get(0).getMenu().getName();
+		int amount = -1;
+		for(int i=0; i<order.getMenulist().size();i++) {
+			amount += order.getMenulist().get(i).getAmt();
+		}
+//		for(int i=0; i<datalist.size();i++) {
+//			amount += datalist.get(i).getAmount();
+//		}
+		if(amount > 0) namedata += " 외" + amount;
+		JLabel havegone = new JLabel(namedata);
 		havegone.setFont(Commons.getFont(16));
 		havegone.setForeground(new Color(0, 0, 0, 150));
-		JLabel arrive = new JLabel(remaintime + "분후에 도착할 예정입니다.");
+		JLabel arrive = new JLabel(remaintime + "분 후에 도착할 예정입니다.");
 		arrive.setFont(Commons.getFont(16));
 		arrive.setForeground(new Color(0, 0, 0, 150));
 

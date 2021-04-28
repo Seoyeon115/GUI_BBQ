@@ -31,11 +31,12 @@ public class JoinUI implements ActionListener {
 	String[] namelist2 = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰1", "핸드폰2", "핸드폰3", "주소1", "주소2" };
 	ArrayList<Object> list = new ArrayList<Object>(); // 데이터 저장할 곳(배열)
 	LoginUI log;
-	BBQ_System system = new BBQ_System();
+	BBQ_System system;
 	JTextField tf_id;
 
 	// Constructor
 	public JoinUI() {
+		system = new BBQ_System();
 		init();
 
 	}
@@ -45,6 +46,7 @@ public class JoinUI implements ActionListener {
 	}
 
 	public JoinUI(LoginUI log) {
+		system = new BBQ_System();
 		this.log = log;
 		init();
 	}

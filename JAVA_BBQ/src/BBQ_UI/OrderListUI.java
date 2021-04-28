@@ -124,7 +124,12 @@ public class OrderListUI implements ActionListener{
 			
 			JLabel[] labels = new JLabel[3];
 			labels[0] = new JLabel(order.getDate());
-			labels[1] = new JLabel(order.getMenulist().get(0).getMenu().getName() + " 외 "+ order.getMenulist().size() +"건");
+			System.out.println(order);
+			System.out.println(order.getMenulist());
+			System.out.println(order.getMenulist().get(0));
+			String title = order.getMenulist().get(0).getMenu().getName();
+			if(order.getMenulist().size() > 1) title += " 외 "+ (order.getMenulist().size()-1) +"건";
+			labels[1] = new JLabel(title);
 			labels[2] = new JLabel("주문금액: "+ order.getPrice() +"원");
 			
 			for(int i=0;i<labels.length;i++) {

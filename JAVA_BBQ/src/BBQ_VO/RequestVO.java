@@ -16,6 +16,8 @@ public class RequestVO implements Serializable{
 	public static int GET_ORDER_INFO = 10; // 주문정보 가져오기
 	public static int ORDER_UPDATE = 11; // 주문 접수 하기
 	public static int GET_ADDRESS = 12; // 주소 불러오기
+	public static int GET_LAST_ORDER = 13; // 최근 주문 불러오기
+	public static int GET_ORDER_INFO_NOW = 14; // 완료 안된 주문정보 가져오기
 	
 	int request; // 요청 정보
 	Object obj; // 객체 데이터

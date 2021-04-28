@@ -165,4 +165,8 @@ public class BBQ_System {
 	public String getAddress() {
 		return client.getAddr(uid);
 	}
+	
+	public OrderVO getLastOrder() {
+		return client.getLastOrder(uid);
+	}
 }//class

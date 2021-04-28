@@ -18,7 +18,7 @@ public class OrderDAO extends DBConn {
 		String orderId = "";
 		
 		try {
-			String sql = "insert into bbq_order "
+			String sql = "insert into bbq_order(orderId, user_id, request, addr, odate, state) "
 					+ "values('order_'||seq_bbq_order_orderId.nextval, ?, ?, ?, sysdate, ?)";
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);
@@ -94,12 +94,41 @@ public class OrderDAO extends DBConn {
 		return result;
 	}
 	
-	public ArrayList<OrderVO> getOrderList(String uid){
-		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
-		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
+	public OrderVO getLastOrder(String uid) {
+		OrderVO order = new OrderVO();
 		
 		try {
-			String sql = "select orderid, user_id, request, addr, odate, state "
+			String sql = "select * from (select orderId, user_id, request, addr, odate, delitime, state "
+					+ " from bbq_order where user_id = ? order by odate desc) "
+					+ " where rownum = 1";
+			getPreparedStatement(sql);
+			pstmt.setString(1,  uid);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				order.setOrderId(rs.getString(1));
+				order.setName(rs.getString(2));
+				order.setMessage(rs.getString(3));
+				order.setAddr(rs.getString(4));
+				order.setDate(rs.getString(5));
+				order.setDelitime(rs.getString(6));
+				order.setState(rs.getInt(7));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		order.setMenulist(getOrderDetail(order.getOrderId()));
+		
+		return order;
+	}
+	
+	public ArrayList<OrderVO> getOrderList(String uid){
+		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+		ArrayList<String> orderIdList = new ArrayList<String>();
+		
+		try {
+			String sql = "select orderid, user_id, request, addr, odate, delitime, state "
 					+ " from bbq_order where user_id = ?";
 			
 			getPreparedStatement(sql);
@@ -109,13 +138,15 @@ public class OrderDAO extends DBConn {
 			while(rs.next()) {
 				OrderVO order = new OrderVO();
 				
-				orderIdList.add(rs.getInt(1));
+				orderIdList.add(rs.getString(1));
+				order.setOrderId(rs.getString(1));
 				order.setName(rs.getString(2));
 //				order.setMenulist(getOrderDetail(rs.getInt(1)));
 				order.setMessage(rs.getString(3));
 				order.setAddr(rs.getString(4));
 				order.setDate(rs.getString(5));
-				order.setState(rs.getInt(6));
+				order.setDelitime(rs.getString(6));
+				order.setState(rs.getInt(7));
 				
 				orderlist.add(order);
 			}
@@ -134,10 +165,10 @@ public class OrderDAO extends DBConn {
 	
 	public ArrayList<OrderVO> getOrderList(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
-		ArrayList<Integer> orderIdList = new ArrayList<Integer>();
+		ArrayList<String> orderIdList = new ArrayList<String>();
 		
 		try {
-			String sql = "select orderid, user_id, request, addr, odate, orderCheck "
+			String sql = "select orderid, user_id, request, addr, odate, delitime, state "
 					+ " from bbq_order";
 			
 			getPreparedStatement(sql);
@@ -146,13 +177,54 @@ public class OrderDAO extends DBConn {
 			while(rs.next()) {
 				OrderVO order = new OrderVO();
 				
-				orderIdList.add(rs.getInt(1));
+				orderIdList.add(rs.getString(1));
+				order.setOrderId(rs.getString(1));
 				order.setName(rs.getString(2));
 //				order.setMenulist(getOrderDetail(rs.getInt(1)));
 				order.setMessage(rs.getString(3));
 				order.setAddr(rs.getString(4));
 				order.setDate(rs.getString(5));
-				order.setState(rs.getInt(6));
+				order.setDelitime(rs.getString(6));
+				order.setState(rs.getInt(7));
+				
+				orderlist.add(order);
+			}
+			
+			for(int i=0;i<orderlist.size();i++) {
+				ArrayList<CartVO> menulist = getOrderDetail(orderIdList.get(i));
+				orderlist.get(i).setMenulist(menulist);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return orderlist;
+	}
+	
+	public ArrayList<OrderVO> getOrderListNow(){
+		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
+		ArrayList<String> orderIdList = new ArrayList<String>();
+		
+		try {
+			String sql = "select orderid, user_id, request, addr, odate, delitime, state "
+					+ " from bbq_order where state = 0";
+			
+			getPreparedStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OrderVO order = new OrderVO();
+				
+				orderIdList.add(rs.getString(1));
+				order.setOrderId(rs.getString(1));
+				order.setName(rs.getString(2));
+//				order.setMenulist(getOrderDetail(rs.getInt(1)));
+				order.setMessage(rs.getString(3));
+				order.setAddr(rs.getString(4));
+				order.setDate(rs.getString(5));
+				order.setDelitime(rs.getString(6));
+				order.setState(rs.getInt(7));
 				
 				orderlist.add(order);
 			}
@@ -173,7 +245,7 @@ public class OrderDAO extends DBConn {
 		boolean result = false;
 		try {
 			String sql = " UPDATE BBQ_ORDER " + 
-					" SET deledate = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),ORDERCHECK=? " +
+					" SET delitime = To_Date(?,'YYYY/MM/DD HH24:MI:SS'),STATE=? " +
 					" WHERE ORDERID= ? "; 
 			
 			getPreparedStatement(sql);
@@ -232,7 +304,7 @@ public class OrderDAO extends DBConn {
 //		return orderlist;
 //	}
 	
-	public ArrayList<CartVO> getOrderDetail(int orderId){
+	public ArrayList<CartVO> getOrderDetail(String orderId){
 		ArrayList<CartVO> orderDetail = new ArrayList<CartVO>();
 		ArrayList<Integer> midList = new ArrayList<Integer>();
 		ArrayList<String[]> oidList = new ArrayList<String[]>();
@@ -243,7 +315,7 @@ public class OrderDAO extends DBConn {
 					+ " where orderid = ? and d.mid = m.mid ";
 			
 			getPreparedStatement(sql);
-			pstmt.setInt(1, orderId);
+			pstmt.setString(1, orderId);
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -254,7 +326,9 @@ public class OrderDAO extends DBConn {
 				menu.setPrice(rs.getInt(2));
 				
 				midList.add(rs.getInt(3));
-				oidList.add(rs.getString(4).split("/"));
+				String ops = rs.getString(4);
+				if(ops == null) ops = "";
+				oidList.add(ops.split("/"));
 				cart.setAmt(rs.getInt(5));
 				
 				cart.setMenu(menu);
@@ -284,6 +358,8 @@ public class OrderDAO extends DBConn {
 					+ " where mid = ? and oid = ?";
 			
 			for(String oid : oidlist) {
+				if(oid.equals("")) continue;
+//				System.out.println(oid);
 				getPreparedStatement(sql);
 				pstmt.setInt(1, mid);
 				pstmt.setInt(2, Integer.parseInt(oid));

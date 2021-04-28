@@ -90,6 +90,10 @@ public class BBQ_ServerSystem {
 					oos.writeObject(odao.getOrderUpdateResult((OrderVO)req.getObj()));
 				}else if(req.getRequest() == RequestVO.GET_ADDRESS) { // 주소 불러오기
 					oos.writeObject(mdao.getAddress((String)req.getObj()));
+				}else if(req.getRequest() == RequestVO.GET_LAST_ORDER) {
+					oos.writeObject(odao.getLastOrder((String)req.getObj()));
+				}else if(req.getRequest() == RequestVO.GET_ORDER_INFO_NOW) {// 주문정보 가져오기
+					oos.writeObject(odao.getOrderListNow());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
