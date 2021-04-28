@@ -3,7 +3,6 @@ package main_jk;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main_sy.InnerMain;
 
 public class StartUIEvent implements ActionListener{
 	StartUI main;

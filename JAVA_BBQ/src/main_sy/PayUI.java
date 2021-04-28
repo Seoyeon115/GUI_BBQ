@@ -1,4 +1,4 @@
-package main_jk;
+package main_sy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,7 +22,12 @@ import javax.swing.border.BevelBorder;
 
 import BBQ_DAO_jk.MemberDAO;
 import BBQ_DAO_jk.OrderDAO;
+import BBQ_SYSTEM.BBQ_System;
+import BBQ_UI.Commons;
+import BBQ_UI.ShopBasketUI;
+import BBQ_UI.StartUI;
 import BBQ_VO.CartVO;
+import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
 
@@ -37,11 +42,9 @@ public class PayUI implements ActionListener {
 	JTextField addr1_tf, addr2_tf;
 	int ttl_price;
 	OrderDAO orderlist = new OrderDAO();
-	MemberDAO mdao = new MemberDAO();
 	BBQ_System system;
 	OrderVO order = new OrderVO();
-	ArrayList<JPanel> m_panel;
-	
+	ArrayList<CartVO> cart;
 
 	int m_price;
 
@@ -57,13 +60,6 @@ public class PayUI implements ActionListener {
 
 	// Method
 	public void init() {
-		//예시값
-		order.setOrderid("1001");
-		order.setMenu("후라이드 치킨");
-		order.setPrice(16000);
-		order.setAmt(2);
-		
-		
 		f = new JFrame("결제");
 		f.getContentPane().setBackground(new Color(204, 0, 51));
 		f.getContentPane().setForeground(new Color(255, 255, 255));
@@ -98,11 +94,6 @@ public class PayUI implements ActionListener {
 		/** 결제금액 패널 **/
 		total_panel = new JPanel();
 		total_panel.setBackground(new Color(255, 255, 255));
-		
-		/** menulist **/
-		String
-		
-		
 
 		// top_panel
 		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
@@ -129,24 +120,14 @@ public class PayUI implements ActionListener {
 		tf_panel.add(addr2_tf);
 		addr_panel.add(BorderLayout.WEST, addr_label);
 		addr_panel.add(BorderLayout.EAST, tf_panel);
-		
-		//메뉴리스트
-		JPanel pn = new JPanel(new GridLayout(3,1));
-		JLabel name = new JLabel(order.getMenu());
-		JLabel price = new JLabel(String.valueOf(order.getPrice()));
-		JLabel amt = new JLabel(String.valueOf(order.getAmt()));
-		pn.add(name);
-		pn.add(price);
-		pn.add(amt);
-		menu_panel.add(pn);
-		
-		int totalprice = order.getPrice() * order.getAmt();
-		JLabel total_label = new JLabel("총주문금액: " + totalprice + "원");
+
+		menulist();
+
+		JLabel total_label = new JLabel("총주문금액: " + m_price + "원");
 		total_panel.add(total_label);
-		
-		
+
 		center_panel.add(BorderLayout.NORTH, addr_panel);
-		center_panel.add(BorderLayout.CENTER, menu_panel);
+//		center_panel.add(BorderLayout.CENTER, menu_panel);
 		center_panel.add(BorderLayout.SOUTH, total_panel);
 
 		// bottom_panel
@@ -176,17 +157,13 @@ public class PayUI implements ActionListener {
 	}// init
 
 	/** 메뉴 생성 GUI **/
-	public JPanel menulist() {
-//		cvo = orderlist.getShopBasketResult(login.id);
-//		ovo = orderlist.getShopBasketOption();
-		
-		m_panel = new ArrayList<JPanel>();
-		
-		int i;
-		for (i = 0; i < cvo.size(); i++) {
-			JPanel pc = new JPanel();
-
-			f.add(pc, BorderLayout.CENTER);
+//	public JPanel menulist() {
+	public void menulist() {
+		cart = system.getCart();
+		for (int i = 0; i < cart.size(); i++) {
+//			JPanel pc = new JPanel();
+//
+//			f.add(pc, BorderLayout.CENTER);
 
 			menu_panel = new JPanel(new GridLayout(1, 8)) {
 				@Override
@@ -195,30 +172,36 @@ public class PayUI implements ActionListener {
 				}
 			};
 			menu_panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-			pc.add(menu_panel);
-			f.setVisible(true);
-			
-			
-			menu_label = new JLabel();
-			menu_label.setText(cvo.get(i).getRno() + ". 메뉴: " + cvo.get(i).getMenu() + cvo.get(i).getPrice());
-			option_label = new JLabel();
-			option_label.setText("옵션: " + ovo.get(i).getOption() + ovo.get(i).getPrice());
-			m_price_label = new JLabel();
-			m_price = ((cvo.get(i).getPrice() * cvo.get(i).getAmt()) + ovo.get(i).getPrice());
-			m_price_label.setText("가격: " + m_price);
-			ttl_price += m_price;
-			int a = ((cvo.get(i).getPrice() * cvo.get(i).getAmt()) + ovo.get(i).getPrice());
-			JLabel price_label = new JLabel(String.valueOf(a));
-			price_label.setText("가격: " + price_label);
-			ttl_price += a;
 
+			MenuVO menu = cart.get(i).getMenu();
+			ArrayList<OptionVO> options = cart.get(i).getOptions();
+
+//			menu_label = new JLabel();
+			menu_label.setText("메뉴: " + menu.getName() + cart.get(i).getPrice());
+			;
+			System.out.println("2222");
+
+			String optionInfo = "";
+			for (OptionVO op : options) {
+				if (optionInfo.equals(""))
+					optionInfo = op.getName() + "(" + op.getPrice() + ")";
+				else
+					optionInfo += " / " + op.getName() + "(" + op.getPrice() + ")";
+			}
+			option_label = new JLabel();
+			option_label.setText("옵션: " + optionInfo);
+			m_price_label = new JLabel();
+			m_price = ((cart.get(i).getPrice() * cart.get(i).getAmt()));
+			m_price_label.setText("가격: " + m_price);
 			JPanel left_panel = new JPanel(new GridLayout(3, 1));
 			left_panel.add(menu_label);
 			left_panel.add(option_label);
 			left_panel.add(m_price_label);
 			menu_panel.add(BorderLayout.WEST, left_panel);
+			center_panel.add(menu_panel);
+
 		}
-		return menu_panel;
+//		return menu_panel;
 	}// menulist
 
 	@Override

@@ -1,8 +1,9 @@
 package BBQ_VO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OrderVO {
+public class OrderVO implements Serializable{
 	public static int PREPARING = 0;
 	public static int DELIVERING = 1;
 	public static int COMPLETE = 2;
@@ -14,9 +15,9 @@ public class OrderVO {
 	String message; // 요청 사항
 	String addr; // 배달주소
 	int price; // 주문 금액
-	int dPrice; // 배달료
-	int discount; // 할인 금액
-	int payment; // 총 결제 금액
+//	int dPrice; // 배달료
+//	int discount; // 할인 금액
+//	int payment; // 총 결제 금액
 	
 	public ArrayList<MenuVO> getMenulist() {
 		return menulist;
@@ -48,24 +49,24 @@ public class OrderVO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getDPrice() {
-		return dPrice;
-	}
-	public void setDPrice(int dPrice) {
-		this.dPrice = dPrice;
-	}
-	public int getDiscount() {
-		return discount;
-	}
-	public void setDiscount(int discount) {
-		this.discount = discount;
-	}
-	public int getPayment() {
-		return payment;
-	}
-	public void setPayment(int payment) {
-		this.payment = payment;
-	}
+//	public int getDPrice() {
+//		return dPrice;
+//	}
+//	public void setDPrice(int dPrice) {
+//		this.dPrice = dPrice;
+//	}
+//	public int getDiscount() {
+//		return discount;
+//	}
+//	public void setDiscount(int discount) {
+//		this.discount = discount;
+//	}
+//	public int getPayment() {
+//		return payment;
+//	}
+//	public void setPayment(int payment) {
+//		this.payment = payment;
+//	}
 	
 	
 }

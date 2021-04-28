@@ -17,6 +17,5 @@ public class OrderUI {
 	//Method
 	public void init() {
 		System.out.println("주문하기");
-		
 	}
 }

@@ -18,6 +18,10 @@ import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
 
 public class MenulistUI implements ActionListener {
+	public static int MENU1 = 101;
+	public static int MENU2 = 102;
+	public static int MENU3 = 103;
+	
 //	JFrame frame;
 	BBQ_System system;
 	JButton btn_sidepage;
@@ -36,7 +40,7 @@ public class MenulistUI implements ActionListener {
 		this.system = main.system;
 		initialize();
 		list2 = new MenulistUI2(this,main);
-		detail = new DetailMenuUI(main, this);
+		detail = new DetailMenuUI(main);
 	}
 	
 	public JPanel initialize() {
@@ -213,38 +217,38 @@ public class MenulistUI implements ActionListener {
 		menu1_lb.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                goDetail(101);
+                goDetail(MENU1);
             }
         });
 		menu2_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail(2);
+				goDetail(MENU2);
 			}
 		});
 		menu3_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail(3);
+				goDetail(MENU3);
 			}
 		});
 		
 		menu1_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail(101);
+				goDetail(MENU1);
 			}
 		});
 		menu2_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail(2);
+				goDetail(MENU2);
 			}
 		});
 		menu3_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail(3);
+				goDetail(MENU3);
 			}
 		});
 		

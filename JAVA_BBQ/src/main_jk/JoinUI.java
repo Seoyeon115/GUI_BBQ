@@ -20,8 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import BBQ_DAO.MemberDAO;
-import BBQ_SYSTEM.BBQ_System;
+import BBQ_DAO_jk.MemberDAO;
+import BBQ_DAO_jk.OrderDAO;
 import BBQ_VO.MemberVO;
 
 
@@ -31,10 +31,13 @@ public class JoinUI implements ActionListener {
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JButton join_btn, reset_btn, id_chk_btn;
 	String[] namelist = { "아이디", "비밀번호", "비밀번호확인", "이름", "핸드폰", "주소" };
+	JTextField tf_id;
 	ArrayList<Object> list =new ArrayList<Object>();
 	LoginUI log;
 	MemberDAO mdao = new MemberDAO();
+	OrderDAO odao = new OrderDAO();
 	public BBQ_System system = new BBQ_System();
+	
 	
 	// Constructor
 	public JoinUI() {
@@ -49,7 +52,7 @@ public class JoinUI implements ActionListener {
 	
 	// Method
 	public void init() {
-		f = new JFrame("BBQ");
+		f = new JFrame("BBQ 회원가입");
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
 		label_panel = new JPanel(new GridLayout(6, 1));
@@ -82,12 +85,12 @@ public class JoinUI implements ActionListener {
 			JPanel t_panel = new JPanel();
 
 			if (name.equals("아이디")) {
-				JTextField id = new JTextField(12);
+				tf_id = new JTextField(12);
 				id_chk_btn = new JButton("중복확인");
-				t_panel.add(id);
+				t_panel.add(tf_id);
 				t_panel.add(id_chk_btn);
 				tf_panel.add(t_panel);
-				list.add(id);
+				list.add(tf_id);
 
 			} else if (name.equals("핸드폰")) {
 				JTextField hp1 = new JTextField(6);
@@ -151,6 +154,7 @@ public class JoinUI implements ActionListener {
 		
 		if (obj == join_btn) {
 			if(form_check()) {
+				
 				ArrayList<JTextField> jlist = new ArrayList<JTextField>();
 				for(Object tf : list) {
 					JTextField jtf = (JTextField)tf;
@@ -189,13 +193,22 @@ public class JoinUI implements ActionListener {
 				tf.setText("");}
 
 		} else if (obj == id_chk_btn) {
+			if(tf_id.getText().equals("")) {
+	            JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요."));
+			
+			}else if(system.idcheck(tf_id.getText())) {
+				JOptionPane.showMessageDialog(null, 
+						Commons.getMsg("사용가능 한 아이디입니다."));
+				
+			}else {
+				JOptionPane.showMessageDialog(null, 
+						Commons.getMsg("이미 사용중인 아이디입니다.."));
+			}
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 
 		}
 	}
-	
-
 
 /**회원가입 폼 체크**/
 	public boolean form_check() {

@@ -1,6 +1,6 @@
 package main_jk;
 
-import main_sy.InnerMain;
+import main_jk.InnerMain;
 
 public class MainTest {
 
@@ -9,7 +9,6 @@ public class MainTest {
 //		new InnerMain();
 //		new ShopBasketUI();
 		new PayUI();
-
 	}
 
 	

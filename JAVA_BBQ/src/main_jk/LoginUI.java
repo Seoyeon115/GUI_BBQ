@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import BBQ_DAO.MemberDAO;
-import main_sy.InnerMain;
+import BBQ_DAO_jk.MemberDAO;
+import BBQ_VO.MemberVO;
 
 public class LoginUI implements ActionListener{
 	// Field
@@ -32,8 +31,11 @@ public class LoginUI implements ActionListener{
 	JPasswordField pass_tf;
 	JPanel title_panel, label_panel, tf_panel, btn_panel;
 	JLabel blank_label, id_label, pass_label;
+	public static String id;
 	StartUI main;
 	BBQ_System system = new BBQ_System();
+	MemberVO member = new MemberVO();
+	MemberDAO mdao = new MemberDAO();
 //	StartUIEvent eventobj = new StartUIEvent(this);
 
 	// Constructor
@@ -49,11 +51,11 @@ public class LoginUI implements ActionListener{
 
 	// Method
 	public void init() {
-		f = new JFrame("login system");
-		String[] namelist = { "   ID", "   PW" };
+		f = new JFrame("BBQ 로그인");
+		String[] namelist = { "   ID   ", "   PW    " };
 		title_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		title_panel.setBackground(new Color(204, 0, 51));
-		label_panel = new JPanel(new GridLayout(3, 1, 10, 20));
+		label_panel = new JPanel(new GridLayout(3, 2, 10, 20));
 		label_panel.setBackground(new Color(204, 0, 51));
 		tf_panel = new JPanel(new GridLayout(3, 1, 10, 20));
 		tf_panel.setBackground(new Color(204, 0, 51));
@@ -77,9 +79,9 @@ public class LoginUI implements ActionListener{
 
 		for (String name : namelist) {
 			Panel l_panel = new Panel(new FlowLayout(FlowLayout.LEFT));
-			Panel t_panel = new Panel(new FlowLayout(FlowLayout.LEFT));
-
-			label_panel.add(l_panel.add(new Label(name)));
+			Panel t_panel = new Panel(new FlowLayout(FlowLayout.CENTER));
+			
+			label_panel.add(l_panel.add(new JLabel(name)));
 
 			if (name.trim().equals("PW")) {
 				pass_tf = new JPasswordField(15);
@@ -131,7 +133,8 @@ public class LoginUI implements ActionListener{
 			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {
 				JOptionPane.showMessageDialog(null, Commons.getMsg("로그인 성공"));
-				BBQ_System.LOGIN_RESULT = true;
+				member.setId(id_tf.getText());
+				id = id_tf.getText();
 				f.setVisible(false);
 				new InnerMain();
 			} else {
@@ -141,13 +144,19 @@ public class LoginUI implements ActionListener{
 			
 		}
 	}
+	/** 로그인 결과 반환 **/
+//	public String loginId() {
+//		member.setId(id_tf.getText());
+//		String id = member.getId();
+//		System.out.println(id);
+//		return id;
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 
 		if (obj == btn_login) {
-			// 로그인
 			login_proc();
 		} else if (obj == btn_join) {
 			//회원가입 창

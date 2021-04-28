@@ -11,7 +11,7 @@ public class DBConn {
 		String pass = "tiger";
 		Connection conn;
 		PreparedStatement pstmt;
-		ResultSet rs;
+		public ResultSet rs;
 		
 		public DBConn() {
 			try {

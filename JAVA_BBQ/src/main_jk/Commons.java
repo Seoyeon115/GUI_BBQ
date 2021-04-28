@@ -1,5 +1,6 @@
 package main_jk;
- 
+
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Label;
@@ -23,6 +24,11 @@ public class Commons {
 		return font;
 	}
 	
+	public static Font getFont(int size) { // 크기를 지정하여 폰트 생성
+		Font font = new Font("맑은 고딕",Font.BOLD, size);
+		return font;
+	}
+	
 	public static JButton getJButton(String name) {
 		Font font = new Font("맑은 고딕",Font.BOLD,10);   //String은 UI가 아니기 때문에 setFont출력 불가
 		JButton button = new JButton(name);
@@ -41,10 +47,10 @@ public class Commons {
 	}
 	
 	// ImageIcon 원하는 사이즈로 크기 조절
-		public static ImageIcon imageResize(ImageIcon icon, int width, int height) {
-			Image image = icon.getImage();
-			Image resized = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
-			return new ImageIcon(resized);
-		}
+	public static ImageIcon imageResize(ImageIcon icon, int width, int height) {
+		Image image = icon.getImage();
+		Image resized = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+		return new ImageIcon(resized);
+	}
 	
 }

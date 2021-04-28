@@ -1,7 +1,9 @@
 package BBQ_VO;
 
+import java.io.Serializable;
+
 // 메뉴 옵션 vo
-public class OptionVO {
+public class OptionVO implements Serializable{
 	String name;
 	int oid, price;
 	

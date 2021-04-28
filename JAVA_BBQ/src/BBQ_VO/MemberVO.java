@@ -1,6 +1,8 @@
 package BBQ_VO;
 
-public class MemberVO {
+import java.io.Serializable;
+
+public class MemberVO implements Serializable{
 	String id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;
 
 	public String getId() {
