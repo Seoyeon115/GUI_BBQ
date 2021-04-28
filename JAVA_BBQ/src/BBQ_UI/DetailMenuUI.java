@@ -251,14 +251,12 @@ public class DetailMenuUI implements ActionListener{
 			for(int i=0;i<check_options.size();i++) {
 				if(check_options.get(i).isSelected()) {
 					selectedOptions.add(vo.getOptions().get(i));
-					System.out.println(vo.getOptions().get(i).getName());
 				}
 			}
-			System.out.println(selectedOptions);
-			
-			
 			system.addCart(vo, price_final, selectedOptions);
 			JOptionPane.showMessageDialog(null, Commons.getMsg("장바구니에 추가되었습니다"));
+			panel_content.setVisible(false);
+			main.switchPanel(InnerMain.MENULIST);
 		}else if(obj == button_back) { // 뒤로가기 버튼 클릭
 //			System.out.println("뒤로가기");
 			panel_content.setVisible(false);

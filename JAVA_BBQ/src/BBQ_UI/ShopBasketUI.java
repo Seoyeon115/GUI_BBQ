@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -269,8 +270,12 @@ public class ShopBasketUI implements ActionListener{
 		         main.switchPanel(InnerMain.MENULIST);
 		         
 		      }else if(obj == btn_pay) {
-		    	  panel_content.setVisible(false);
-		    	  main.switchPanel(InnerMain.PAY);
+		    	  if(cart.size() == 0) {
+		    		  JOptionPane.showMessageDialog(null, Commons.getMsg("장바구니에 메뉴를 담아 주세요!"));
+		    	  }else {		    		  
+		    		  panel_content.setVisible(false);
+		    		  main.switchPanel(InnerMain.PAY);
+		    	  }
 		    	  
 		      }else if(btns_del.contains(obj)) {
 		    	  deleteMenu(obj);

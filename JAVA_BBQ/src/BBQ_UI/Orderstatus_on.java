@@ -245,7 +245,7 @@ public class Orderstatus_on implements ActionListener {
 			if (existchat == false) {
 				idnum = +1;
 
-				UI = new ChatUI2(idnum, main, id);
+				UI = new ChatUI2(idnum, main, system.uid);
 //				panel.setVisible(false);
 //				main.chatUI.createsocket(idnum);
 //				main.switchPanel(InnerMain.CHATCON);

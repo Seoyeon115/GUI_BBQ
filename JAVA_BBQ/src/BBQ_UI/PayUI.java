@@ -33,7 +33,7 @@ public class PayUI implements ActionListener {
 	JPanel label_panel, tf_panel, top_panel, center_panel, bottom_panel, total_panel, menu_panel, addr_panel,
 			panel_content, pn_panel;
 	JButton btn_back, btn_pay, btn_cancel, btn_mdelete, btn_madd, btn_minus;
-	JLabel addr_label, total_label, price_label, menu_label, option_label, m_price_label;
+	JLabel addr_label, message_label, total_label, price_label, menu_label, option_label, m_price_label;
 	JTextField addr_tf, message_tf;
 	BBQ_System system;
 	ArrayList<CartVO> cart;
@@ -55,6 +55,7 @@ public class PayUI implements ActionListener {
 
 	// Method
 	public JPanel init() {
+		t_price = 0;
 
 		panel_content = new JPanel(new BorderLayout());
 		panel_content.setBackground(new Color(255, 255, 255));
@@ -70,11 +71,15 @@ public class PayUI implements ActionListener {
 		/** 주소 패널 **/
 		addr_panel = new JPanel(new BorderLayout());
 		tf_panel = new JPanel(new GridLayout(2, 1));
-		addr_label = new JLabel("           주소");
-		addr_label = new JLabel("        요청 사항");
+		addr_label = new JLabel("      주소");
+		message_label = new JLabel(" 요청 사항");
 		addr_tf = new JTextField(40);
 		message_tf = new JTextField(40);
 
+		label_panel = new JPanel(new GridLayout(2, 1));
+		label_panel.add(addr_label);
+		label_panel.add(message_label);
+		
 		addr_tf.setText(system.getAddress());
 		
 		/** 메뉴리스트 패널 **/
@@ -108,7 +113,7 @@ public class PayUI implements ActionListener {
 		// center_panel
 		tf_panel.add(addr_tf);
 		tf_panel.add(message_tf);
-		addr_panel.add(BorderLayout.WEST, addr_label);
+		addr_panel.add(BorderLayout.WEST, label_panel);
 		addr_panel.add(BorderLayout.EAST, tf_panel);
 		center_panel.add(BorderLayout.NORTH, addr_panel);
 //		center_panel.add(addr_panel);

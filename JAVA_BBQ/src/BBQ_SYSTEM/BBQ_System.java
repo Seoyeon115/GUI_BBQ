@@ -13,7 +13,7 @@ public class BBQ_System {
 	//Field
 	BBQ_Client client;
 	ArrayList<CartVO> cart = new ArrayList<CartVO>(); // 장바구니
-	String uid;
+	public String uid;
 	
 	//login 결과
 	public static boolean LOGIN_RESULT = false;
