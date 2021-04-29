@@ -42,6 +42,7 @@ public class JoinUI implements ActionListener {
 	}
 	
 	public JoinUI(MemberVO member) {
+		system = new BBQ_System();
 		init(member);
 	}
 
@@ -93,6 +94,16 @@ public class JoinUI implements ActionListener {
 				tf_panel.add(t_panel);
 				list.add(tf_id);
 
+			} else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
+				JPasswordField tf = new JPasswordField(20);
+				t_panel.add(tf);
+				tf_panel.add(t_panel);
+				list.add(tf);
+			} else if(name.equals("이름")) {
+				JTextField tf = new JTextField(20);
+				t_panel.add(tf);
+				tf_panel.add(t_panel);
+				list.add(tf);
 			} else if (name.equals("핸드폰")) {
 				JTextField hp1 = new JTextField(6);
 				JTextField hp2 = new JTextField(6);
@@ -103,23 +114,18 @@ public class JoinUI implements ActionListener {
 				t_panel.add(new JLabel("-"));
 				t_panel.add(hp3);
 				tf_panel.add(t_panel);
+				list.add(hp1);
+				list.add(hp2);
+				list.add(hp3);
 			} else if (name.equals("주소")) {
-				JTextField addr1 = new JTextField(28);
-				JTextField addr2 = new JTextField(28);
+				JTextField addr1 = new JTextField(22);
+				JTextField addr2 = new JTextField(22);
 				t_panel.add(addr1);
 				t_panel.add(addr2);
 				tf_panel.add(t_panel);
-			} else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
-				JPasswordField tf = new JPasswordField(20);
-				t_panel.add(tf);
-				tf_panel.add(t_panel);
-				list.add(tf);
-			} else {
-				JTextField tf = new JTextField(20);
-				t_panel.add(tf);
-				tf_panel.add(t_panel);
-				list.add(tf);
-			}
+				list.add(addr1);
+				list.add(addr2);
+			} 
 		} // for
 
 		f.add(BorderLayout.NORTH, title_panel);
@@ -181,6 +187,7 @@ public class JoinUI implements ActionListener {
 			}else if (name.equals("비밀번호") || name.equals("비밀번호확인")) {
 				JPasswordField tf = new JPasswordField(20);
 				t_panel.add(tf);
+				tf.setText(member.getPass());
 				tf_panel.add(t_panel);
 				list.add(tf);
 			} else if (name.equals("이름")) {
@@ -255,7 +262,12 @@ public class JoinUI implements ActionListener {
 				member.setPass(jlist.get(1).getText());
 				member.setCpass(jlist.get(2).getText());
 				member.setName(jlist.get(3).getText());
-
+				member.setHp1(jlist.get(4).getText());
+				member.setHp2(jlist.get(5).getText());
+				member.setHp3(jlist.get(6).getText());
+				member.setAddr1(jlist.get(7).getText());
+				member.setAddr2(jlist.get(8).getText());
+				
 				boolean result = system.join(member);
 
 				if (result) {
@@ -274,7 +286,10 @@ public class JoinUI implements ActionListener {
 				JTextField tf = (JTextField) obj2;
 				tf.setText("");
 			}
-		} else if (obj == id_chk_btn) {
+		}else if(obj == reset_btn2) {
+			f.dispose();
+		}
+		else if (obj == id_chk_btn) {
 			if(tf_id.getText().equals("")) {
 	            JOptionPane.showMessageDialog(null, Commons.getMsg("아이디를 입력해주세요."));
 			
@@ -289,8 +304,42 @@ public class JoinUI implements ActionListener {
 			// DB아이디 중복체크
 			System.out.println("아이디 중복체크");
 
+		}else if (obj == join_btn2) {
+			if (form_check()) {
+				ArrayList<JTextField> jlist = new ArrayList<JTextField>();
+				for (Object tf : list) {
+					JTextField jtf = (JTextField) tf; // tf데이터를 형변환시켜서 jtf에 넣어준다
+					jlist.add(jtf);
+				}
+
+				MemberVO member = new MemberVO();
+				member.setId(jlist.get(0).getText());
+				member.setPass(jlist.get(1).getText());
+				member.setCpass(jlist.get(2).getText());
+				member.setName(jlist.get(3).getText());
+				member.setHp1(jlist.get(4).getText());
+				member.setHp2(jlist.get(5).getText());
+				member.setHp3(jlist.get(6).getText());
+				member.setAddr1(jlist.get(7).getText());
+				member.setAddr2(jlist.get(8).getText());
+				
+				boolean result = system.update(member);
+
+				if (result) {
+					JOptionPane.showMessageDialog(null, Commons.getMsg("회원수정 성공"));
+					for (Object obj2 : list) {
+						JTextField tf = (JTextField) obj2;
+						tf.setText("");
+					}
+					f.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, Commons.getMsg("회원수정 실패"));
+				}
+			}
+			
 		}
 	}
+	
 
 	/** 회원가입 폼 체크 **/
 

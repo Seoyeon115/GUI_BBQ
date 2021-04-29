@@ -109,6 +109,10 @@ public class BBQ_System {
 	public void reduceCart(int idx) {
 		cart.get(idx).add(-1);
 	}
+	/** ¼öÁ¤ **/
+	public boolean update(MemberVO member) {	
+		return client.getUpdateResult(member);
+	}	
 	
 	public String optionToStr(ArrayList<OptionVO> optionlist) {
 		String ops = "";

@@ -41,7 +41,7 @@ public class MemberDAO extends DBConn{
 			getPreparedStatement(sql);
 
 			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
-			String addr = member.getAddr1() + " " + member.getAddr2();
+			String addr = member.getAddr1() + "/" + member.getAddr2();
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPass());
 			pstmt.setString(3, member.getName());
@@ -90,13 +90,12 @@ public class MemberDAO extends DBConn{
 			getPreparedStatement(sql);
 
 			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
-			String addr = member.getAddr1() + " " + member.getAddr2();
+			String addr = member.getAddr1() + "/" + member.getAddr2();
 			pstmt.setString(1, member.getPass());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, hp);
 			pstmt.setString(4, addr);
 			pstmt.setString(5, member.getId());
-
 			int val = pstmt.executeUpdate();
 			if (val != 0) result = true;
 
@@ -128,10 +127,9 @@ public class MemberDAO extends DBConn{
 				member.setHp2(hpsplit[1]);
 				member.setHp3(hpsplit[2]);
 				String addr = rs.getString(5);
-				member.setAddr1(addr);
-//				String[] addrsplit = addr.split(" ");
-//				member.setAddr1(addrsplit[0]);
-//				member.setAddr2(addrsplit[1]);
+				String[] addrsplit = addr.split("/");
+				member.setAddr1(addrsplit[0]);
+				member.setAddr2(addrsplit[1]);
 				
 				list.add(member);
 			}

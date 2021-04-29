@@ -130,4 +130,15 @@ public class BBQ_Client {
 		
 		return order;
 	}
+	public boolean getUpdateResult(MemberVO member) {
+		boolean result = false;
+		try {
+			System.out.println("dao");
+			oos.writeObject(new RequestVO(RequestVO.REQUEST_UPDATE, member));
+			result = (boolean) ois.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
