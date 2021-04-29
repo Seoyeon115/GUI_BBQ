@@ -28,6 +28,10 @@ public class Commons {
 		Font font = new Font("맑은 고딕",Font.BOLD, size);
 		return font;
 	}
+	public static Font getFont(String s,int size) { // 크기를 지정하여 폰트 생성
+		Font font = new Font("맑은 고딕",Font.PLAIN, size);
+		return font;
+	}
 	public static Font getFont(int order,int size) { // 크기를 지정하여 폰트 생성
 		Font font = new Font("배달의민족 연성",Font.PLAIN, size);
 		return font;
