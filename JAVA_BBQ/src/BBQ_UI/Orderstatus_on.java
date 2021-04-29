@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,24 +17,68 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
+import BBQ_VO.OrderVO;
+
 public class Orderstatus_on implements ActionListener {
 	InnerMain main;
-
+	BBQ_System system;
 	JFrame frame;
 	JPanel panel;
-	JButton btn_home, btn_cart;
-
-//	public Orderstatus_on() {
-//		init();
-//	}
+	JButton btn_home, btn_cart, btn_chat;
+	boolean existchat = false;
+	ChatUI2 UI;
+	String id;
+	SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	OrderVO order;
+//	ArrayList<OrderVO> datalist = new ArrayList<OrderVO>();
 
 	public Orderstatus_on(InnerMain main) {
 		this.main = main;
-		init();
+		this.system = main.system;
+	}
+	
+	public Orderstatus_on(InnerMain main, String id) {
+		this.main = main;
+		this.id = id;
 	}
 
 	public JPanel init() {
-
+		order = system.getLastOrder();
+		
+		String ordertime = order.getDelitime();
+		System.out.println(ordertime);
+//		String ordertime = datalist.get(0).getDate();
+		
+		if(ordertime == null) {
+			return new Orderstatus_no(main).init();
+		}
+		
+		Date now = new Date();
+		String nowtime = format1.format(now);
+		System.out.println(nowtime);
+		System.out.println(ordertime);
+		
+		//시간 값 인트로 가져오기
+		String[] od1= ordertime.split(" ");
+		String[] od2 = od1[1].split(":");
+		int odvalue = (Integer.parseInt(od2[0])*60) + (Integer.parseInt(od2[1]));
+		
+		String[] now1 = nowtime.split(" ");
+		String[] now2 = now1[1].split(":");
+		int nowvalue = (Integer.parseInt(now2[0])*60) + (Integer.parseInt(now2[1]));
+		
+		//시간 값 빼주기
+		int remaintime = odvalue - nowvalue;
+		if(remaintime <= -1350) {
+			remaintime += 1440;
+		}
+		
+		if(remaintime < 0) {
+			return new Orderstatus_end(main).init();
+		}
+		
+		
 //		frame = new JFrame();
 //		frame.setResizable(false);
 //		frame.getContentPane().setBackground(new Color(204, 0, 51));
@@ -60,14 +107,13 @@ public class Orderstatus_on implements ActionListener {
 		// 홈버튼 장바구니버튼 넣기
 		ImageIcon home = new ImageIcon("images/homer.png");
 		ImageIcon home2 = new ImageIcon("images/homey.png");
-		
-		
+
 		JButton btn_home_blank = new JButton();
 		btn_home_blank.setBackground(new Color(255, 255, 255));
 		btn_home_blank.setPreferredSize(new Dimension(35, 40));
 		JPanel btn_home_pn = new JPanel();
 		btn_home_pn.setBackground(new Color(255, 255, 255));
-		
+
 		btn_home = new JButton();
 		btn_home.setIcon(home);
 		btn_home.setPressedIcon(home2);
@@ -80,7 +126,6 @@ public class Orderstatus_on implements ActionListener {
 		btn_home.setBorderPainted(false);
 		btn_home.setFocusPainted(false);
 		btn_home.setContentAreaFilled(false);
-		btn_home.addActionListener(this);
 		btn_home_blank.setBorderPainted(false);
 		btn_home_blank.setFocusPainted(false);
 		btn_home_blank.setContentAreaFilled(false);
@@ -110,10 +155,27 @@ public class Orderstatus_on implements ActionListener {
 		ImageIcon gone = new ImageIcon("images/gone.png");
 		JLabel goneimg = new JLabel(gone);
 
-		JLabel havegone = new JLabel("후라이드 치킨 외1");
+		// 데이터 값 가져오기
+//		ArrayList<OrderVO> orderlist = system.getOrderList();
+//		for (int i = 0; i < orderlist.size(); i++) {
+//			order = orderlist.get(i);
+//			datalist.add(order);
+//		}
+		
+		
+		String namedata = order.getMenulist().get(0).getMenu().getName();
+		int amount = -1;
+		for(int i=0; i<order.getMenulist().size();i++) {
+			amount += order.getMenulist().get(i).getAmt();
+		}
+//		for(int i=0; i<datalist.size();i++) {
+//			amount += datalist.get(i).getAmount();
+//		}
+		if(amount > 0) namedata += " 외" + amount;
+		JLabel havegone = new JLabel(namedata);
 		havegone.setFont(Commons.getFont(16));
 		havegone.setForeground(new Color(0, 0, 0, 150));
-		JLabel arrive = new JLabel("30분 후에 도착할 예정입니다.");
+		JLabel arrive = new JLabel(remaintime + "분 후에 도착할 예정입니다.");
 		arrive.setFont(Commons.getFont(16));
 		arrive.setForeground(new Color(0, 0, 0, 150));
 
@@ -126,40 +188,39 @@ public class Orderstatus_on implements ActionListener {
 		// 채팅 버튼 넣기
 		ImageIcon chat_icon = new ImageIcon("images/chat.png");
 		ImageIcon chat_icon2 = new ImageIcon("images/chat2.png");
-		
-		JButton btn_chat = new JButton();
+
+		btn_chat = new JButton();
 		btn_chat = new JButton();
 		btn_chat.setIcon(chat_icon2);
 		btn_chat.setPressedIcon(chat_icon);
 		btn_chat.setForeground(new Color(255, 255, 255));
 		btn_chat.setBackground(new Color(255, 255, 255));
 		btn_chat.setPreferredSize(new Dimension(40, 40));
-				
+
 		// 이미지만 넣기
 		btn_chat.setBorderPainted(false);
 		btn_chat.setFocusPainted(false);
 		btn_chat.setContentAreaFilled(false);
-		
+
 		JPanel blank_btn = new JPanel();
 		blank_btn.setBackground(new Color(255, 255, 255));
 		blank_btn.setPreferredSize(new Dimension(20, 65));
-		
-		JPanel btn_panel = new JPanel(new BorderLayout(0,85));
-		btn_panel.setBackground(new Color(255,255,255));
-		
-		//라인 넣기
-		
+
+		JPanel btn_panel = new JPanel(new BorderLayout(0, 85));
+		btn_panel.setBackground(new Color(255, 255, 255));
+
+		// 라인 넣기
+
 		ImageIcon line_icon = new ImageIcon("images/line2.png");
 		JLabel line = new JLabel(line_icon);
 		JPanel line_pn = new JPanel();
 		line_pn.add(line);
-		line_pn.setBackground(new Color(255,255,255));
-		
-		btn_panel.add(BorderLayout.NORTH,blank_btn);
-		btn_panel.add(BorderLayout.CENTER,line_pn);
-		btn_panel.add(BorderLayout.SOUTH,btn_chat);
-		
-		
+		line_pn.setBackground(new Color(255, 255, 255));
+
+		btn_panel.add(BorderLayout.NORTH, blank_btn);
+		btn_panel.add(BorderLayout.CENTER, line_pn);
+		btn_panel.add(BorderLayout.SOUTH, btn_chat);
+
 		middle_in.add(BorderLayout.NORTH, flow_gone);
 		middle_in.add(BorderLayout.CENTER, flow_arrive);
 		middle_in.add(BorderLayout.SOUTH, auto);
@@ -175,6 +236,8 @@ public class Orderstatus_on implements ActionListener {
 
 		panel.add(menu1);
 //		frame.setVisible(true);
+		btn_chat.addActionListener(this);
+		btn_home.addActionListener(this);
 
 		return panel;
 
@@ -188,6 +251,30 @@ public class Orderstatus_on implements ActionListener {
 			panel.setVisible(false);
 //			main.panelinit();
 			main.switchPanel(InnerMain.MAIN);
+		} else if (obj == btn_chat) {
+			int idnum = 0;
+			if (existchat == false) {
+				idnum = +1;
+
+				UI = new ChatUI2(idnum, main, main.id);
+//				panel.setVisible(false);
+//				main.chatUI.createsocket(idnum);
+//				main.switchPanel(InnerMain.CHATCON);
+				existchat = true;
+			} else if (existchat == true) {
+				UI.frame.setLocationRelativeTo(main.frame);
+				main.frame.setVisible(false);
+				UI.frame.setVisible(true);
+
+//				panel.setVisible(false);
+//				String[] array = UI.msg_array;
+//				String msg = "";
+//				for(int i=0;i<array.length;i++) {
+//					msg += array[i]+"\n";
+//				}
+//				main.switchPanel(InnerMain.CHATRE);
+			}
+
 		}
 
 	}

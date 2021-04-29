@@ -8,19 +8,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
-import BBQ_VO.OptionVO;
 
 public class MenulistUI implements ActionListener {
+	public static int MENU1 = 101;
+	public static int MENU2 = 102;
+	public static int MENU3 = 103;
+	
 //	JFrame frame;
+	BBQ_System system;
 	JButton btn_sidepage;
 	JButton btn_home;
 	JButton btn_cart;
@@ -34,9 +37,9 @@ public class MenulistUI implements ActionListener {
 	}
 	public MenulistUI(InnerMain main) {
 		this.main = main;
-		initialize();
+		this.system = main.system;
 		list2 = new MenulistUI2(this,main);
-		detail = new DetailMenuUI(main, this);
+		detail = main.detailMenu;
 	}
 	
 	public JPanel initialize() {
@@ -213,52 +216,47 @@ public class MenulistUI implements ActionListener {
 		menu1_lb.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                goDetail("1");
+                goDetail(MENU1);
             }
         });
 		menu2_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail("2");
+				goDetail(MENU2);
 			}
 		});
 		menu3_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail("3");
+				goDetail(MENU3);
 			}
 		});
 		
 		menu1_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail("1");
+				goDetail(MENU1);
 			}
 		});
 		menu2_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail("2");
+				goDetail(MENU2);
 			}
 		});
 		menu3_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goDetail("3");
+				goDetail(MENU3);
 			}
 		});
 		
 		return panel;
 	}
 
-	public void goDetail(String id) {
+	public void goDetail(int id) {
 		// DB에서 선택한 메뉴 정보를 불러와 그 정보를 매개변수로 상세메뉴창을 초기화하여 출력하는 코드 넣기~
-		MenuVO menu = new MenuVO();
-		menu.setName(id);
-		menu.setDesc(id);
-		menu.setImage(new ImageIcon("images/normal.png"));
-		menu.setPrice(10000);
-		menu.setOptions(new ArrayList<OptionVO>());
+		MenuVO menu = system.getMenuInfo(id);
 		
 		panel.setVisible(false);
 		main.frame.add(detail.init(menu));

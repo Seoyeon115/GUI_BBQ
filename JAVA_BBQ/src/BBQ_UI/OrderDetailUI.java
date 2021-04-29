@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import BBQ_VO.CartVO;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
@@ -48,13 +48,13 @@ public class OrderDetailUI implements ActionListener{
 		
 		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
-		panel_content.setBounds(30, 22, 520, 820);
+		panel_content.setBounds(30, 22, 520, 830);
 		
 		// 패널 생성
 		init_upper();
 		init_summary();
 		init_detail();
-		init_bottom();
+//		init_bottom();
 		//
 		
 //		frame.add(panel_content);
@@ -67,18 +67,18 @@ public class OrderDetailUI implements ActionListener{
 		JPanel panel_upper = new JPanel();
 		panel_upper.setLayout(null);
 		panel_upper.setBackground(new Color(255, 255, 255));
-		panel_upper.setPreferredSize(new Dimension(520, 35));
+		panel_upper.setPreferredSize(new Dimension(520, 53));
 		
 		// 뒤로가기 버튼
-		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
-		ImageIcon image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
+		ImageIcon image_back = new ImageIcon("images/leftr.png");
+		ImageIcon image_backPressed = new ImageIcon("images/lefty.png");
 		
 		button_back = new JButton("", image_back);
 		button_back.setPressedIcon(image_backPressed);
 		button_back.setBorderPainted(false);
 		button_back.setContentAreaFilled(false);
-		button_back.setBounds(5, 0, 50, 40);
-		button_back.setPreferredSize(new Dimension(50, 40));
+		button_back.setBounds(0, 5, 50, 40);
+		button_back.setPreferredSize(new Dimension(50, 53));
 		button_back.addActionListener(this);		
 		panel_upper.add(button_back);
 		
@@ -93,7 +93,7 @@ public class OrderDetailUI implements ActionListener{
 		
 		JLabel label_title = new JLabel("주문 개요");
 		label_title.setFont(Commons.getFont(15));
-		label_title.setBounds(25, 5, 100, 20);
+		label_title.setBounds(25, 0, 100, 20);
 		panel_space.add(label_title);
 		
 		JPanel panel_summary = new JPanel();
@@ -135,25 +135,28 @@ public class OrderDetailUI implements ActionListener{
 		
 		JPanel panel_detail = new JPanel();
 		panel_detail.setBackground(new Color(255, 255, 255));
-		panel_detail.setPreferredSize(new Dimension(480, 360));
+		panel_detail.setPreferredSize(new Dimension(480, 385));
 		panel_detail.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
-		int height = 5;
-		for(MenuVO menu : vo.getMenulist()) {
-			int size_panel = 25 + 17 * menu.getOptions().size();
+//		int height = 5;
+		for(CartVO cart : vo.getMenulist()) {
+			MenuVO menu = cart.getMenu();
+			int size_panel = 25 + 17 * cart.getOptions().size();
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.setBackground(new Color(255, 255, 255));
 			panel.setPreferredSize(new Dimension(460, size_panel));
 //			panel.setLayout(null);
-			JLabel label_menu = new JLabel(menu.getName() +"("+ menu.getPrice() +")");
+			String menuName = menu.getName() +"("+ menu.getPrice() +")";
+			if(cart.getAmt() > 1) menuName += " x "+ cart.getAmt();
+			JLabel label_menu = new JLabel(menuName);
 			label_menu.setFont(Commons.getFont(12));
 			label_menu.setPreferredSize(new Dimension(460, 15));
 //			label_menu.setBounds(0, height, 460, 50);
 			panel.add(label_menu);
 			
-			for(OptionVO option : menu.getOptions()) {
-				height += 10;
-				JLabel label_option = new JLabel(" + "+ option.getOption() +"("+ option.getPrice() +")");
+			for(OptionVO option : cart.getOptions()) {
+//				height += 10;
+				JLabel label_option = new JLabel(" + "+ option.getName() +"("+ option.getPrice() +")");
 				label_option.setFont(Commons.getFont(10));
 				label_option.setPreferredSize(new Dimension(460, 12));
 //				label_option.setBounds(5, height, 460, 50);

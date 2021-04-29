@@ -11,11 +11,17 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
+import BBQ_VO.MenuVO;
+
 public class MenulistUI2 implements ActionListener {
+	static int MENU4 = 104;
+	static int MENU5 = 105;
+	static int MENU6 = 106;
+	
 //	JFrame frame = new JFrame();
 	JButton btn_sidepage;
 	JButton btn_home;
@@ -23,9 +29,13 @@ public class MenulistUI2 implements ActionListener {
 	JPanel panel;
 	MenulistUI list1;
 	InnerMain main;
+	BBQ_System system;
+	DetailMenuUI detail;
 
 	public MenulistUI2(InnerMain main) {
 		this.main = main;
+		this.system = main.system;
+		detail = main.detailMenu;
 	}
 	public MenulistUI2(MenulistUI ui, InnerMain main) {
 		this.list1 = ui;
@@ -199,42 +209,50 @@ public class MenulistUI2 implements ActionListener {
 		menu1_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("메뉴1 클릭");
+				goDetail(MENU4);
 			}
 		});
 		menu2_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("메뉴2 클릭");
+				goDetail(MENU5);
 			}
 		});
 		menu3_lb.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("메뉴3 클릭");
+				goDetail(MENU6);
 			}
 		});
 
 		menu1_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("그림1 클릭");
+				goDetail(MENU4);
 			}
 		});
 		menu2_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("그림2 클릭");
+				goDetail(MENU5);
 			}
 		});
 		menu3_image.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("그림3 클릭");
+				goDetail(MENU6);
 			}
 		});
 
 		return panel;
+	}
+	
+	public void goDetail(int id) {
+		// DB에서 선택한 메뉴 정보를 불러와 그 정보를 매개변수로 상세메뉴창을 초기화하여 출력하는 코드 넣기~
+		MenuVO menu = system.getMenuInfo(id);
+		
+		panel.setVisible(false);
+		main.frame.add(detail.init(menu));
 	}
 
 	@Override
@@ -250,6 +268,7 @@ public class MenulistUI2 implements ActionListener {
 			panel.setVisible(false);
 			main.panelinit();
 		} else if (obj == btn_cart) {
+			panel.setVisible(false);
 //			System.out.println("cart2");
 			main.switchPanel(InnerMain.CART);
 		}

@@ -9,20 +9,20 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
-import BBQ_VO.MenuVO;
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.OrderVO;
 
 // 상세 메뉴창 미완성
 public class OrderListUI implements ActionListener{
 //	JFrame frame;
 	InnerMain main;
+	BBQ_System system;
 	JPanel panel_content;
 	JButton button_back;
 	ArrayList<JButton> buttons = new ArrayList<JButton>();
@@ -35,12 +35,14 @@ public class OrderListUI implements ActionListener{
 	// 생성자, 메뉴 정보를 매개변수로 받는다
 		public OrderListUI(InnerMain main) {
 			this.main = main;
-//			this.orderlist = orderlist;
+			this.system = main.system;
 //			init();
 		}
 		
 	//Method	
 	public JPanel init() {
+		orderlist = system.getOrderList();
+		
 		// 프레임
 //		frame = new JFrame();
 //		frame.setResizable(false); // 크기 조절 불가
@@ -50,7 +52,7 @@ public class OrderListUI implements ActionListener{
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setLayout(null);
 		
-		this.orderlist = new ArrayList<OrderVO>(); // DB에서 주문 내역 리스트를 불러와서 orderlist에 저장하기
+//		this.orderlist = new ArrayList<OrderVO>(); // DB에서 주문 내역 리스트를 불러와서 orderlist에 저장하기
 		
 		panel_content = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
 		panel_content.setBackground(new Color(255, 255, 255));
@@ -74,18 +76,18 @@ public class OrderListUI implements ActionListener{
 		JPanel panel_upper = new JPanel();
 		panel_upper.setLayout(null);
 		panel_upper.setBackground(new Color(255, 255, 255));
-		panel_upper.setPreferredSize(new Dimension(520, 35));
+		panel_upper.setPreferredSize(new Dimension(520, 50));
 		
 		// 뒤로가기 버튼
-		ImageIcon image_back = Commons.imageResize(new ImageIcon("images/homer.png"), 50, 40);
-		ImageIcon image_backPressed = Commons.imageResize(new ImageIcon("images/homey.png"), 50, 40);
+		ImageIcon image_back = new ImageIcon("images/homer.png");
+		ImageIcon image_backPressed = new ImageIcon("images/homey.png");
 		
 		button_back = new JButton("", image_back);
 		button_back.setPressedIcon(image_backPressed);
 		button_back.setBorderPainted(false);
 		button_back.setContentAreaFilled(false);
-		button_back.setBounds(5, 0, 50, 40);
-		button_back.setPreferredSize(new Dimension(50, 40));
+		button_back.setBounds(0, 5, 50, 40);
+		button_back.setPreferredSize(new Dimension(50, 50));
 		button_back.addActionListener(this);
 		panel_upper.add(button_back);
 		
@@ -96,16 +98,16 @@ public class OrderListUI implements ActionListener{
 		JPanel panel_list = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 //		panel_list.setLayout(null);
 		panel_list.setBackground(new Color(255, 255, 255));
-		panel_list.setPreferredSize(new Dimension(480, 750));
+		panel_list.setPreferredSize(new Dimension(480, 730));
 		panel_list.setBorder(new LineBorder(new Color(204, 0, 51), 5, true));
 		
 		JPanel panel_inner = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 5));
 //		panel_inner.setLayout(null);
 		panel_inner.setBackground(new Color(210, 210, 210));
-		panel_inner.setPreferredSize(new Dimension(460, 700));
+		panel_inner.setPreferredSize(new Dimension(460, 730));
 		
 		JScrollPane scroll = new JScrollPane(panel_inner);
-		scroll.setPreferredSize(new Dimension(470, 740));		
+		scroll.setPreferredSize(new Dimension(470, 720));		
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 //		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 //		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -113,6 +115,7 @@ public class OrderListUI implements ActionListener{
 		scroll.setHorizontalScrollBar(null);
 		scroll.setBorder(null);
 		
+		buttons = new ArrayList<JButton>();
 		for(OrderVO order : orderlist) {
 			JPanel panel_order = new JPanel();
 			panel_order.setLayout(null);
@@ -121,7 +124,9 @@ public class OrderListUI implements ActionListener{
 			
 			JLabel[] labels = new JLabel[3];
 			labels[0] = new JLabel(order.getDate());
-			labels[1] = new JLabel(order.getMenulist().get(0).getName() + " 외 "+ order.getMenulist().size() +"건");
+			String title = order.getMenulist().get(0).getMenu().getName();
+			if(order.getMenulist().size() > 1) title += " 외 "+ (order.getMenulist().size()-1) +"건";
+			labels[1] = new JLabel(title);
 			labels[2] = new JLabel("주문금액: "+ order.getPrice() +"원");
 			
 			for(int i=0;i<labels.length;i++) {

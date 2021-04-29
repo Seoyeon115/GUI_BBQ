@@ -1,8 +1,10 @@
 package BBQ_UI;
 
-public class MainTest {
+public class ChatUITest {
 
 	public static void main(String[] args) {
-		new StartUI();
+		
+		//new ChatUI("test");
 	}
+
 }

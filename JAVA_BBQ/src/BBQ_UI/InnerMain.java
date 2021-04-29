@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import BBQ_SYSTEM.BBQ_System;
 import BBQ_VO.MenuVO;
 import BBQ_VO.OrderVO;
 
@@ -30,20 +31,46 @@ public class InnerMain implements ActionListener {
 	public static int PAY = 8;
 	
 	JFrame frame = new JFrame();
+	BBQ_System system;
 	JButton btn_mainlist, btn_cart, btn_ing, btn_ed;
-	MenulistUI list1 = new MenulistUI(this);
-	MenulistUI2 list2 = new MenulistUI2(this);
-	DetailMenuUI detailMenu = new DetailMenuUI(this);
-	ShopBasketUI basket = new ShopBasketUI(this);
-	Orderstatus_on ing = new Orderstatus_on(this);
-	OrderListUI orderlistUI = new OrderListUI(this);
-	OrderDetailUI orderDetailUI = new OrderDetailUI(this);
-	PayUI payUI = new PayUI(this);
+	MenulistUI list1;
+	MenulistUI2 list2;
+	DetailMenuUI detailMenu;
+	ShopBasketUI basket;
+	Orderstatus_on ing;
+	OrderListUI orderlistUI;
+	OrderDetailUI orderDetailUI;
+	PayUI payUI;
 	
 	JPanel panel;
 	
+	String id;
+	
 	//Constructor
-	public InnerMain() {
+	public InnerMain(BBQ_System system) {
+		this.system = system;
+		detailMenu = new DetailMenuUI(this);
+		list1 = new MenulistUI(this);
+		list2 = new MenulistUI2(this);
+		basket = new ShopBasketUI(this);
+		ing = new Orderstatus_on(this);
+		orderlistUI = new OrderListUI(this);
+		orderDetailUI = new OrderDetailUI(this);
+		payUI = new PayUI(this);
+		init();
+	}
+	
+	public InnerMain(BBQ_System system, String id) {
+		this.system = system;
+		this.id = id;
+		detailMenu = new DetailMenuUI(this);
+		list1 = new MenulistUI(this);
+		list2 = new MenulistUI2(this);
+		basket = new ShopBasketUI(this);
+		ing = new Orderstatus_on(this);
+		orderlistUI = new OrderListUI(this);
+		orderDetailUI = new OrderDetailUI(this);
+		payUI = new PayUI(this);
 		init();
 	}
 	
@@ -56,6 +83,7 @@ public class InnerMain implements ActionListener {
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(100, 90, 600, 910);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocation(640,70);
 		frame.setLayout(null);
 		panelinit();
 	}
@@ -286,7 +314,6 @@ public class InnerMain implements ActionListener {
 //			frame.add(list1.initialize());
 			switchPanel(InnerMain.MENULIST);
 		}else if(obj == btn_cart) {
-//			System.out.println("cart");
 			panel.setVisible(false);
 //			frame.add(basket.init());
 			switchPanel(InnerMain.CART);

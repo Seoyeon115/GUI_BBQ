@@ -1,5 +1,7 @@
 package BBQ_DAO;
 
+import java.util.ArrayList;
+
 import BBQ_VO.MemberVO;
 
 public class MemberDAO extends DBConn{
@@ -56,4 +58,107 @@ public class MemberDAO extends DBConn{
 		return result;
 	}// getJoinResult
 	
+	/** 아이디 중복 확인 **/
+	public boolean getJoinIdResult(String id) {
+		boolean result = false;
+		try {
+			String sql ="SELECT COUNT(*) FROM BBQ_MEMBER "
+					+ "WHERE ID =? "; 
+			getPreparedStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) result = true;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**정보 수정**/
+	public boolean getUpdateResult(MemberVO member) {
+		boolean result = false;
+
+		try {
+			String sql = " UPDATE BBQ_MEMBER " + 
+					" set PASS=?,NAME=?,HP=?,ADDR=? " +
+					" WHERE ID=?";
+			getPreparedStatement(sql);
+
+			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
+			String addr = member.getAddr1() + " " + member.getAddr2();
+			pstmt.setString(1, member.getPass());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, hp);
+			pstmt.setString(4, addr);
+			pstmt.setString(5, member.getId());
+
+			int val = pstmt.executeUpdate();
+			if (val != 0) result = true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	/** 회원 데이터 가져오기 **/
+	public ArrayList<MemberVO> getmemberlist() {
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		//id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;	
+		try {
+			String sql ="SELECT ID,PASS,NAME,HP,ADDR FROM BBQ_MEMBER ORDER BY MDATE";
+			getPreparedStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVO member = new MemberVO();
+				member.setId(rs.getString(1));
+				member.setPass(rs.getString(2));
+				member.setName(rs.getString(3));
+				String HP = rs.getString(4);
+				String[] hpsplit = new String[3];
+				if(!(HP == null)) hpsplit = HP.split("-");
+				member.setHp1(hpsplit[0]);
+				member.setHp2(hpsplit[1]);
+				member.setHp3(hpsplit[2]);
+				String addr = rs.getString(5);
+				member.setAddr1(addr);
+//				String[] addrsplit = addr.split(" ");
+//				member.setAddr1(addrsplit[0]);
+//				member.setAddr2(addrsplit[1]);
+				
+				list.add(member);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	public String getAddress(String uid) {
+		String addr = "";
+		
+		try {
+			String sql = "select addr from bbq_member where id = ? ";
+			getPreparedStatement(sql);
+			pstmt.setString(1, uid);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				addr = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return addr;
+	}
 }
