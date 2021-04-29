@@ -154,7 +154,7 @@ public class OrderDAO extends DBConn {
 	public ArrayList<OrderVO> getOrderchecklist(){
 		ArrayList<OrderVO> orderlist = new ArrayList<OrderVO>();
 		try {
-			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK , DELITIME "  
+			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, A.STATE , DELITIME "  
 					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
 					+ " WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID "
 					+ " ORDER BY A.ORDERID ";
@@ -178,13 +178,6 @@ public class OrderDAO extends DBConn {
 				
 				orderlist.add(order);
 			}
-			
-			
-	
-
-
-
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
