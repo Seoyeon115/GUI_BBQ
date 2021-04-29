@@ -1,4 +1,4 @@
-package BBQ_SYSTEM;
+package BBQ_Server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,7 +25,7 @@ public class ChatServer {
 
 	public void init() {
 		try {
-			server = new ServerSocket(9090);
+			server = new ServerSocket(15151);
 			System.out.println("-------->> 서버 실행중");
 
 			while (true) {

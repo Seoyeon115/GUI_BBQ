@@ -206,6 +206,7 @@ public class PayUI implements ActionListener {
 		order.setAddr(addr_tf.getText());
 		order.setMessage(message_tf.getText());
 		system.pushOrder(order);
+		cart = new ArrayList<CartVO>();
 		JOptionPane.showMessageDialog(null, Commons.getMsg("주문이 완료되었습니다."));
 	}
 	

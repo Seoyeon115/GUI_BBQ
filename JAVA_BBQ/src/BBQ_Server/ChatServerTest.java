@@ -1,11 +1,9 @@
-package BBQ_SYSTEM;
+package BBQ_Server;
 
-public class Chatservertest {
+public class ChatServerTest {
 
 	public static void main(String[] args) {
-		
 		new ChatServer();
-		
 	}
 
 }

@@ -46,38 +46,38 @@ public class ManagerUI implements ActionListener {
 	ChatUIForManager ui;
 	ArrayList<MessageVO> msglist = new ArrayList<MessageVO>();
 	ManagerSystem system;
-	
+	ArrayList<ChatUIForManager> chatlist = new ArrayList<ChatUIForManager>(); 
 
 	public ManagerUI() {
-//		createsocket(0);
+		createsocket(0);
 		system = new ManagerSystem();
 		memberui = new ManagerUImember(this);
 		orderui = new ManagerUIorder(this);
 		init();
 	}
 
-//	public void createsocket(int idnum) {
-//		try {
-//			s = new Socket("127.0.0.1", 9090);
-//
-//			oos = new ObjectOutputStream(s.getOutputStream());
-//			ois = new ObjectInputStream(s.getInputStream());
-//
-//			// 1.처음접속
-//			MessageVO vo = new MessageVO();
-//			vo.setStatus(MessageVO.CONNECT);
-//			vo.setName("Owner_pn");
-//			vo.setIdnum(idnum);
-//			oos.writeObject(vo);
-//
-//			// 수신작업 실행(무한루프) - inner class 형식의 쓰레드 객체 생성
-//			ClientThread1 ct = new ClientThread1();
-//			ct.start();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
+	public void createsocket(int idnum) {
+		try {
+			s = new Socket("localhost", 15151);
+
+			oos = new ObjectOutputStream(s.getOutputStream());
+			ois = new ObjectInputStream(s.getInputStream());
+
+			// 1.처음접속
+			MessageVO vo = new MessageVO();
+			vo.setStatus(MessageVO.CONNECT);
+			vo.setName("Owner_pn");
+			vo.setIdnum(idnum);
+			oos.writeObject(vo);
+
+			// 수신작업 실행(무한루프) - inner class 형식의 쓰레드 객체 생성
+			ClientThread1 ct = new ClientThread1();
+			ct.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void init() {
 
@@ -228,7 +228,7 @@ public class ManagerUI implements ActionListener {
 
 			try {
 				while (true) {
-					RequestVO req = (RequestVO) ois.readObject();
+//					RequestVO req = (RequestVO) ois.readObject();
 //					
 //					if(req.getRequest() == RequestVO.REQUEST_ORDER) { // 클라이언트의 주문 요청
 //						111
@@ -262,6 +262,10 @@ public class ManagerUI implements ActionListener {
 						}
 					}
 					msglist.add(vo);
+					
+					for(ChatUIForManager chat : chatlist) {
+						chat.newMessage(vo);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -336,7 +340,8 @@ public class ManagerUI implements ActionListener {
 								// 채팅창 열기
 								if (check == false) {
 									idnum += 1;
-									ui = new ChatUIForManager(idnum, name, msglist);
+									ui = new ChatUIForManager(s, oos, ois, idnum, name, msglist);
+									chatlist.add(ui);
 								}
 							}
 						}

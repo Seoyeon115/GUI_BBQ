@@ -44,6 +44,41 @@ public class Orderstatus_on implements ActionListener {
 	}
 
 	public JPanel init() {
+		order = system.getLastOrder();
+		
+		String ordertime = order.getDelitime();
+		System.out.println(ordertime);
+//		String ordertime = datalist.get(0).getDate();
+		
+		if(ordertime == null) {
+			return new Orderstatus_no(main).init();
+		}
+		
+		Date now = new Date();
+		String nowtime = format1.format(now);
+		System.out.println(nowtime);
+		System.out.println(ordertime);
+		
+		//시간 값 인트로 가져오기
+		String[] od1= ordertime.split(" ");
+		String[] od2 = od1[1].split(":");
+		int odvalue = (Integer.parseInt(od2[0])*60) + (Integer.parseInt(od2[1]));
+		
+		String[] now1 = nowtime.split(" ");
+		String[] now2 = now1[1].split(":");
+		int nowvalue = (Integer.parseInt(now2[0])*60) + (Integer.parseInt(now2[1]));
+		
+		//시간 값 빼주기
+		int remaintime = odvalue - nowvalue;
+		if(remaintime <= -1350) {
+			remaintime += 1440;
+		}
+		
+		if(remaintime < 0) {
+			return new Orderstatus_end(main).init();
+		}
+		
+		
 //		frame = new JFrame();
 //		frame.setResizable(false);
 //		frame.getContentPane().setBackground(new Color(204, 0, 51));
@@ -126,31 +161,7 @@ public class Orderstatus_on implements ActionListener {
 //			order = orderlist.get(i);
 //			datalist.add(order);
 //		}
-		order = system.getLastOrder();
 		
-		String ordertime = order.getDelitime();
-		System.out.println(ordertime);
-//		String ordertime = datalist.get(0).getDate();
-		
-		Date now = new Date();
-		String nowtime = format1.format(now);
-		System.out.println(nowtime);
-		System.out.println(ordertime);
-		
-		//시간 값 인트로 가져오기
-		String[] od1= ordertime.split(" ");
-		String[] od2 = od1[1].split(":");
-		int odvalue = (Integer.parseInt(od2[0])*60) + (Integer.parseInt(od2[1]));
-		
-		String[] now1 = nowtime.split(" ");
-		String[] now2 = now1[1].split(":");
-		int nowvalue = (Integer.parseInt(now2[0])*60) + (Integer.parseInt(now2[1]));
-		
-		//시간 값 빼주기
-		int remaintime = odvalue - nowvalue;
-		if(remaintime <= -1350) {
-			remaintime += 1440;
-		}
 		
 		String namedata = order.getMenulist().get(0).getMenu().getName();
 		int amount = -1;
@@ -245,7 +256,7 @@ public class Orderstatus_on implements ActionListener {
 			if (existchat == false) {
 				idnum = +1;
 
-				UI = new ChatUI2(idnum, main, system.uid);
+				UI = new ChatUI2(idnum, main, main.id);
 //				panel.setVisible(false);
 //				main.chatUI.createsocket(idnum);
 //				main.switchPanel(InnerMain.CHATCON);

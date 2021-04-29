@@ -44,9 +44,25 @@ public class InnerMain implements ActionListener {
 	
 	JPanel panel;
 	
+	String id;
+	
 	//Constructor
 	public InnerMain(BBQ_System system) {
 		this.system = system;
+		detailMenu = new DetailMenuUI(this);
+		list1 = new MenulistUI(this);
+		list2 = new MenulistUI2(this);
+		basket = new ShopBasketUI(this);
+		ing = new Orderstatus_on(this);
+		orderlistUI = new OrderListUI(this);
+		orderDetailUI = new OrderDetailUI(this);
+		payUI = new PayUI(this);
+		init();
+	}
+	
+	public InnerMain(BBQ_System system, String id) {
+		this.system = system;
+		this.id = id;
 		detailMenu = new DetailMenuUI(this);
 		list1 = new MenulistUI(this);
 		list2 = new MenulistUI2(this);

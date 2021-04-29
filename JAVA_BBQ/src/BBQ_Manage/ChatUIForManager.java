@@ -39,15 +39,18 @@ public class ChatUIForManager implements ActionListener {
 	ArrayList<MessageVO> currentmsg;
 
 	// Construct
-	public ChatUIForManager(int idnum, String name, ArrayList<MessageVO> currentmsg) {
+	public ChatUIForManager(Socket socket, ObjectOutputStream oos, ObjectInputStream ois, int idnum, String name, ArrayList<MessageVO> currentmsg) {
 		try {
 			this.name = name;
 			this.idnum = idnum;
 			this.currentmsg = currentmsg;
-			s = new Socket("127.0.0.1", 9090);
+//			s = new Socket("127.0.0.1", 15151);
+			s = socket;
 
-			oos = new ObjectOutputStream(s.getOutputStream());
-			ois = new ObjectInputStream(s.getInputStream());
+			this.oos = oos;
+			this.ois = ois;
+//			oos = new ObjectOutputStream(s.getOutputStream());
+//			ois = new ObjectInputStream(s.getInputStream());
 
 			// 1.처음접속
 			MessageVO vo = new MessageVO();
@@ -58,8 +61,8 @@ public class ChatUIForManager implements ActionListener {
 			init();
 
 			// 수신작업 실행(무한루프) - inner class 형식의 쓰레드 객체 생성
-			ClientThread ct = new ClientThread();
-			ct.start();
+//			ClientThread ct = new ClientThread();
+//			ct.start();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -138,39 +141,57 @@ public class ChatUIForManager implements ActionListener {
 		send_jtf.addActionListener(this);
 
 	}
-
-	class ClientThread extends Thread {
-
-		public void run() {
-
-			try {
-				while (true) {
-
-					MessageVO vo = (MessageVO) ois.readObject();
-					if (vo.getStatus() == MessageVO.CONNECT) {
-//						jlist.setListData(vo.getUsers());
-						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
-							// chatmain.append("사장님이 입장하셨습니다." + "\n");
-						} else if (vo.getName().equals(name)) {
-							// chatmain.append(vo.getName() + vo.getContent() + "\n");
-						}
-					} else if (vo.getStatus() == MessageVO.TALK) {
-
-						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
-							chatmain.append("Owner > " + vo.getContent() + "\n");
-						} else if (vo.getName().equals(name)) {
-							chatmain.append(vo.getName() + " > " + vo.getContent() + "\n");
-						}
-					}
-
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+	
+	void newMessage(MessageVO vo) {
+		if (vo.getStatus() == MessageVO.CONNECT) {
+//			jlist.setListData(vo.getUsers());
+			if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
+				// chatmain.append("사장님이 입장하셨습니다." + "\n");
+			} else if (vo.getName().equals(name)) {
+				// chatmain.append(vo.getName() + vo.getContent() + "\n");
 			}
+		} else if (vo.getStatus() == MessageVO.TALK) {
 
+			if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
+				chatmain.append("Owner > " + vo.getContent() + "\n");
+			} else if (vo.getName().equals(name)) {
+				chatmain.append(vo.getName() + " > " + vo.getContent() + "\n");
+			}
 		}
-
 	}
+
+//	class ClientThread extends Thread {
+//
+//		public void run() {
+//
+//			try {
+//				while (true) {
+//
+//					MessageVO vo = (MessageVO) ois.readObject();
+//					if (vo.getStatus() == MessageVO.CONNECT) {
+////						jlist.setListData(vo.getUsers());
+//						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
+//							// chatmain.append("사장님이 입장하셨습니다." + "\n");
+//						} else if (vo.getName().equals(name)) {
+//							// chatmain.append(vo.getName() + vo.getContent() + "\n");
+//						}
+//					} else if (vo.getStatus() == MessageVO.TALK) {
+//
+//						if (vo.getName().equals(name) && vo.getIdnum() == idnum) {
+//							chatmain.append("Owner > " + vo.getContent() + "\n");
+//						} else if (vo.getName().equals(name)) {
+//							chatmain.append(vo.getName() + " > " + vo.getContent() + "\n");
+//						}
+//					}
+//
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
