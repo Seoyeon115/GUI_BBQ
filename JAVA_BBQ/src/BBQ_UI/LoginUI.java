@@ -75,10 +75,10 @@ public class LoginUI implements ActionListener {
 		btn_login.setBackground(new Color(227,25,55));
 		btn_login.setForeground(new Color(255,255,255));
 		btn_join = new JButton("회원가입");
-		btn_join.setFont(Commons.getFont(12));
 		btn_join.setBorderPainted(false); 
 		btn_join.setFocusPainted(false); 
 		btn_join.setContentAreaFilled(false);
+		btn_join.setFont(Commons.getFont(12));
 		btn_join.setForeground(new Color(204, 0, 51, 170));
 		
 		

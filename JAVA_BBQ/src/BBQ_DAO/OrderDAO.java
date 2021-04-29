@@ -156,7 +156,8 @@ public class OrderDAO extends DBConn {
 		try {
 			String sql = " SELECT A.ORDERID, USER_ID, C.NAME, REQUEST, ADDR, ODATE, B.AMOUNT, OPTIONS, ORDERCHECK , DELITIME "  
 					+ " FROM BBQ_ORDER A, bbq_order_detail B, MENU_DATA C " 
-					+ "WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID ";
+					+ " WHERE A.ORDERID = B.ORDERID AND B.MID=C.MID "
+					+ " ORDER BY A.ORDERID ";
 			
 			getPreparedStatement(sql);
 			
