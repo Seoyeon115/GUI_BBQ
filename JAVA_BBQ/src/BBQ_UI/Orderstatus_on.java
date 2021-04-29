@@ -47,8 +47,6 @@ public class Orderstatus_on implements ActionListener {
 		order = system.getLastOrder();
 		
 		String ordertime = order.getDelitime();
-		System.out.println(ordertime);
-//		String ordertime = datalist.get(0).getDate();
 		
 		if(ordertime == null) {
 			return new Orderstatus_no(main).init();
@@ -56,8 +54,6 @@ public class Orderstatus_on implements ActionListener {
 		
 		Date now = new Date();
 		String nowtime = format1.format(now);
-		System.out.println(nowtime);
-		System.out.println(ordertime);
 		
 		//시간 값 인트로 가져오기
 		String[] od1= ordertime.split(" ");

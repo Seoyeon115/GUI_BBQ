@@ -88,7 +88,7 @@ public class ManagerUI implements ActionListener {
 		frame.setBounds(100, 90, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setLocation(500,70);
+		frame.setLocation(480,150);
 
 		panel = new JPanel(new BorderLayout());
 		panel.setBackground(new Color(255, 255, 255));

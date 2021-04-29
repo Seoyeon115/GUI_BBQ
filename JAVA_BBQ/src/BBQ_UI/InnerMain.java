@@ -311,19 +311,15 @@ public class InnerMain implements ActionListener {
 		Object obj = e.getSource();
 		if(obj == btn_mainlist) {
 			panel.setVisible(false);
-//			frame.add(list1.initialize());
 			switchPanel(InnerMain.MENULIST);
 		}else if(obj == btn_cart) {
 			panel.setVisible(false);
-//			frame.add(basket.init());
 			switchPanel(InnerMain.CART);
 		}else if(obj == btn_ing) {
 			panel.setVisible(false);
-//			frame.add(ing.init());
 			switchPanel(InnerMain.ORDERSTATUS);
 		}else if(obj == btn_ed) {
 			panel.setVisible(false);
-//			frame.add(orderlistUI.init());
 			switchPanel(InnerMain.ORDERLIST);
 		}
 	}
