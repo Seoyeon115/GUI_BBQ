@@ -11,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,6 +24,7 @@ import javax.swing.border.LineBorder;
 
 import BBQ_UI.Commons;
 import BBQ_VO.MessageVO;
+import BBQ_VO.RequestVO;
 
 public class ManagerUI implements ActionListener {
 	ManagerUImember memberui;
@@ -228,6 +228,13 @@ public class ManagerUI implements ActionListener {
 
 			try {
 				while (true) {
+					RequestVO req = (RequestVO) ois.readObject();
+//					
+//					if(req.getRequest() == RequestVO.REQUEST_ORDER) { // 클라이언트의 주문 요청
+//						111
+//					}else if(req.getRequest() == RequestVO.ENTER_CHAT) { // 클라이언트의 채팅 입장
+//						123
+//					}
 					MessageVO vo = (MessageVO) ois.readObject();
 					if (vo.getStatus() == MessageVO.CONNECT) {
 						int check = 0;

@@ -10,6 +10,7 @@ import BBQ_DAO.MemberDAO;
 import BBQ_DAO.MenuDAO;
 import BBQ_DAO.OrderDAO;
 import BBQ_VO.MemberVO;
+import BBQ_VO.MessageVO;
 import BBQ_VO.OrderVO;
 import BBQ_VO.RequestVO;
 
@@ -47,7 +48,7 @@ public class BBQ_ServerSystem {
 		Socket socket;
 		ObjectInputStream ois;
 		ObjectOutputStream oos;
-		String uid = null;
+		String uid = "";
 		
 		ServerThread(Socket s){
 			try {
@@ -57,6 +58,10 @@ public class BBQ_ServerSystem {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		ServerThread(Socket s, String uid){
+			this(s);
+			this.uid = uid;
 		}
 		
 		void response(RequestVO req) { // 클라이언트 요청에 대한 응답 송신
@@ -74,12 +79,9 @@ public class BBQ_ServerSystem {
 					if(result) uid = id;
 					oos.writeObject(result);
 				}else if(req.getRequest() == RequestVO.REQUEST_ORDER) { // 주문 요청
-					odao.pushOrder(uid, (OrderVO)req.getObj());
-//					mt.recieveOrder(req);
-					oos.writeObject(true);
+					oos.writeObject(odao.pushOrder(uid, (OrderVO)req.getObj()));
 				}else if(req.getRequest() == RequestVO.CHECK_ID_PRIMARY) {
-					boolean result = mdao.getJoinIdResult((String)req.getObj());
-					oos.writeObject(result);
+					oos.writeObject(mdao.getJoinIdResult((String)req.getObj()));
 				}else if(req.getRequest() == RequestVO.GET_MEMBER_INFO) {// 멤버정보 가져오기
 					oos.writeObject(mdao.getmemberlist());
 				}else if(req.getRequest() == RequestVO.REQUEST_UPDATE) { // 회원가입
@@ -98,6 +100,23 @@ public class BBQ_ServerSystem {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		
+		void chatLoop() {
+			boolean flag = true;
+			MessageVO message;
+			try {
+				while(flag) {
+					message = (MessageVO) ois.readObject();
+//					mt.chatting(message);
+					if(message.getStatus() == MessageVO.EXIT) {
+						flag = false;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				
 		}
 		
 		@Override
@@ -131,27 +150,33 @@ public class BBQ_ServerSystem {
 	
 	class ManagerThread extends ServerThread{
 		
-		final String uid = "manager";
-		
 		ManagerThread(Socket socket){
-			super(socket);
+			super(socket, "MANAGER");
 		}
 		
-		void recieveOrder(RequestVO req) {
-			try {				
-				oos.writeObject(req);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		@Override
-		void response(RequestVO req) {
-			try {
-				// 유저에게 메시지 보내기 / 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		void recieveOrder(RequestVO req) {
+//			try {				
+//				oos.writeObject(req);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		void notifyChat(RequestVO req) {
+//			try {
+//				oos.writeObject(req);
+//				111
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		void chatting(MessageVO msg) {
+//			try {
+//				oos.writeObject(msg);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 }
