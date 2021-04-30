@@ -14,15 +14,18 @@ public class ManagerClient {
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 	
-	ManagerClient(){
-		try {
-			socket = new Socket("localhost", 9000);
-			oos = new ObjectOutputStream(socket.getOutputStream());
-			ois = new ObjectInputStream(socket.getInputStream());
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	ManagerClient(Object[] vals){
+		socket = (Socket)vals[0];
+		oos = (ObjectOutputStream) vals[1];
+		ois = (ObjectInputStream) vals[2];
+//		try {
+//			socket = new Socket("localhost", 9000);
+//			oos = new ObjectOutputStream(socket.getOutputStream());
+//			ois = new ObjectInputStream(socket.getInputStream());
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public boolean getUpdateResult(MemberVO member) {

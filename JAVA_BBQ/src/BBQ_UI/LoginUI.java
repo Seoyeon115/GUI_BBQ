@@ -199,7 +199,7 @@ public class LoginUI implements ActionListener {
 			pass_tf.requestFocus();
 		}  else if(id_tf.getText().equals("manager") && pass_tf.getText().equals("123")) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("관리자 로그인 성공"));
-			new ManagerUI(); } else{
+			new ManagerUI(system.getConnection()); } else{
 			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
 			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {

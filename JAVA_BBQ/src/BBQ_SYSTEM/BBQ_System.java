@@ -173,4 +173,9 @@ public class BBQ_System {
 	public OrderVO getLastOrder() {
 		return client.getLastOrder(uid);
 	}
+	
+	public Object[] getConnection() {
+		Object[] vals = client.getConnection();
+		return vals;
+	}
 }//class

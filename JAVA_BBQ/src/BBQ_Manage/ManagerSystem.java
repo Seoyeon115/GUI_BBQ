@@ -8,8 +8,11 @@ import BBQ_VO.OptionVO;
 import BBQ_VO.OrderVO;
 
 public class ManagerSystem {
-	ManagerClient client = new ManagerClient();
+	ManagerClient client;
 	
+	ManagerSystem(Object[] vals){
+		client = new ManagerClient(vals);
+	}
 	
 	/** Á¶È¸ **/
 	public ArrayList<MemberVO> getMemberList(){

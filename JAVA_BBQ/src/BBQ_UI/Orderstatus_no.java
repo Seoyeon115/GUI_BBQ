@@ -82,7 +82,7 @@ public class Orderstatus_no implements ActionListener {
 		JPanel noexist_sort = new JPanel(new FlowLayout());
 		noexist_sort.setBackground(new Color(255,255,255));
 		
-		JLabel noexist = new JLabel("주문내역이 없습니다");
+		JLabel noexist = new JLabel("준비중인 주문이 없습니다");
 		noexist.setFont(Commons.getFont(20));
 		noexist.setForeground(new Color(0,0,0,130));
 		

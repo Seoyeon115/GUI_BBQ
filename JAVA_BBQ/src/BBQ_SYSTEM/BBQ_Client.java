@@ -26,6 +26,11 @@ public class BBQ_Client {
 		}
 	}
 	
+	Object[] getConnection() {
+		Object[] vals = {socket, oos, ois};
+		return vals;
+	}
+	
 	public boolean getJoinResult(MemberVO member) {
 		boolean result = false;
 		try {

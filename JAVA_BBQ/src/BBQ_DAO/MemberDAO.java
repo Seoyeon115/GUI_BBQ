@@ -37,16 +37,16 @@ public class MemberDAO extends DBConn{
 		boolean result = false;
 
 		try {
-			String sql = "insert into bbq_member values(?,?,?,?,?,sysdate)";
+			String sql = "insert into bbq_member() values(?,?,?,?,?,?,sysdate)";
 			getPreparedStatement(sql);
 
 			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
-			String addr = member.getAddr1() + "/" + member.getAddr2();
 			pstmt.setString(1, member.getId());
 			pstmt.setString(2, member.getPass());
 			pstmt.setString(3, member.getName());
 			pstmt.setString(4, hp);
-			pstmt.setString(5, addr);
+			pstmt.setString(5, member.getAddr1());
+			pstmt.setString(6, member.getAddr2());
 
 			int val = pstmt.executeUpdate();
 			if (val != 0) result = true;
@@ -90,12 +90,13 @@ public class MemberDAO extends DBConn{
 			getPreparedStatement(sql);
 
 			String hp = member.getHp1() + "-" + member.getHp2() + "-" + member.getHp3();
-			String addr = member.getAddr1() + "/" + member.getAddr2();
+			String addr = member.getAddr1() + " " + member.getAddr2();
 			pstmt.setString(1, member.getPass());
 			pstmt.setString(2, member.getName());
 			pstmt.setString(3, hp);
 			pstmt.setString(4, addr);
 			pstmt.setString(5, member.getId());
+
 			int val = pstmt.executeUpdate();
 			if (val != 0) result = true;
 
@@ -111,7 +112,7 @@ public class MemberDAO extends DBConn{
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		//id,pass,cpass,name,hp1,hp2,hp3,addr1,addr2;	
 		try {
-			String sql ="SELECT ID,PASS,NAME,HP,ADDR FROM BBQ_MEMBER ORDER BY MDATE";
+			String sql ="SELECT ID,PASS,NAME,HP,ADDR1,ADDR2 FROM BBQ_MEMBER ORDER BY MDATE";
 			getPreparedStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -122,14 +123,12 @@ public class MemberDAO extends DBConn{
 				member.setName(rs.getString(3));
 				String HP = rs.getString(4);
 				String[] hpsplit = new String[3];
-				if(!(HP == null)) hpsplit = HP.split("-");
+				if(HP != null) hpsplit = HP.split("-");
 				member.setHp1(hpsplit[0]);
 				member.setHp2(hpsplit[1]);
 				member.setHp3(hpsplit[2]);
-				String addr = rs.getString(5);
-				String[] addrsplit = addr.split("/");
-				member.setAddr1(addrsplit[0]);
-				member.setAddr2(addrsplit[1]);
+				member.setAddr1(rs.getString(5));
+				member.setAddr2(rs.getString(6));
 				
 				list.add(member);
 			}
@@ -145,13 +144,13 @@ public class MemberDAO extends DBConn{
 		String addr = "";
 		
 		try {
-			String sql = "select addr from bbq_member where id = ? ";
+			String sql = "select addr1, addr2 from bbq_member where id = ? ";
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);
 			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				addr = rs.getString(1);
+				addr = rs.getString(1) + " / " + rs.getString(2);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -129,7 +129,7 @@ public class OrderDAO extends DBConn {
 		
 		try {
 			String sql = "select orderid, user_id, request, addr, odate, delitime, state "
-					+ " from bbq_order where user_id = ?";
+					+ " from bbq_order where user_id = ? order by odate desc";
 			
 			getPreparedStatement(sql);
 			pstmt.setString(1, uid);

@@ -29,7 +29,7 @@ import BBQ_VO.OrderVO;
 
 public class ManagerUIorder implements ActionListener {
 
-	ManagerSystem system = new ManagerSystem();
+	ManagerSystem system;
 	ManagerUI ui;
 
 	ArrayList<String> namelist = new ArrayList<String>();
@@ -47,6 +47,7 @@ public class ManagerUIorder implements ActionListener {
 	
 	public ManagerUIorder(ManagerUI ui) {
 		this.ui = ui;
+		this.system = ui.system;
 	}
 	
 	
