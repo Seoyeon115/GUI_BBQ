@@ -206,21 +206,29 @@ public class PayUI implements ActionListener {
 		order.setAddr(addr_tf.getText());
 		order.setMessage(message_tf.getText());
 		system.pushOrder(order);
-		cart = new ArrayList<CartVO>();
+		system.deleteCartAll();
 		JOptionPane.showMessageDialog(null, Commons.getMsg("주문이 완료되었습니다."));
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-
+		
+		
 		if (obj == btn_back) { // 뒤로가기
 			panel_content.setVisible(false);
 			main.switchPanel(InnerMain.MAIN);
 		} else if (obj == btn_pay) {
-			order();
-			panel_content.setVisible(false);
-			main.switchPanel(InnerMain.MAIN);
+			OrderVO last = system.getLastOrder();
+			if(addr_tf.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("주소를 입력해주세요."));
+			} else if(last.getOrderId() != null && last.getState() == 0) {
+				JOptionPane.showMessageDialog(null, Commons.getMsg("대기중인 주문이 있습니다."));
+			}else {
+				order();
+				panel_content.setVisible(false);
+				main.switchPanel(InnerMain.MAIN);
+			}
 		} else if (obj == btn_cancel) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("결제를 취소합니다."));
 			panel_content.setVisible(false);

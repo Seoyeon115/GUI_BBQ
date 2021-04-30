@@ -48,9 +48,9 @@ public class ManagerUI implements ActionListener {
 	ManagerSystem system;
 	ArrayList<ChatUIForManager> chatlist = new ArrayList<ChatUIForManager>(); 
 
-	public ManagerUI() {
+	public ManagerUI(Object[] vals) {
 		createsocket(0);
-		system = new ManagerSystem();
+		system = new ManagerSystem(vals);
 		memberui = new ManagerUImember(this);
 		orderui = new ManagerUIorder(this);
 		init();

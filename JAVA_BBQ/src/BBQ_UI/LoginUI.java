@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import BBQ_Manage.ManagerUI;
 import BBQ_SYSTEM.BBQ_System;
 
 public class LoginUI implements ActionListener {
@@ -195,7 +196,10 @@ public class LoginUI implements ActionListener {
 		} else if (pass_tf.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, Commons.getMsg("패스워드를 입력해주세요"));
 			pass_tf.requestFocus();
-		} else {
+		} else if(id_tf.getText().equals("manager") && pass_tf.getText().equals("123")) {
+			JOptionPane.showMessageDialog(null, Commons.getMsg("관리자 로그인 성공"));
+			new ManagerUI(system.getConnection()); 
+		}else {
 			// 로그인 체크 :system.loginCheck(아이디, 패스워드);
 			boolean result = system.loginCheck(id_tf.getText(), pass_tf.getText());
 			if (result) {

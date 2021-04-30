@@ -162,7 +162,6 @@ public class Orderstatus_on implements ActionListener {
 //			datalist.add(order);
 //		}
 		
-		
 		String namedata = order.getMenulist().get(0).getMenu().getName();
 		int amount = -1;
 		for(int i=0; i<order.getMenulist().size();i++) {
